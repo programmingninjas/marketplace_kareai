@@ -1,6 +1,20 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Domine } from "next/font/google";
 import "./globals.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { Poppins } from 'next/font/google'
+ 
+// const roboto = Poppins({
+//   weight: '400',
+//   subsets: ['latin'],
+//   display: 'swap',
+// })
+const roboto = Domine({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={roboto.className}>
+      <body className={roboto.className} >{children}</body>
     </html>
   );
 }
