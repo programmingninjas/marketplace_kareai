@@ -42,6 +42,7 @@ function page() {
   </CardContent>
 </Card>
 </Link>
+<Link href={"/medical_research_agent"}>
 <Card className='border-2 text-[#540F66]'>
   <CardHeader>
     <CardTitle>Medical Research Agent</CardTitle>
@@ -52,6 +53,7 @@ function page() {
     <p>for related medical research papers.</p>
   </CardContent>
 </Card>
+</Link>
 <Card className='border-2 text-[#540F66]'>
   <CardHeader>
     <CardTitle>Financial Analytics Agent</CardTitle>
