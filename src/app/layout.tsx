@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Domine } from "next/font/google";
+import { Montserrat } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Poppins } from 'next/font/google'
@@ -10,7 +12,7 @@ import { Poppins } from 'next/font/google'
 //   subsets: ['latin'],
 //   display: 'swap',
 // })
-const roboto = Domine({
+const roboto = Open_Sans({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',

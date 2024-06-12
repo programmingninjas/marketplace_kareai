@@ -5,7 +5,7 @@ import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/com
 import { Label } from "@/components/ui/label"
 import React, { useState } from 'react'
 import Loader from "@/components/Loader";
-import { WandIcon } from "lucide-react";
+import { Copy, Save, WandIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -36,8 +36,12 @@ import Sidebar from "@/components/sidebar"
 import axios from "axios";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // import styles
-
+// import html2pdf from 'html2pdf.js';
+import html2pdf from 'html2pdf.js'
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 function Page() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [content, setContent] = useState("");
   const [content2, setContent2] = useState("");
   const [content3, setContent3] = useState("");
@@ -49,7 +53,7 @@ function Page() {
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);
     try {
-      const response = await axios.post(`http://localhost:8000/api/market_research`, {
+      const response = await axios.post(`https://b96b-2405-201-4041-c8-4d6b-a4f1-5a92-e190.ngrok-free.app/api/market_research`, {
         sector: data.sector,
         value_proposition: data.value_proposition,
       }, {
@@ -57,6 +61,7 @@ function Page() {
           "Content-Type": "application/json"
         }
       });
+
       setContent(response.data.industry_landscape);
       setContent2(response.data.msgp);
       setContent3(response.data.tt);
@@ -69,6 +74,7 @@ function Page() {
     }
     setIsSubmitting(false);
   };
+
   const loadingMessages = [
     "Fetching and Analyzing information...",
     "Compiling data...",
@@ -83,17 +89,56 @@ function Page() {
     [{ indent: '-1' }, { indent: '+1' }],
     ['link', 'image'],
     ['clean'],
-    
   ];
 
-
-
   const form = useForm();
+  const router = useRouter();
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Content copied to clipboard");
+    }).catch((err) => {
+      console.error('Could not copy text: ', err);
+    });
+  };
+
+  const generatePDF = (content: string, filename: string) => {
+    // Create a hidden div element and append the content
+    const hiddenDiv = document.createElement('div');
+    hiddenDiv.innerHTML = content;
+    document.body.appendChild(hiddenDiv);
+
+    // Define the pdf options
+    const pdfOptions = {
+      margin: 1,
+      filename: filename,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    // Convert the hidden div to PDF
+    html2pdf().from(hiddenDiv).set(pdfOptions).save().then(() => {
+      document.body.removeChild(hiddenDiv); // Clean up after download
+    });
+  };
+
+  const downloadPDF = (content: string, contentId: string) => {
+    generatePDF(content, `${contentId}_market_research.pdf`);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <div className="w-full h-screen flex overflow-hidden ">
-      <div className="h-full">
-        <Sidebar />
+      <div className="h-full ">
+      
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+       
+        
+
       </div>
       <div className="w-full">
         <div className="py-5 w-full border-b-2 border-zinc-100">  </div>
@@ -111,7 +156,7 @@ function Page() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className='mb-2  text-2xl font-bold text-zinc-800'>Industry Sector</FormLabel>
-                        <Input className='mt-2 border border-zinc-400' {...field} />
+                        <Input className='overflow-y-auto mt-2 border border-zinc-400' {...field} />
                         <FormMessage />
                       </FormItem>
                     )}
@@ -129,71 +174,73 @@ function Page() {
                     )}
                   />
 
-                  <Accordion className=" " type="single" collapsible>
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger className="text-lg border border-zinc-400 p-3">Advanced options</AccordionTrigger>
-                      <AccordionContent>
-                        <div className='flex items-center gap-5 p-4'>
+<Accordion className="border border-gray-400 rounded-md" type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger className="text-lg p-4 border-b border-gray-300">Advanced Options</AccordionTrigger>
+    <AccordionContent>
+      <div className="flex items-center gap-6 p-4">
+
+        <FormField
+          name="language"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-semibold mb-2">Language</FormLabel>
+              <Controller
+                name="language"
+                control={form.control}
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                      <SelectValue placeholder="Select Language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="english">English (US)</SelectItem>
+                      <SelectItem value="hindi">Hindi</SelectItem>
+                      <SelectItem value="german">German</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="tone"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-semibold mb-2">Tone of voice</FormLabel>
+              <Controller
+                name="tone"
+                control={form.control}
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                      <SelectValue placeholder="Select Tone" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="formal">Formal</SelectItem>
+                      <SelectItem value="informal">Informal</SelectItem>
+                      <SelectItem value="friendly">Friendly</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
 
 
-                          <FormField
-                            name="language"
-                            control={form.control}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className='text-l mb-2 font-semibold'>Select Language</FormLabel>
-                                <Controller
-                                  name="language"
-                                  control={form.control}
-                                  render={({ field }) => (
-                                    <Select onValueChange={field.onChange} value={field.value}>
-                                      <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Select Language" />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        <SelectItem value="english">English</SelectItem>
-                                        <SelectItem value="hindi">Hindi</SelectItem>
-                                        <SelectItem value="german">German</SelectItem>
-                                      </SelectContent>
-                                    </Select>
-                                  )}
-                                />
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            name="model"
-                            control={form.control}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className='text-l mb-2 font-semibold'>Select Model</FormLabel>
-                                <Controller
-                                  name="model"
-                                  control={form.control}
-                                  render={({ field }) => (
-                                    <Select onValueChange={field.onChange} value={field.value}>
-                                      <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Select Model" />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        <SelectItem value="gpt">GPT</SelectItem>
-                                        <SelectItem value="gemini">Gemini</SelectItem>
-                                        <SelectItem value="llama 3">Llama 3</SelectItem>
-                                      </SelectContent>
-                                    </Select>
-                                  )}
-                                />
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-
-                  <Button type="submit" className='w-full bg-gradient-to-r from-pink-600 to-[#540F66]' disabled={isSubmitting}>
+                  <Button type="submit" className='w-full bg-gradient-to-r from-purple-700 to-[#540F66]' disabled={isSubmitting}>
                     {isSubmitting ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -210,9 +257,9 @@ function Page() {
               </Form>
             </div>
           </div>
-          <div className='w-full min-w-1/2 h-full border-l-2 border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden'>
+          <div className='w-10/12 min-w-1/2 h-full border-l-2 border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden'>
             <Tabs className="w-full " defaultValue="account">
-              <TabsList className="flex w-full   mb-[50px] text-zinc-900">
+              <TabsList className="flex w-full    text-zinc-900">
                 <TabsTrigger value="account">Industry Landscape</TabsTrigger>
                 <TabsTrigger value="password">Market Size</TabsTrigger>
                 <TabsTrigger value="profile">Tech Trends</TabsTrigger>
@@ -221,25 +268,33 @@ function Page() {
                 <TabsTrigger value="support">Insights</TabsTrigger>
               </TabsList>
               <TabsContent className="flex-1 overflow-hidden" value="account">
-                <Card className="border-0 h-full">
+                <Card className="h-full">
                   <CardHeader>
                     <CardTitle className="text-zinc-900">Industry Landscape</CardTitle>
-                    <CardDescription>Brief overview of the selected industry.</CardDescription>
+                    <CardDescription>Overview of the industry landscape.</CardDescription>
                   </CardHeader>
-                  <CardContent className="h-full overflow-hidden">
+                  <CardContent className="h-full overflow-hidden" id="content1">
                     {isSubmitting ? (
                       <Loader messages={loadingMessages}/>
                     ) : (
                       <>
-                        <ReactQuill className="h-[400px] py-5 mb-5 " modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} />
-                        {/* <ReactMarkdown className="mt-4" children={content} components={{
-                          a: ({ node, ...props }) => (
-                            <a {...props} className='text text-purple-700 hover:underline'>
-                              {props.children}
-                            </a>
-                          )
-                        }} /> */}
-                      </>
+                      <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} />
+                      <div className=" py-2   flex  gap-2">
+                          <div className="relative group">
+                              <Copy className="w-5 cursor-pointer hover:text-blue-500" onClick={() => copyToClipboard(content)} />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Copy 
+                              </div>
+                          </div>
+                          <div className="relative group">
+                              <Save className="w-5 cursor-pointer hover:text-blue-500" onClick={() => downloadPDF(content, "industry_landscape")} />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Save 
+                              </div>
+                          </div>
+                      </div>
+                  </>
+                  
                     )}
                   </CardContent>
                 </Card>
@@ -250,19 +305,17 @@ function Page() {
                     <CardTitle className="text-zinc-900">Market Size and Projections</CardTitle>
                     <CardDescription>Current and expected growth of the market.</CardDescription>
                   </CardHeader>
-                  <CardContent className="h-full overflow-hidden">
+                  <CardContent className="h-full overflow-hidden" id="content2">
                     {isSubmitting ? (
                       <Loader messages={loadingMessages}/>
                     ) : (
                       <>
-                        <ReactQuill value={content2} onChange={setContent2} />
-                        <ReactMarkdown className="mt-4" children={content2} components={{
-                          a: ({ node, ...props }) => (
-                            <a {...props} className='text text-purple-700 hover:underline'>
-                              {props.children}
-                            </a>
-                          )
-                        }} />
+                      <div className="flex gap-2 opacity-1/2">
+                      <Copy className="w-5 cursor-pointer" onClick={() => copyToClipboard(content2)}/>
+                      <Save className="w-5 cursor-pointer" onClick={() => downloadPDF(content2, "Market Size and Projections")}/>
+                    </div>
+                        <ReactQuill className="h-[400px] py-5 mb-5" modules={{toolbar:customToolbarOptions}} value={content2} onChange={setContent2} />
+                       
                       </>
                     )}
                   </CardContent>
@@ -274,19 +327,17 @@ function Page() {
                     <CardTitle className="text-zinc-900">Tech Trends</CardTitle>
                     <CardDescription>Overview of technological trends in the industry.</CardDescription>
                   </CardHeader>
-                  <CardContent className="h-full overflow-hidden">
+                  <CardContent className="h-full overflow-hidden" id="content3">
                     {isSubmitting ? (
                       <Loader messages={loadingMessages}/>
                     ) : (
                       <>
-                        <ReactQuill value={content3} onChange={setContent3} />
-                        <ReactMarkdown className="mt-4" children={content3} components={{
-                          a: ({ node, ...props }) => (
-                            <a {...props} className='text text-purple-700 hover:underline'>
-                              {props.children}
-                            </a>
-                          )
-                        }} />
+                         <div className="flex gap-2 opacity-1/2">
+                      <Copy className="w-5 cursor-pointer" onClick={() => copyToClipboard(content3)}/>
+                      <Save className="w-5 cursor-pointer" onClick={() => downloadPDF(content3, "Tech_Trends")}/>
+                    </div>
+                        <ReactQuill className="h-[400px] py-5 mb-5" modules={{toolbar:customToolbarOptions}} value={content3} onChange={setContent3} />
+                        
                       </>
                     )}
                   </CardContent>
@@ -298,19 +349,17 @@ function Page() {
                     <CardTitle className="text-zinc-900">News</CardTitle>
                     <CardDescription>Latest news in the industry.</CardDescription>
                   </CardHeader>
-                  <CardContent className="h-full overflow-hidden">
+                  <CardContent className="h-full overflow-hidden" id="content4">
                     {isSubmitting ? (
                       <Loader messages={loadingMessages}/>
                     ) : (
                       <>
-                        <ReactQuill value={content4} onChange={setContent4} />
-                        <ReactMarkdown className="mt-4" children={content4} components={{
-                          a: ({ node, ...props }) => (
-                            <a {...props} className='text text-purple-700 hover:underline'>
-                              {props.children}
-                            </a>
-                          )
-                        }} />
+                         <div className="flex gap-2 opacity-1/2">
+                      <Copy className="w-5 cursor-pointer" onClick={() => copyToClipboard(content4)}/>
+                      <Save className="w-5 cursor-pointer" onClick={() => downloadPDF(content4, "News")}/>
+                    </div>
+                        <ReactQuill className="h-[400px] py-5 mb-5" value={content4} modules={{toolbar:customToolbarOptions}} onChange={setContent4} />
+                        
                       </>
                     )}
                   </CardContent>
@@ -322,19 +371,17 @@ function Page() {
                     <CardTitle className="text-zinc-900">Predictions</CardTitle>
                     <CardDescription>Future predictions for the industry.</CardDescription>
                   </CardHeader>
-                  <CardContent className="h-full overflow-hidden">
+                  <CardContent className="h-full overflow-hidden" id="content5">
                     {isSubmitting ? (
                       <Loader messages={loadingMessages}/>
                     ) : (
                       <>
-                        <ReactQuill value={content5} onChange={setContent5} />
-                        <ReactMarkdown className="mt-4" children={content5} components={{
-                          a: ({ node, ...props }) => (
-                            <a {...props} className='text text-purple-700 hover:underline'>
-                              {props.children}
-                            </a>
-                          )
-                        }} />
+                         <div className="flex gap-2 opacity-1/2">
+                      <Copy className="w-5 cursor-pointer" onClick={() => copyToClipboard(content5)}/>
+                      <Save className="w-5 cursor-pointer" onClick={() => downloadPDF(content5, "Predictions")}/>
+                    </div>
+                        <ReactQuill className="h-[400px] py-5 mb-5" value={content5} modules={{toolbar:customToolbarOptions}} onChange={setContent5} />
+                       
                       </>
                     )}
                   </CardContent>
@@ -344,21 +391,19 @@ function Page() {
                 <Card className="h-full">
                   <CardHeader>
                     <CardTitle className="text-zinc-900">Insights</CardTitle>
-                    <CardDescription>Key insights and takeaways.</CardDescription>
+                    <CardDescription>Additional insights and recommendations.</CardDescription>
                   </CardHeader>
-                  <CardContent className="h-full overflow-hidden">
+                  <CardContent className="h-full overflow-hidden" id="content6">
                     {isSubmitting ? (
                       <Loader messages={loadingMessages}/>
                     ) : (
                       <>
-                        <ReactQuill value={content6} onChange={setContent6} />
-                        <ReactMarkdown className="mt-4" children={content6} components={{
-                          a: ({ node, ...props }) => (
-                            <a {...props} className='text text-purple-700 hover:underline'>
-                              {props.children}
-                            </a>
-                          )
-                        }} />
+                    <div className="flex gap-2 opacity-1/2">
+                      <Copy className="w-5 cursor-pointer" onClick={() => copyToClipboard(content6)}/>
+                      <Save className="w-5 cursor-pointer" onClick={() => downloadPDF(content6, "Insights")}/>
+                    </div>
+                        <ReactQuill className="h-[400px] py-5 mb-5" modules={{toolbar:customToolbarOptions}} value={content6} onChange={setContent6} />
+                        
                       </>
                     )}
                   </CardContent>
