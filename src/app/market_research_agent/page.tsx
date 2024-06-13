@@ -41,21 +41,24 @@ import html2pdf from 'html2pdf.js'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 function Page() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
   const [content2, setContent2] = useState("");
   const [content3, setContent3] = useState("");
   const [content4, setContent4] = useState("");
   const [content5, setContent5] = useState("");
   const [content6, setContent6] = useState("");
+  const [wordFile, setWordFile] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
   
   const onSubmit = async (data: any) => {
+    console.log(data);
     setIsSubmitting(true);
     try {
-      const response = await axios.post(`https://b96b-2405-201-4041-c8-4d6b-a4f1-5a92-e190.ngrok-free.app/api/market_research`, {
+      const response = await axios.post(`http://127.0.0.1:8000/api/market_research`, {
         sector: data.sector,
         value_proposition: data.value_proposition,
+        model: data.model,
       }, {
         headers: {
           "Content-Type": "application/json"
@@ -68,6 +71,7 @@ function Page() {
       setContent4(response.data.in);
       setContent5(response.data.top_5);
       setContent6(response.data.insights);
+      setWordFile(response.data.file);
       console.log(response);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -125,6 +129,44 @@ function Page() {
 
   const downloadPDF = (content: string, contentId: string) => {
     generatePDF(content, `${contentId}_market_research.pdf`);
+  };
+
+  const downloadWord = async (filename:string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/download_report/${filename}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('File download failed');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+
+      // Optional: Parse the filename from the Content-Disposition header if available
+      const contentDisposition = response.headers.get('Content-Disposition');
+      let downloadFilename = filename;
+      if (contentDisposition) {
+        const match = contentDisposition.match(/filename="(.+)"/);
+        if (match) {
+          downloadFilename = match[1];
+        }
+      }
+
+      a.download = downloadFilename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+    }
   };
 
   const toggleSidebar = () => {
@@ -208,23 +250,23 @@ function Page() {
         />
 
         <FormField
-          name="tone"
+          name="model"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-semibold mb-2">Tone of voice</FormLabel>
+              <FormLabel className="text-sm font-semibold mb-2">Model</FormLabel>
               <Controller
-                name="tone"
+                name="model"
                 control={form.control}
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
-                      <SelectValue placeholder="Select Tone" />
+                      <SelectValue placeholder="Select Model" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="formal">Formal</SelectItem>
-                      <SelectItem value="informal">Informal</SelectItem>
-                      <SelectItem value="friendly">Friendly</SelectItem>
+                      <SelectItem value="llama3-70b-8192">Llama 3</SelectItem>
+                      <SelectItem value="gpt-4o">GPT-4o</SelectItem>
+                      <SelectItem value="gemini-1.5-pro">Gemini</SelectItem>
                     </SelectContent>
                   </Select>
                 )}
@@ -289,7 +331,13 @@ function Page() {
                           <div className="relative group">
                               <Save className="w-5 cursor-pointer hover:text-blue-500" onClick={() => downloadPDF(content, "industry_landscape")} />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Save 
+                                  PDF 
+                              </div>
+                          </div>
+                          <div className="relative group">
+                              <Save className="w-5 cursor-pointer hover:text-blue-500" onClick={() => downloadWord(wordFile)} />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
                               </div>
                           </div>
                       </div>
