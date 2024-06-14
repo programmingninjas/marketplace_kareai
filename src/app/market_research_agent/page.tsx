@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ReactMarkdown from 'react-markdown';
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import React, { useState } from 'react'
+import React, { useState, MouseEvent } from 'react'
 import Loader from "@/components/Loader";
 import { Copy, Save, WandIcon } from "lucide-react";
 import {
@@ -40,7 +40,10 @@ import 'react-quill/dist/quill.snow.css'; // import styles
 import html2pdf from 'html2pdf.js'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import NewComponent from "@/components/newC";
 function Page() {
+
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [content, setContent] = useState("");
   const [content2, setContent2] = useState("");
@@ -130,6 +133,20 @@ function Page() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const [isopen, setIsopen] = useState<boolean>(false);
+  const [selectedText, setSelectedText] = useState<string>("");
+  console.log(selectedText)
+
+  const handleTextSelection = (event: MouseEvent<HTMLDivElement>) => {
+    const selectedText = window.getSelection()?.toString() || "";
+    setSelectedText(selectedText);
+    setIsopen(true);
+  }
+
+  const handleClose = () => {
+    setIsopen(false);
+  }
 
   return (
     <div className="w-full h-screen flex overflow-hidden ">
@@ -257,7 +274,7 @@ function Page() {
               </Form>
             </div>
           </div>
-          <div className='w-10/12 min-w-1/2 h-full border-l-2 border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden'>
+          <div className='w-10/12 min-w-1/2 h-full border-l-2 border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden'   >
             <Tabs className="w-full " defaultValue="account">
               <TabsList className="flex w-full    text-zinc-900">
                 <TabsTrigger value="account">Industry Landscape</TabsTrigger>
@@ -273,6 +290,7 @@ function Page() {
                     <CardTitle className="text-zinc-900">Industry Landscape</CardTitle>
                     <CardDescription>Overview of the industry landscape.</CardDescription>
                   </CardHeader>
+                  <div className="sample" onDoubleClick={handleTextSelection} >
                   <CardContent className="h-full overflow-hidden" id="content1">
                     {isSubmitting ? (
                       <Loader messages={loadingMessages}/>
@@ -297,6 +315,8 @@ function Page() {
                   
                     )}
                   </CardContent>
+                  </div>
+                 
                 </Card>
               </TabsContent>
               <TabsContent className="flex-1 overflow-hidden" value="password">
@@ -305,7 +325,7 @@ function Page() {
                     <CardTitle className="text-zinc-900">Market Size and Projections</CardTitle>
                     <CardDescription>Current and expected growth of the market.</CardDescription>
                   </CardHeader>
-                  <CardContent className="h-full overflow-hidden" id="content2">
+                  <CardContent className="h-full overflow-hidden" id="content2" >
                     {isSubmitting ? (
                       <Loader messages={loadingMessages}/>
                     ) : (
@@ -314,7 +334,7 @@ function Page() {
                       <Copy className="w-5 cursor-pointer" onClick={() => copyToClipboard(content2)}/>
                       <Save className="w-5 cursor-pointer" onClick={() => downloadPDF(content2, "Market Size and Projections")}/>
                     </div>
-                        <ReactQuill className="h-[400px] py-5 mb-5" modules={{toolbar:customToolbarOptions}} value={content2} onChange={setContent2} />
+                        <ReactQuill  className="h-[400px] py-5 mb-5" modules={{toolbar:customToolbarOptions}} value={content2} onChange={setContent2} />
                        
                       </>
                     )}
@@ -410,8 +430,10 @@ function Page() {
                 </Card>
               </TabsContent>
             </Tabs>
+            <NewComponent isOpen={isopen} selectedText={selectedText} handleClose={handleClose} />
           </div>
         </div>
+        
       </div>
     </div>
   )
