@@ -1,10 +1,11 @@
 "use client";
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent,useEffect } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"; // Import Tabs components as needed
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"; // Import Card components as needed
+import Loader from "./Loader";
 
 interface NewComponentProps {
   isOpen: boolean;
@@ -13,6 +14,27 @@ interface NewComponentProps {
 }
 
 const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handleClose }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [reply, setReply] = useState("");
+  const getReply = async () => {
+    setIsLoading(true);
+    const response = await fetch("http://localhost:8000/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: selectedText,model:"llama3-70b-8192" }),
+    });
+    const data = await response.json();
+    setReply(data.response);
+    setIsLoading(false);
+  }
+  useEffect(() => {
+    if(selectedText.length > 0){
+      getReply();
+    }
+  }, [selectedText])
+  
   return (
     <div className="relative">
       <div className="p-4 cursor-text"></div>
@@ -29,32 +51,29 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
             >
               <XIcon className="w-4 h-4" />
             </button>
-            <h3 className="text-lg font-medium text-zinc-800 font-semibold">Chat with AI</h3>
+            <h3 className="text-lg font-medium text-zinc-800 font-semibold">Chat with Cosmo</h3>
           </header>
           <div className="flex-1 overflow-auto p-4">
-            <div className="flex items-start gap-4">
-              <Avatar className="border w-6 h-6">
-                <img src="/placeholder.svg" alt="Avatar" />
-                <AvatarFallback>YO</AvatarFallback>
-              </Avatar>
+            <div className="flex justify-end items-start gap-4">
               <div className="grid gap-1">
                 <div className="font-bold">You</div>
                 <div className="prose prose-stone">{selectedText}</div>
               </div>
+              <Avatar className="border w-6 h-6">
+                <img src="/placeholder.svg" alt="Avatar" />
+                <AvatarFallback>YO</AvatarFallback>
+              </Avatar>
             </div>
-            <div className="flex items-start gap-4 mt-4">
+            {isLoading ? (<Loader messages={["Thinking.","Thinking..","Thinking..."]} />):(<div className="flex items-start gap-4 mt-4">
               <Avatar className="border w-6 h-6">
                 <img src="/placeholder.svg" alt="Avatar" />
                 <AvatarFallback>OA</AvatarFallback>
               </Avatar>
               <div className="grid gap-1">
-                <div className="font-bold">ChatGPT</div>
+                <div className="font-bold">Cosmo</div>
                 <div className="prose prose-stone">
                   <p>
-                    The king's plan to tax the jokes in the kingdom was a clever one, but it didn't go quite as he
-                    expected. Jokester, a mischievous trickster, began sneaking into the castle at night and leaving
-                    jokes all over the place - under the king's pillow, in his soup, even in the royal toilet. The king
-                    was furious, but he couldn't seem to stop Jokester.
+                    {reply}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-2">
@@ -92,12 +111,12 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                   </Button>
                 </div>
               </div>
-            </div>
+            </div>)}
           </div>
           <div className="bg-gray-100 dark:bg-gray-800 px-4 py-3 border-t">
             <div className="relative">
               <Textarea
-                placeholder="Message ChatGPT..."
+                placeholder="Message Cosmo..."
                 name="message"
                 id="message"
                 rows={1}
