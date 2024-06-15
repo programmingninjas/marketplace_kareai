@@ -61,6 +61,7 @@ function Page() {
         sector: data.sector,
         value_proposition: data.value_proposition,
         model: data.model,
+        language: data.language
       }, {
         headers: {
           "Content-Type": "application/json"
@@ -97,7 +98,12 @@ function Page() {
     ['clean'],
   ];
 
-  const form = useForm();
+  const form = useForm({
+    defaultValues: {
+      language: 'english',
+      model: 'llama3-70b-8192',
+    },
+  });
   const router = useRouter();
 
   const copyToClipboard = (text: string) => {
@@ -281,9 +287,9 @@ function Page() {
                       <SelectValue placeholder="Select Model" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="llama3-70b-8192">Llama 3</SelectItem>
-                      <SelectItem value="gpt-4o">GPT-4o</SelectItem>
-                      <SelectItem value="gemini-1.5-pro">Gemini</SelectItem>
+                      <SelectItem value="llama3-70b-8192">Default</SelectItem>
+                      <SelectItem value="gpt-4o">OpenAI|GPT-4o</SelectItem>
+                      <SelectItem value="gemini-1.5-pro">Google|Gemini</SelectItem>
                     </SelectContent>
                   </Select>
                 )}

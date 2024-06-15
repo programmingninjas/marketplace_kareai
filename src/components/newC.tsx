@@ -16,13 +16,16 @@ interface NewComponentProps {
 
 const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handleClose }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [reply, setReply] = useState("");
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [messageText, setMessageText] = useState("");
+  const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
     { sender: "Cosmo", text: "Hello! How can I assist you today?" },
     // Add more predefined messages here
   ]);
+
+  useEffect(() => {
+    setMessageText(selectedText);
+  }, [selectedText]);
 
   useEffect(() => {
     const handleIncomingMessage = (event: MessageEvent) => {
@@ -32,7 +35,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     };
 
     const client_id = Date.now().toString();
-    const wsInstance = new WebSocket(`ws://192.168.29.141:8000/ws/${client_id}`);
+    const wsInstance = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
     setWs(wsInstance);
 
     wsInstance.onmessage = handleIncomingMessage;
@@ -114,7 +117,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
               <Button
                 type="button"
                 size="icon"
-                className="absolute top-3 right-3 w-8 h-8 bg-purple-950 hover:bg-purple-700 text-white"
+                className="absolute top-3 right-3 w-8 h-8 bg-purple-600 hover:bg-purple-700 text-white"
                 onClick={sendMessage}
               >
                 <ArrowUpIcon className="w-4 h-4 text-white" />
