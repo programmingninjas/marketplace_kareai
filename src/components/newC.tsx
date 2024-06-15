@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"; // Import Tabs components as needed
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"; // Import Card components as needed
 import Loader from "./Loader";
+import { Wand } from "lucide-react";
 
 interface NewComponentProps {
   isOpen: boolean;
@@ -32,7 +33,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     };
 
     const client_id = Date.now().toString();
-    const wsInstance = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
+    const wsInstance = new WebSocket(`ws://192.168.29.141:8000/ws/${client_id}`);
     setWs(wsInstance);
 
     wsInstance.onmessage = handleIncomingMessage;
@@ -60,36 +61,39 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
         }`}
       >
         <div className="flex flex-col h-full">
-          <header className="bg-gray-100 dark:bg-gray-800 px-4 py-3 border-b flex items-center gap-3">
-            <button
-              className="top-4 left-4 bg-gray-100 dark:bg-gray-800 p-2 rounded-full shadow-md"
+          <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
+            
+            <img className=" h-6 " src="/logo2.jpg" alt="no" />
+                        <h3 className="text-lg font-medium text-zinc-800 font-semibold">Chat </h3>
+
+            <Button
+              className="top-4 left-4 w-4 h-2 bg-white dark:bg-gray-800 p-4 text-black rounded-full shadow-md"
               onClick={handleClose}
             >
               X
-            </button>
-            <h3 className="text-lg font-medium text-zinc-800 font-semibold">Chat with Cosmo</h3>
+            </Button>
           </header>
           <div className="flex-1 overflow-auto p-4">
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex ${message.sender === "You" ? "justify-end" : "justify-start"} items-start gap-4`}
+                className={`flex ${message.sender === "You" ? "justify-end" : "justify-start"} items-start gap-4 bg--200`}
               >
                 {message.sender === "Cosmo" && (
-                  <Avatar className="border w-6 h-6">
-                    <img src="/placeholder.svg" alt="Avatar" />
-                    <AvatarFallback>OA</AvatarFallback>
+                  <Avatar className=" w-6 h-7 bg-white">
+                    {/* <img src="/placeholder.svg" alt="Avatar" /> */}
+                    <AvatarFallback className="bg-white "><Wand className="text-purple-700"/></AvatarFallback>
                   </Avatar>
                 )}
-                <div className="grid gap-1">
-                  <div className="font-bold">{message.sender}</div>
-                  <div className="prose prose-stone">
-                    <p>{message.text}</p>
+                <div className="grid gap-1 ">
+                  <div className={`font-bold flex ${message.sender === "You" ? "justify-end" : "justify-start"}`}>{message.sender}</div>
+                  <div className={`prose prose-stone  rounded-full  ${message.sender==="You" ? "bg-purple-600 py-1 px-3 text-white":"bg-white"} `}>
+                    <p className="">{message.text}</p>
                   </div>
                 </div>
                 {message.sender === "You" && (
                   <Avatar className="border w-6 h-6">
-                    <img src="/placeholder.svg" alt="Avatar" />
+                    {/* <img src="/placeholder.svg" alt="Avatar" /> */}
                     <AvatarFallback>YO</AvatarFallback>
                   </Avatar>
                 )}
@@ -106,7 +110,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                 rows={1}
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
-                className="min-h-[48px] rounded-2xl resize-none p-4 border border-gray-200 border-neutral-400 shadow-sm pr-16 dark:border-gray-800"
+                className="min-h-[48px] rounded-2xl resize-none p-4 border border-gray-200 overflow-y-hidden shadow-sm pr-16 dark:border-gray-800"
               />
               <Button
                 type="button"

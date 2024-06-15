@@ -173,8 +173,8 @@ function Page() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
-  const [isopen, setIsopen] = useState<boolean>(false);
+//chatbox states
+  const [isopen, setIsopen] = useState<boolean>(true);
   const [selectedText, setSelectedText] = useState<string>("");
   console.log(selectedText)
 
