@@ -36,6 +36,7 @@ import Sidebar from "@/components/sidebar"
 import axios from "axios";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // import styles
+import Layout from "@/components/Layout";
 
 function Page() {
   const [content, setContent] = useState("");
@@ -80,9 +81,9 @@ function Page() {
   const form = useForm();
 
   return (
+    <Layout>
     <div className="w-full h-screen flex overflow-hidden ">
       <div className="h-full">
-        <Sidebar />
       </div>
       <div className="w-full">
         <div className="py-5 w-full border-b-2 border-zinc-100">  </div>
@@ -217,6 +218,7 @@ function Page() {
         </div>
       </div>
     </div>
+    </Layout>
   )
 }
 

@@ -5,7 +5,7 @@ import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/com
 import { Label } from "@/components/ui/label"
 import React, { useState, MouseEvent } from 'react'
 import Loader from "@/components/Loader";
-import { Copy, Save, WandIcon } from "lucide-react";
+import { Copy, File, FileText, Save, WandIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -41,6 +41,7 @@ import html2pdf from 'html2pdf.js'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NewComponent from "@/components/newC";
+import Layout from "@/components/Layout";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -174,7 +175,7 @@ function Page() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 //chatbox states
-  const [isopen, setIsopen] = useState<boolean>(true);
+  const [isopen, setIsopen] = useState<boolean>(false);
   const [selectedText, setSelectedText] = useState<string>("");
   console.log(selectedText)
 
@@ -189,10 +190,11 @@ function Page() {
   }
 
   return (
+    <Layout>
     <div className="w-full h-screen flex overflow-hidden ">
       <div className="h-full ">
       
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      {/* <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /> */}
        
         
 
@@ -351,7 +353,7 @@ function Page() {
                               </div>
                           </div>
                           <div className="relative group">
-                              <Save className="w-5 cursor-pointer hover:text-blue-500" onClick={() => downloadWord(wordFile)} />
+                              <FileText className="w-5 cursor-pointer hover:text-blue-500" onClick={() => downloadWord(wordFile)} />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Word
                               </div>
@@ -482,6 +484,7 @@ function Page() {
         
       </div>
     </div>
+    </Layout>
   )
 }
 

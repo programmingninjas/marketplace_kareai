@@ -20,7 +20,6 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [messageText, setMessageText] = useState("");
   const [messages, setMessages] = useState([
-    { sender: "You", text: "Hi Cosmo!" },
     { sender: "Cosmo", text: "Hello! How can I assist you today?" },
     // Add more predefined messages here
   ]);
@@ -92,8 +91,8 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                   </div>
                 </div>
                 {message.sender === "You" && (
-                  <Avatar className="border w-6 h-6">
-                    {/* <img src="/placeholder.svg" alt="Avatar" /> */}
+                  <Avatar className="border w-7 h-7">
+                    <img src="/avatar[1].jpg" alt="Avatar" />
                     <AvatarFallback>YO</AvatarFallback>
                   </Avatar>
                 )}
@@ -115,10 +114,10 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
               <Button
                 type="button"
                 size="icon"
-                className="absolute top-3 right-3 w-8 h-8"
+                className="absolute top-3 right-3 w-8 h-8 bg-purple-950 hover:bg-purple-700 text-white"
                 onClick={sendMessage}
               >
-                <ArrowUpIcon className="w-4 h-4" />
+                <ArrowUpIcon className="w-4 h-4 text-white" />
                 <span className="sr-only">Send</span>
               </Button>
             </div>
@@ -148,13 +147,13 @@ function ArrowUpIcon(props: IconProps) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className="text-white" // Apply Tailwind class for purple color
     >
       <path d="m5 12 7-7 7 7" />
       <path d="M12 19V5" />
     </svg>
   )
 }
-
 function ClipboardIcon(props: IconProps) {
   return (
     <svg

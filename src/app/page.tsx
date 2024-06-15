@@ -11,10 +11,12 @@ import {
     CardTitle,
   } from "@/components/ui/card"
   import React from 'react'
+import Layout from '@/components/Layout'
 
 function page() {
   return (
-    <div className='w-full flex'><Sidebar/>
+    <Layout>
+    <div className='w-full flex'>
     <div className='w-full h-full px-5 '>
     <div className=' w-full p-4 mt-10 '>
         <h1 className='  font-bold text-3xl font-sans  '><span className='text-[#A785B2]'>Hello,</span> <span className='text-[#540F66]'>Ayan</span>  </h1>
@@ -70,6 +72,7 @@ function page() {
 
         </div>
     </div>
+    </Layout>
   )
 }
 

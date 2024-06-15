@@ -6,6 +6,7 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Poppins } from 'next/font/google'
+import { SidebarProvider } from "@/context/SidebarContext";
  
 // const roboto = Poppins({
 //   weight: '400',
@@ -32,7 +33,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={roboto.className}>
-      <body className={roboto.className} >{children}</body>
+      <body className={roboto.className} >
+      <SidebarProvider>
+
+        {children}
+        </SidebarProvider>
+
+        </body>
     </html>
   );
 }
