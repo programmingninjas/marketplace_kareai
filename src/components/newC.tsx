@@ -16,25 +16,41 @@ interface NewComponentProps {
 const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handleClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [reply, setReply] = useState("");
-  const getReply = async () => {
-    setIsLoading(true);
-    const response = await fetch("http://localhost:8000/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: selectedText,model:"llama3-70b-8192" }),
-    });
-    const data = await response.json();
-    setReply(data.response);
-    setIsLoading(false);
-  }
+  const [ws, setWs] = useState<WebSocket | null>(null);
+  const [messageText, setMessageText] = useState("");
+  const [messages, setMessages] = useState([
+    { sender: "You", text: "Hi Cosmo!" },
+    { sender: "Cosmo", text: "Hello! How can I assist you today?" },
+    // Add more predefined messages here
+  ]);
+
   useEffect(() => {
-    if(selectedText.length > 0){
-      getReply();
+    const handleIncomingMessage = (event: MessageEvent) => {
+      const newMessage = event.data;
+      setMessages((prevMessages) => [...prevMessages, { sender: "Cosmo", text: newMessage }]);
+      setIsLoading(false);
+    };
+
+    const client_id = Date.now().toString();
+    const wsInstance = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
+    setWs(wsInstance);
+
+    wsInstance.onmessage = handleIncomingMessage;
+
+    return () => {
+      wsInstance.close();
+    };
+  }, []);
+
+  const sendMessage = () => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(messageText);
+      setMessages((prevMessages) => [...prevMessages, { sender: "You", text: messageText }]);
+      setIsLoading(true);
+      setMessageText("");
     }
-  }, [selectedText])
-  
+  };
+
   return (
     <div className="relative">
       <div className="p-4 cursor-text"></div>
@@ -49,69 +65,37 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
               className="top-4 left-4 bg-gray-100 dark:bg-gray-800 p-2 rounded-full shadow-md"
               onClick={handleClose}
             >
-              <XIcon className="w-4 h-4" />
+              X
             </button>
             <h3 className="text-lg font-medium text-zinc-800 font-semibold">Chat with Cosmo</h3>
           </header>
           <div className="flex-1 overflow-auto p-4">
-            <div className="flex justify-end items-start gap-4">
-              <div className="grid gap-1">
-                <div className="font-bold">You</div>
-                <div className="prose prose-stone">{selectedText}</div>
-              </div>
-              <Avatar className="border w-6 h-6">
-                <img src="/placeholder.svg" alt="Avatar" />
-                <AvatarFallback>YO</AvatarFallback>
-              </Avatar>
-            </div>
-            {isLoading ? (<Loader messages={["Thinking.","Thinking..","Thinking..."]} />):(<div className="flex items-start gap-4 mt-4">
-              <Avatar className="border w-6 h-6">
-                <img src="/placeholder.svg" alt="Avatar" />
-                <AvatarFallback>OA</AvatarFallback>
-              </Avatar>
-              <div className="grid gap-1">
-                <div className="font-bold">Cosmo</div>
-                <div className="prose prose-stone">
-                  <p>
-                    {reply}
-                  </p>
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`flex ${message.sender === "You" ? "justify-end" : "justify-start"} items-start gap-4`}
+              >
+                {message.sender === "Cosmo" && (
+                  <Avatar className="border w-6 h-6">
+                    <img src="/placeholder.svg" alt="Avatar" />
+                    <AvatarFallback>OA</AvatarFallback>
+                  </Avatar>
+                )}
+                <div className="grid gap-1">
+                  <div className="font-bold">{message.sender}</div>
+                  <div className="prose prose-stone">
+                    <p>{message.text}</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 py-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900"
-                  >
-                    <ClipboardIcon className="w-4 h-4" />
-                    <span className="sr-only">Copy</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900"
-                  >
-                    <ThumbsUpIcon className="w-4 h-4" />
-                    <span className="sr-only">Upvote</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900"
-                  >
-                    <ThumbsDownIcon className="w-4 h-4" />
-                    <span className="sr-only">Downvote</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900"
-                  >
-                    <RefreshCcwIcon className="w-4 h-4" />
-                    <span className="sr-only">Regenerate</span>
-                  </Button>
-                </div>
+                {message.sender === "You" && (
+                  <Avatar className="border w-6 h-6">
+                    <img src="/placeholder.svg" alt="Avatar" />
+                    <AvatarFallback>YO</AvatarFallback>
+                  </Avatar>
+                )}
               </div>
-            </div>)}
+            ))}
+            {isLoading && <Loader messages={["Thinking.", "Thinking..", "Thinking..."]} />}
           </div>
           <div className="bg-gray-100 dark:bg-gray-800 px-4 py-3 border-t">
             <div className="relative">
@@ -120,9 +104,16 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                 name="message"
                 id="message"
                 rows={1}
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
                 className="min-h-[48px] rounded-2xl resize-none p-4 border border-gray-200 border-neutral-400 shadow-sm pr-16 dark:border-gray-800"
               />
-              <Button type="submit" size="icon" className="absolute top-3 right-3 w-8 h-8" disabled>
+              <Button
+                type="button"
+                size="icon"
+                className="absolute top-3 right-3 w-8 h-8"
+                onClick={sendMessage}
+              >
                 <ArrowUpIcon className="w-4 h-4" />
                 <span className="sr-only">Send</span>
               </Button>
@@ -133,7 +124,6 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     </div>
   );
 };
-
 export default NewComponent;
 
 
