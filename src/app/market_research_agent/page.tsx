@@ -5,7 +5,7 @@ import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/com
 import { Label } from "@/components/ui/label"
 import React, { useState, MouseEvent } from 'react'
 import Loader from "@/components/Loader";
-import { Copy, File, FileText, Save, WandIcon } from "lucide-react";
+import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, Save, WandIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -42,6 +42,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NewComponent from "@/components/newC";
 import Layout from "@/components/Layout";
+import MyResponsiveBar from "@/components/GraphC";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -52,6 +53,7 @@ function Page() {
   const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [graph, setGraph] = useState(false);
   
   const onSubmit = async (data: any) => {
     console.log(data);
@@ -102,6 +104,8 @@ function Page() {
     defaultValues: {
       language: 'english',
       model: 'llama3-70b-8192',
+      sector:"",
+      value_proposition:""
     },
   });
   const router = useRouter();
@@ -186,9 +190,11 @@ function Page() {
   console.log(selectedText)
 
   const handleTextSelection = (event: MouseEvent<HTMLDivElement>) => {
+    event.preventDefault()
     const selectedText = window.getSelection()?.toString() || "";
     setSelectedText(selectedText);
     setIsopen(true);
+    
   }
 
   const handleClose = () => {
@@ -338,7 +344,7 @@ function Page() {
                     <CardTitle className="text-zinc-900">Industry Landscape</CardTitle>
                     <CardDescription>Overview of the industry landscape.</CardDescription>
                   </CardHeader>
-                  <div className="sample" onDoubleClick={handleTextSelection} >
+                  <div className="sample" onContextMenu={handleTextSelection}  >
                   <CardContent className="h-full overflow-hidden" id="content1">
                     {isSubmitting ? (
                       <Loader messages={loadingMessages}/>
@@ -387,8 +393,13 @@ function Page() {
                       <div className="flex gap-2 opacity-1/2">
                       <Copy className="w-5 cursor-pointer" onClick={() => copyToClipboard(content2)}/>
                       <Save className="w-5 cursor-pointer" onClick={() => downloadPDF(content2, "Market Size and Projections")}/>
+                      <BarChart3 className="w-5 cursor-pointer" onClick={() =>setGraph((prevState:boolean) => !prevState) }/>
+
                     </div>
-                        <ReactQuill  className="h-[400px] py-5 mb-5" modules={{toolbar:customToolbarOptions}} value={content2} onChange={setContent2} />
+                    {
+                      graph ? (<MyResponsiveBar/>):(  <ReactQuill  className="h-[400px] py-5 mb-5" modules={{toolbar:customToolbarOptions}} value={content2} onChange={setContent2} />
+                      )
+                    }
                        
                       </>
                     )}
