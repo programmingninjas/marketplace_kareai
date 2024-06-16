@@ -390,16 +390,19 @@ function Page() {
                       <Loader messages={loadingMessages}/>
                     ) : (
                       <>
-                      <div className="flex gap-2 opacity-1/2">
+                      
+                    {
+                      graph ? (<MyResponsiveBar/>):(  <ReactQuill  className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content2} onChange={setContent2} />
+                      )
+                    }
+                    <div className="py-2   flex  gap-2">
                       <Copy className="w-5 cursor-pointer" onClick={() => copyToClipboard(content2)}/>
                       <Save className="w-5 cursor-pointer" onClick={() => downloadPDF(content2, "Market Size and Projections")}/>
                       <BarChart3 className="w-5 cursor-pointer" onClick={() =>setGraph((prevState:boolean) => !prevState) }/>
+                      <FileText className="w-5 cursor-pointer hover:text-blue-500" onClick={() => downloadWord(wordFile)} />
+
 
                     </div>
-                    {
-                      graph ? (<MyResponsiveBar/>):(  <ReactQuill  className="h-[400px] py-5 mb-5" modules={{toolbar:customToolbarOptions}} value={content2} onChange={setContent2} />
-                      )
-                    }
                        
                       </>
                     )}
