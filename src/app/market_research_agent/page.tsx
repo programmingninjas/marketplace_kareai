@@ -43,6 +43,7 @@ import { useRouter } from "next/navigation";
 import NewComponent from "@/components/newC";
 import Layout from "@/components/Layout";
 import MyResponsiveBar from "@/components/GraphC";
+import GraphComponent from "@/components/GraphC";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -53,13 +54,16 @@ function Page() {
   const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [sector, setSector] = useState("")
   const [graph, setGraph] = useState(false);
   
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
+    setSector(data.sector);
+
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/market_research`, {
+      const response = await axios.post(`https://0b67-2405-201-4041-c8-9841-7806-6aab-8d4a.ngrok-free.app/api/market_research`, {
         sector: data.sector,
         value_proposition: data.value_proposition,
         model: data.model,
@@ -330,13 +334,14 @@ function Page() {
           </div>
           <div className='w-10/12 min-w-1/2 h-full border-l-2 border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden'   >
             <Tabs className="w-full " defaultValue="account">
-              <TabsList className="flex w-full    text-zinc-900">
+              <TabsList className="flex w-full  justify-evenly gap-1  text-zinc-900">
                 <TabsTrigger value="account">Industry Landscape</TabsTrigger>
                 <TabsTrigger value="password">Market Size</TabsTrigger>
-                <TabsTrigger value="profile">Tech Trends</TabsTrigger>
+                <TabsTrigger value="Graphs">Graphs</TabsTrigger>
+               <TabsTrigger value="profile">Tech Trends</TabsTrigger>
                 <TabsTrigger value="settings">News</TabsTrigger>
                 <TabsTrigger value="billing">Predictions</TabsTrigger>
-                <TabsTrigger value="support">Insights</TabsTrigger>
+                <TabsTrigger value="support">Recommendations</TabsTrigger>
               </TabsList>
               <TabsContent className="flex-1 overflow-hidden" value="account">
                 <Card className="h-full">
@@ -391,10 +396,8 @@ function Page() {
                     ) : (
                       <>
                       
-                    {
-                      graph ? (<MyResponsiveBar/>):(  <ReactQuill  className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content2} onChange={setContent2} />
-                      )
-                    }
+                      <ReactQuill  className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content2} onChange={setContent2} />
+                    
                     <div className="py-2   flex  gap-2">
                       <Copy className="w-5 cursor-pointer" onClick={() => copyToClipboard(content2)}/>
                       <Save className="w-5 cursor-pointer" onClick={() => downloadPDF(content2, "Market Size and Projections")}/>
@@ -407,6 +410,48 @@ function Page() {
                       </>
                     )}
                   </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent className="flex-1 overflow-hidden" value="Graphs">
+                <Card className="h-full">
+                  <CardHeader>
+                    <CardTitle className="text-zinc-900">Industry Statistics</CardTitle>
+                    <CardDescription>Overview of the industry statistics.</CardDescription>
+                  </CardHeader>
+                  <div className="sample" onContextMenu={handleTextSelection}  >
+                  <CardContent className="h-full overflow-hidden" id="content1">
+                    {isSubmitting ? (
+                      <Loader messages={loadingMessages}/>
+                    ) : (
+                      <>
+                      <GraphComponent sector = {sector}/>
+                      {/* <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} /> */}
+                      <div className=" py-2   flex  gap-2">
+                          <div className="relative group">
+                              <Copy className="w-5 cursor-pointer hover:text-blue-500" onClick={() => copyToClipboard(content)} />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Copy 
+                              </div>
+                          </div>
+                          <div className="relative group">
+                              <Save className="w-5 cursor-pointer hover:text-blue-500" onClick={() => downloadPDF(content, "industry_landscape")} />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  PDF 
+                              </div>
+                          </div>
+                          <div className="relative group">
+                              <FileText className="w-5 cursor-pointer hover:text-blue-500" onClick={() => downloadWord(wordFile)} />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                              </div>
+                          </div>
+                      </div>
+                  </>
+                  
+                    )}
+                  </CardContent>
+                  </div>
+                 
                 </Card>
               </TabsContent>
               <TabsContent className="flex-1 overflow-hidden" value="profile">
