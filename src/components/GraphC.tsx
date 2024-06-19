@@ -5,7 +5,8 @@ import axios from "axios";
 import { ResponsivePie } from "@nivo/pie";
 import { ResponsiveBar } from "@nivo/bar";
 interface props{
-    sector : string;
+    data : any,
+    type: string
 }
 
 const GraphComponent: React.FC<props> = ({data,type}) => {

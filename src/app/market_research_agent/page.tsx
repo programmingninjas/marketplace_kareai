@@ -54,7 +54,7 @@ function Page() {
   const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
   const [data, setData] = useState();
-  const [type, setType] = useState();
+  const [type, setType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [graph, setGraph] = useState(false);
   
@@ -200,7 +200,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
     event.preventDefault();
     const selectedText = window.getSelection()?.toString() || "";
     setSelectedText(selectedText);
-    setIsPopupOpen(true);
+    if(selectedText.length > 0){
+      setIsPopupOpen(true);
+
+    } 
   };
 
   const handlePopupClick = () => {
@@ -419,7 +422,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         Overview of the industry landscape.
                       </CardDescription>
                     </CardHeader>
-                    <div className="sample" onDoubleClick={handleTextSelection}>
+                    <div className="sample" onMouseUp={handleTextSelection}>
                       <CardContent
                         className="h-full overflow-hidden"
                         id="content1"
