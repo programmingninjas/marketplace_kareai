@@ -53,17 +53,17 @@ function Page() {
   const [content5, setContent5] = useState("");
   const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
+  const [data, setData] = useState();
+  const [type, setType] = useState();
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [sector, setSector] = useState("")
   const [graph, setGraph] = useState(false);
   
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
-    setSector(data.sector);
 
     try {
-      const response = await axios.post(`https://0b67-2405-201-4041-c8-9841-7806-6aab-8d4a.ngrok-free.app/api/market_research`, {
+      const response = await axios.post(`http://localhost:8000/api/market_research`, {
         sector: data.sector,
         value_proposition: data.value_proposition,
         model: data.model,
@@ -81,6 +81,8 @@ function Page() {
       setContent5(response.data.top_5);
       setContent6(response.data.insights);
       setWordFile(response.data.file);
+      setData(response.data.data);
+      setType(response.data.type);
       console.log(response);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -511,12 +513,6 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 )
                               }
                             />
-                            <BarChart3
-                              className="w-5 cursor-pointer"
-                              onClick={() =>
-                                setGraph((prevState: boolean) => !prevState)
-                              }
-                            />
                             <FileText
                               className="w-5 cursor-pointer hover:text-blue-500"
                               onClick={() => downloadWord(wordFile)}
@@ -542,7 +538,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                          <GraphComponent sector={sector} />
+                          <GraphComponent data={data} type={type} />
                           {/* <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} /> */}
                         </>
                       )}
