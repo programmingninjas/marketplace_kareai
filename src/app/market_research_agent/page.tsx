@@ -507,25 +507,37 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             onChange={setContent2}
                           />
 
-                          <div className="py-2   flex  gap-2">
-                            <Copy
-                              className="w-5 cursor-pointer"
-                              onClick={() => copyToClipboard(content2)}
-                            />
-                            <Save
-                              className="w-5 cursor-pointer"
-                              onClick={() =>
-                                downloadPDF(
-                                  content2,
-                                  "Market Size and Projections"
-                                )
-                              }
-                            />
-                            <FileText
-                              className="w-5 cursor-pointer hover:text-blue-500"
-                              onClick={() => downloadWord(wordFile)}
-                            />
-                          </div>
+                           <div className=" py-2   flex  gap-2">
+                              <div className="relative group">
+                                <Copy
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => copyToClipboard(content2)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Copy
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <Save
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() =>
+                                    downloadPDF(content2, "Market_Size")
+                                  }
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  PDF
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => downloadWord(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                            </div>
                         </>
                       )}
                     </CardContent>
