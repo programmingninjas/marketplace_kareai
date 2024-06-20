@@ -178,6 +178,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
     { sender: "Cosmo", text: "Hello! How can I assist you today?" },
+
   ]);
 
   useEffect(() => {
@@ -211,18 +212,23 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     }
   };
 
+  const linkify = (text: string) => {
+    const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    return text.replace(urlPattern, '<a href="$1" class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">$1</a>');
+  };
+
   return (
-    <div className="relative">
-      <div className="p-4 cursor-text"></div>
+    <div className="relative ">
+      <div className="p-5 cursor-text "></div>
       <div
-        className={`fixed top-0 right-0 bottom-0 w-[400px] bg-white dark:bg-gray-950 border-l shadow-lg z-50 transform transition-transform duration-300 ${
+        className={`fixed top-0 right-0 bottom-0 w-[400px] bg-white overflow-x-hidden dark:bg-gray-950 border-l shadow-lg z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col  h-full">
           <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
             <img className="h-6" src="/logo2.jpg" alt="Logo" />
-            <h3 className="text-lg font-medium text-zinc-800 font-semibold">Chat</h3>
+            <h3 className="text-lg  text-zinc-800 font-semibold">Chat</h3>
             <Button
               className="top-4 left-4 w-4 h-2 bg-white dark:bg-gray-800 p-4 text-black rounded-full shadow-md"
               onClick={handleClose}
@@ -230,7 +236,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
               X
             </Button>
           </header>
-          <div className="flex-1 overflow-auto p-4">
+          <div className="flex-1 bg--500 overflow-x-hidden overflow-y-auto p-5">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -251,9 +257,8 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                     className={`prose prose-stone rounded-full ${
                       message.sender === "You" ? "bg-purple-600 py-1 px-3 text-white" : "bg-white"
                     }`}
-                  >
-                    <p className="">{message.text}</p>
-                  </div>
+                    dangerouslySetInnerHTML={{ __html: linkify(message.text) }}
+                  />
                 </div>
                 {message.sender === "You" && (
                   <Avatar className="border w-7 h-7">

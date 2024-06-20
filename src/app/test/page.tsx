@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, MouseEvent } from 'react';
 import NewComponent from '@/components/newC';
+import Loader from '@/components/Loader';
 
 const App: React.FC = () => {
   const [isopen, setIsopen] = useState<boolean>(false);

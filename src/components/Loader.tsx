@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, LoaderPinwheel } from 'lucide-react';
 
 interface LoaderProps {
   messages: string[];
@@ -18,8 +18,8 @@ const Loader: React.FC<LoaderProps> = ({ messages }) => {
   }, [messages]);
 
   return (
-    <div className="flex items-center mt-52 justify-center space-x-2">
-      <Loader2 className="h-8 w-8 animate-spin text-[#540F66]" />
+    <div className="flex flex-col items-center mt-52 justify-center space-x-2">
+      <LoaderPinwheel className="h-8 w-8 animate-spin text-[#540F66]" />
       {messages ? messages[currentMessageIndex] : 'Loading...'}
     </div>
   );

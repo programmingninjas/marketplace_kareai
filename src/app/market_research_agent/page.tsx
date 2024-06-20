@@ -91,10 +91,16 @@ function Page() {
   };
 
   const loadingMessages = [
-    "Fetching and Analyzing information...",
-    "Compiling data...",
-    "Almost there..."
+    "Initializing deep learning models...",
+    "Analyzing data patterns...",
+    "Generating insightful responses...",
+    "Optimizing neural networks...",
+    "Synthesizing information...",
+    "Refining output quality...",
+    "Finalizing analysis...",
+    "Almost ready with your response..."
   ];
+  
 
   const customToolbarOptions = [
     [{ 'header': [1, 2, false] }],
