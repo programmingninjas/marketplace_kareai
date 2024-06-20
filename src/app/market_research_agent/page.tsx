@@ -91,10 +91,9 @@ function Page() {
   };
 
   const loadingMessages = [
-    "Initializing deep learning models...",
-    "Analyzing data patterns...",
-    "Generating insightful responses...",
-    "Optimizing neural networks...",
+    "Initializing model...",
+    "Fetching information...",
+    "Analysing gathered information...",
     "Synthesizing information...",
     "Refining output quality...",
     "Finalizing analysis...",
@@ -365,7 +364,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                         </SelectTrigger>
                                         <SelectContent>
                                           <SelectItem value="llama3-70b-8192">
-                                            Default
+                                            KareAI
                                           </SelectItem>
                                           <SelectItem value="gpt-4o">
                                             OpenAI|GPT-4o
@@ -536,10 +535,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <Card className="h-full ">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                        Industry Statistics
+                        Graph
                       </CardTitle>
                       <CardDescription>
-                        Overview of the industry statistics.
+                        Graph of the market size and projections.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className=" h-full overflow-hidden">
@@ -642,7 +641,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         Predictions
                       </CardTitle>
                       <CardDescription>
-                        Future predictions for the industry.
+                        Future predictions of the industry.
                       </CardDescription>
                     </CardHeader>
                     <CardContent
@@ -679,9 +678,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                 <TabsContent className="flex-1 overflow-hidden" value="support">
                   <Card className="h-full">
                     <CardHeader>
-                      <CardTitle className="text-zinc-900">Insights</CardTitle>
+                      <CardTitle className="text-zinc-900">Recommendations</CardTitle>
                       <CardDescription>
-                        Additional insights and recommendations.
+                        As per your value proposition.
                       </CardDescription>
                     </CardHeader>
                     <CardContent

@@ -76,6 +76,15 @@ const GraphComponent: React.FC<props> = ({data,type}) => {
                              legendOffset: -50,
                              truncateTickAt: 0
                          }}
+                         axisBottom={{
+                            legend: 'Year',
+                            tickSize: 5,
+                            tickPadding: 5,
+                            tickRotation: 0,
+                            legendPosition: 'middle',
+                            legendOffset: 40,
+                            truncateTickAt: 0
+                         }}
                          labelSkipWidth={12}
                          labelSkipHeight={12}
                          labelTextColor={{
