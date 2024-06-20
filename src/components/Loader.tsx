@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Loader2, LoaderPinwheel } from 'lucide-react';
+import { LoaderPinwheel } from 'lucide-react';
 
 interface LoaderProps {
   messages: string[];
@@ -11,7 +11,14 @@ const Loader: React.FC<LoaderProps> = ({ messages }) => {
   useEffect(() => {
     if (messages && messages.length > 0) {
       const interval = setInterval(() => {
-        setCurrentMessageIndex((prevIndex) => (prevIndex + 1) % messages.length);
+        setCurrentMessageIndex((prevIndex) => {
+          if (prevIndex < messages.length - 1) {
+            return prevIndex + 1;
+          } else {
+            clearInterval(interval); // Clear interval once the last message is reached
+            return prevIndex;
+          }
+        });
       }, 2000); // Change message every 2 seconds
       return () => clearInterval(interval);
     }
@@ -26,4 +33,3 @@ const Loader: React.FC<LoaderProps> = ({ messages }) => {
 };
 
 export default Loader;
-
