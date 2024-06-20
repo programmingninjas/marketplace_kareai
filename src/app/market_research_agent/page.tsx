@@ -571,24 +571,44 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                          <div className="flex gap-2 opacity-1/2">
-                            <Copy
-                              className="w-5 cursor-pointer"
-                              onClick={() => copyToClipboard(content3)}
-                            />
-                            <Save
-                              className="w-5 cursor-pointer"
-                              onClick={() =>
-                                downloadPDF(content3, "Tech_Trends")
-                              }
-                            />
-                          </div>
-                          <ReactQuill
-                            className="h-[400px] py-5 mb-5"
+                        <ReactQuill
+                            className="h-[400px] py-2 mb-10"
                             modules={{ toolbar: customToolbarOptions }}
                             value={content3}
                             onChange={setContent3}
                           />
+                           <div className=" py-2   flex  gap-2">
+                              <div className="relative group">
+                                <Copy
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => copyToClipboard(content3)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Copy
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <Save
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() =>
+                                    downloadPDF(content3, "tech_trends")
+                                  }
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  PDF
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => downloadWord(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                            </div>
+                          
                         </>
                       )}
                     </CardContent>
@@ -613,22 +633,44 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                          <div className="flex gap-2 opacity-1/2">
-                            <Copy
-                              className="w-5 cursor-pointer"
-                              onClick={() => copyToClipboard(content4)}
-                            />
-                            <Save
-                              className="w-5 cursor-pointer"
-                              onClick={() => downloadPDF(content4, "News")}
-                            />
-                          </div>
-                          <ReactQuill
-                            className="h-[400px] py-5 mb-5"
+                        <ReactQuill
+                            className="h-[400px] py-2 mb-10"
                             value={content4}
                             modules={{ toolbar: customToolbarOptions }}
                             onChange={setContent4}
                           />
+                        <div className=" py-2   flex  gap-2">
+                              <div className="relative group">
+                                <Copy
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => copyToClipboard(content4)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Copy
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <Save
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() =>
+                                    downloadPDF(content4, "News")
+                                  }
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  PDF
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => downloadWord(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                            </div>
+                          
                         </>
                       )}
                     </CardContent>
@@ -652,24 +694,44 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                          <div className="flex gap-2 opacity-1/2">
-                            <Copy
-                              className="w-5 cursor-pointer"
-                              onClick={() => copyToClipboard(content5)}
-                            />
-                            <Save
-                              className="w-5 cursor-pointer"
-                              onClick={() =>
-                                downloadPDF(content5, "Predictions")
-                              }
-                            />
-                          </div>
-                          <ReactQuill
-                            className="h-[400px] py-5 mb-5"
+                        <ReactQuill
+                            className="h-[400px] py-2 mb-10"
                             value={content5}
                             modules={{ toolbar: customToolbarOptions }}
                             onChange={setContent5}
                           />
+                         <div className=" py-2   flex  gap-2">
+                              <div className="relative group">
+                                <Copy
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => copyToClipboard(content5)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Copy
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <Save
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() =>
+                                    downloadPDF(content5, "Predictions")
+                                  }
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  PDF
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => downloadWord(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                            </div>
+                          
                         </>
                       )}
                     </CardContent>
@@ -691,22 +753,44 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                          <div className="flex gap-2 opacity-1/2">
-                            <Copy
-                              className="w-5 cursor-pointer"
-                              onClick={() => copyToClipboard(content6)}
-                            />
-                            <Save
-                              className="w-5 cursor-pointer"
-                              onClick={() => downloadPDF(content6, "Insights")}
-                            />
-                          </div>
-                          <ReactQuill
-                            className="h-[400px] py-5 mb-5"
+                        <ReactQuill
+                            className="h-[400px] py-2 mb-10"
                             modules={{ toolbar: customToolbarOptions }}
                             value={content6}
                             onChange={setContent6}
                           />
+                           <div className=" py-2   flex  gap-2">
+                              <div className="relative group">
+                                <Copy
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => copyToClipboard(content6)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Copy
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <Save
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() =>
+                                    downloadPDF(content6, "Recommendations")
+                                  }
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  PDF
+                                </div>
+                              </div>
+                              <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => downloadWord(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                            </div>
+                          
                         </>
                       )}
                     </CardContent>
