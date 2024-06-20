@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Loader2, LoaderPinwheel } from 'lucide-react';
+import { LoaderPinwheel } from 'lucide-react';
 
 interface LoaderProps {
   messages: string[];
