@@ -5,7 +5,7 @@ import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/com
 import { Label } from "@/components/ui/label"
 import React, { useState, MouseEvent } from 'react'
 import Loader from "@/components/Loader";
-import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, Save, WandIcon } from "lucide-react";
+import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelRightClose, Save, WandIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -57,10 +57,12 @@ function Page() {
   const [type, setType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [graph, setGraph] = useState(false);
+  const [left, setLeft] = useState(true);
   
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
+    // setLeft(true)
 
     try {
       const response = await axios.post(`http://localhost:8000/api/market_research`, {
@@ -88,6 +90,8 @@ function Page() {
       console.error("Error fetching data:", error);
     }
     setIsSubmitting(false);
+    setLeft(false);
+    console.log(left)
   };
 
   const loadingMessages = [
@@ -195,6 +199,10 @@ function Page() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const toggleInput = () => {
+    setLeft(!left);
+  };
+
 
 //chatbox states
 const [isopen, setIsopen] = useState<boolean>(false);
@@ -242,16 +250,15 @@ const [isopen, setIsopen] = useState<boolean>(false);
   
   
   return (
-    <Layout>
+    <Layout >
       <div className="w-full h-screen flex overflow-hidden ">
-        <div className="h-full ">
-          {/* <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /> */}
-        </div>
+        
         <div className="w-full">
           <div className="py-5 w-full border-b-2 border-zinc-100"> </div>
-          <div className="w-full h-full flex  text-base text-zinc-800 overflow-hidden">
-            <div className="w-1/2 h-full flex flex-col ">
-              <div className="py-4 text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
+          <div className="w-full  h-full flex  text-base text-zinc-800 overflow-hidden">
+            {left ? (<>
+              <div className={`leftDiv w-1/2 h-full flex flex-col ${left ? "inline" : "block"}`}>
+          <div className="py-4 text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
                 Market Research Agent{" "}
               </div>
               <div className="p-6 mt-2 flex-1 overflow-hidden">
@@ -406,9 +413,12 @@ const [isopen, setIsopen] = useState<boolean>(false);
                 </Form>
               </div>
             </div>
-            <div className="w-10/12 min-w-1/2 h-full border-l-2 border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden">
-              <Tabs className="w-full " defaultValue="account">
-                <TabsList className="flex w-full  justify-evenly gap-1  text-zinc-900">
+            </>):("")}
+         
+            <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden">
+              <Tabs className="w-full bg--200 " defaultValue="account">
+                <TabsList className="flex w-full  justify-evenly gap-2   text-zinc-900">
+                {/* <PanelRightClose onClick={toggleInput} className="cursor-pointer"/> */}
                   <TabsTrigger value="account">Industry Landscape</TabsTrigger>
                   <TabsTrigger value="password">Market Size</TabsTrigger>
                   <TabsTrigger value="Graphs">Graphs</TabsTrigger>
@@ -416,16 +426,24 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <TabsTrigger value="settings">News</TabsTrigger>
                   <TabsTrigger value="billing">Predictions</TabsTrigger>
                   <TabsTrigger value="support">Recommendations</TabsTrigger>
+                  
                 </TabsList>
                 <TabsContent className="flex-1 overflow-hidden" value="account">
                   <Card className="h-full">
                     <CardHeader>
+                      <div className="flex justify-between  ">
                       <CardTitle className="text-zinc-900">
                         Industry Landscape
+
                       </CardTitle>
+                      <PanelRightClose onClick={toggleInput} className="cursor-pointer"/>
+
+                      </div>
+                      
                       <CardDescription>
                         Overview of the industry landscape.
                       </CardDescription>
+                      
                     </CardHeader>
                     <div className="sample" onMouseUp={handleTextSelection}>
                       <CardContent
