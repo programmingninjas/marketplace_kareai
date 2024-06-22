@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ReactMarkdown from 'react-markdown';
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import React, { useState, MouseEvent } from 'react'
+import React, { useState, MouseEvent, useEffect } from 'react'
 import Loader from "@/components/Loader";
 import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelRightClose, Save, WandIcon } from "lucide-react";
 import {
@@ -63,9 +63,9 @@ function Page() {
     console.log(data);
     setIsSubmitting(true);
     // setLeft(true)
-
+    
     try {
-      const response = await axios.post(`http://localhost:8000/api/market_research`, {
+      const response = await axios.post(`https://99a2-2405-201-4041-c8-f033-2769-45d6-263.ngrok-free.app/api/market_research`, {
         sector: data.sector,
         value_proposition: data.value_proposition,
         model: data.model,
@@ -75,6 +75,7 @@ function Page() {
           "Content-Type": "application/json"
         }
       });
+      
 
       setContent(response.data.industry_landscape);
       setContent2(response.data.msgp);
@@ -247,7 +248,26 @@ const [isopen, setIsopen] = useState<boolean>(false);
     "beforeend",
     `<style>${styles}</style>`
   );
-  
+  useEffect(() => {
+    const handleNodeInserted = (mutation:any) => {
+        console.log('Node inserted', mutation);
+    };
+
+    const observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                handleNodeInserted(mutation);
+            }
+        }
+    });
+
+    const config = { childList: true, subtree: true };
+    observer.observe(document.body, config);
+
+    return () => {
+        observer.disconnect();
+    };
+}, []);
   
   return (
     <Layout >
@@ -301,96 +321,96 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       )}
                     />
 
-                    <Accordion
-                      className="border border-gray-400 rounded-md"
-                      type="single"
-                      collapsible
-                    >
-                      <AccordionItem value="item-1">
-                        <AccordionTrigger className="text-lg p-4 border-b border-gray-300">
-                          Advanced Options
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <div className="flex items-center gap-6 p-4">
-                            <FormField
-                              name="language"
-                              control={form.control}
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel className="text-sm font-semibold mb-2">
-                                    Language
-                                  </FormLabel>
-                                  <Controller
-                                    name="language"
-                                    control={form.control}
-                                    render={({ field }) => (
-                                      <Select
-                                        onValueChange={field.onChange}
-                                        value={field.value}
-                                      >
-                                        <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
-                                          <SelectValue placeholder="Select Language" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                          <SelectItem value="english">
-                                            English (US)
-                                          </SelectItem>
-                                          <SelectItem value="hindi">
-                                            Hindi
-                                          </SelectItem>
-                                          <SelectItem value="german">
-                                            German
-                                          </SelectItem>
-                                        </SelectContent>
-                                      </Select>
-                                    )}
-                                  />
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
+<Accordion
+  className="border border-gray-400 "
+  type="single"
+  collapsible
+>
+  <AccordionItem value="item-1">
+    <AccordionTrigger className="text-lg p-4">
+      Advanced Options
+    </AccordionTrigger>
+    <AccordionContent className="border-t  border-gray-300">
+      <div className="flex items-center gap-6 p-4">
+        <FormField
+          name="language"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-semibold mb-2">
+                Language
+              </FormLabel>
+              <Controller
+                name="language"
+                control={form.control}
+                render={({ field }) => (
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                      <SelectValue placeholder="Select Language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="english">
+                        English (US)
+                      </SelectItem>
+                      <SelectItem value="hindi">
+                        Hindi
+                      </SelectItem>
+                      <SelectItem value="german">
+                        German
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-                            <FormField
-                              name="model"
-                              control={form.control}
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel className="text-sm font-semibold mb-2">
-                                    Model
-                                  </FormLabel>
-                                  <Controller
-                                    name="model"
-                                    control={form.control}
-                                    render={({ field }) => (
-                                      <Select
-                                        onValueChange={field.onChange}
-                                        value={field.value}
-                                      >
-                                        <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
-                                          <SelectValue placeholder="Select Model" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                          <SelectItem value="llama3-70b-8192">
-                                            KareAI
-                                          </SelectItem>
-                                          <SelectItem value="gpt-4o">
-                                            OpenAI|GPT-4o
-                                          </SelectItem>
-                                          <SelectItem value="gemini-1.5-pro">
-                                            Google|Gemini
-                                          </SelectItem>
-                                        </SelectContent>
-                                      </Select>
-                                    )}
-                                  />
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
+        <FormField
+          name="model"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-semibold mb-2">
+                Model
+              </FormLabel>
+              <Controller
+                name="model"
+                control={form.control}
+                render={({ field }) => (
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                      <SelectValue placeholder="Select Model" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="llama3-70b-8192">
+                        KareAI
+                      </SelectItem>
+                      <SelectItem value="gpt-4o">
+                        OpenAI|GPT-4o
+                      </SelectItem>
+                      <SelectItem value="gemini-1.5-pro">
+                        Google|Gemini
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
 
                     <Button
                       type="submit"

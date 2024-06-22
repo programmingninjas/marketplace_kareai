@@ -12,7 +12,7 @@ interface props{
 const GraphComponent: React.FC<props> = ({data,type}) => {
     const [graphData, setGraphData] = useState<any>(data);
     const [graphType, setGraphType] = useState<string | null>(type);
-
+console.log(data);
 
 
      return (

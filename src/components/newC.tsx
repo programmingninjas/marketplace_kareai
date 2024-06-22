@@ -17,6 +17,8 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
     { sender: "Cosmo", text: "Hello! How can I assist you today?" },
+    { sender: "You", text: "Hello! How can I assist you today?" },
+
   ]);
 
   useEffect(() => {
@@ -55,6 +57,13 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     return text.replace(urlPattern, '<a href="$1" class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">$1</a>');
   };
 
+  const handleKeyPress = (event: any) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault(); // Prevents adding a new line
+      sendMessage();
+    }
+  };
+
   return (
     <div className="relative">
       <div className="p-4 cursor-text"></div>
@@ -78,33 +87,34 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex ${message.sender === "You" ? "justify-end" : "justify-start"} items-start gap-4 bg--200`}
+                className={`flex items-end gap-4 mb-4 ${message.sender === "You" ? "justify-end" : "justify-start"}`}
               >
-                {message.sender === "Cosmo" && (
-                  <Avatar className="w-6 h-7 bg-white">
+                {message.sender !== "You" && (
+                  <Avatar className="w-8 h-8 bg-white">
                     <AvatarFallback className="bg-white">
+                      
                       <Wand className="text-purple-700" />
                     </AvatarFallback>
                   </Avatar>
                 )}
-                <div className="grid gap-1">
-                  <div className={`font-bold flex ${message.sender === "You" ? "justify-end" : "justify-start"}`}>
-                    {message.sender}
-                  </div>
+                <div className="max-w-[75%] flex">
+                  
                   <div
-                    className={`prose prose-stone rounded-full ${
-                      message.sender === "You" ? "bg-purple-600 py-1 px-3 text-white" : "bg-white"
-                    }`}
-                    style={{ overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '85%' }}
+                    className={`prose prose-stone rounded-full p-3 ${
+                      message.sender === "You" ? "bg-purple-600 text-white rounded-full" : "bg-gray-100"
+                    } break-words`}
                     dangerouslySetInnerHTML={{ __html: linkify(message.text) }}
                   />
                 </div>
+                
                 {message.sender === "You" && (
-                  <Avatar className="border w-7 h-7">
+                  <Avatar className="w-8 h-8 border">
                     <img src="/avatar[1].jpg" alt="Avatar" />
                     <AvatarFallback>YO</AvatarFallback>
                   </Avatar>
+
                 )}
+                
               </div>
             ))}
             {isLoading && <Loader messages={["Thinking.", "Thinking..", "Thinking..."]} />}
@@ -117,6 +127,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                 id="message"
                 rows={1}
                 value={messageText}
+                onKeyPress={handleKeyPress}
                 onChange={(e) => setMessageText(e.target.value)}
                 className="min-h-[48px] rounded-2xl resize-none p-4 border border-gray-200 overflow-y-hidden shadow-sm pr-16 dark:border-gray-800"
               />
