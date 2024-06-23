@@ -32,7 +32,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     };
 
     const client_id = Date.now().toString();
-    const wsInstance = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
+    const wsInstance = new WebSocket(`ws://98.70.9.194:8000/ws/${client_id}`);
     setWs(wsInstance);
 
     wsInstance.onmessage = handleIncomingMessage;
@@ -100,7 +100,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                   
                   <div
                     className={`prose prose-stone rounded-full p-3 ${
-                      message.sender === "You" ? "bg-purple-600 text-white rounded-full" : "bg-gray-100"
+                      message.sender === "You" ? "bg-purple-600 text-white rounded-full" : ""
                     } break-words`}
                     dangerouslySetInnerHTML={{ __html: linkify(message.text) }}
                   />

@@ -7,17 +7,18 @@ import "./globals.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Poppins } from 'next/font/google'
 import { SidebarProvider } from "@/context/SidebarContext";
+import { Toaster } from "@/components/ui/toaster";
  
-// const roboto = Poppins({
+const roboto = Poppins({
+  weight: '500',
+  subsets: ['latin'],
+  display: 'swap',
+})
+// const roboto = Open_Sans({
 //   weight: '400',
 //   subsets: ['latin'],
 //   display: 'swap',
 // })
-const roboto = Open_Sans({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-})
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,9 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={roboto.className}>
       <body className={roboto.className} >
+      <Toaster/>
       <SidebarProvider>
 
         {children}
+        
         </SidebarProvider>
 
         </body>

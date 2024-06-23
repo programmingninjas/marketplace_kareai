@@ -44,6 +44,7 @@ import NewComponent from "@/components/newC";
 import Layout from "@/components/Layout";
 import MyResponsiveBar from "@/components/GraphC";
 import GraphComponent from "@/components/GraphC";
+import { useToast } from "@/components/ui/use-toast";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -58,14 +59,14 @@ function Page() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [graph, setGraph] = useState(false);
   const [left, setLeft] = useState(true);
-  
+  const {toast} = useToast();
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
     // setLeft(true)
     
     try {
-      const response = await axios.post(`http://localhost:8000/api/market_research`, {
+      const response = await axios.post(`http://98.70.9.194:8000/api/market_research`, {
         sector: data.sector,
         value_proposition: data.value_proposition,
         model: data.model,
@@ -88,6 +89,11 @@ function Page() {
       setType(response.data.type);
       console.log(response);
     } catch (error) {
+      toast({
+        title: "ERROR API CALL",
+        description:"There is an error in making the call",
+        variant:"destructive"
+      })
       console.error("Error fetching data:", error);
     }
     setIsSubmitting(false);

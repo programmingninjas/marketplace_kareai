@@ -44,55 +44,61 @@ import NewComponent from "@/components/newC";
 import Layout from "@/components/Layout";
 import MyResponsiveBar from "@/components/GraphC";
 import GraphComponent from "@/components/GraphC";
+import ExportToExcel from "@/components/Excel";
+import { useToast } from "@/components/ui/use-toast";
+import { title } from "process";
+import { Description } from "@radix-ui/react-toast";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
   const [content2, setContent2] = useState("");
   const [content3, setContent3] = useState("");
   const [content4, setContent4] = useState("");
-  const [content5, setContent5] = useState("");
-  const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
   const [data, setData] = useState();
   const [type, setType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [graph, setGraph] = useState(false);
   const [left, setLeft] = useState(true);
-  
+  const {toast} = useToast();
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
     // setLeft(true)
     
     try {
-      const response = await axios.post(`https://99a2-2405-201-4041-c8-f033-2769-45d6-263.ngrok-free.app/api/market_research`, {
-        sector: data.sector,
-        value_proposition: data.value_proposition,
-        model: data.model,
-        language: data.language
+      const response = await axios.post(`http://98.70.9.194:8000/api/finance_agent`, {
+        ticker: data.ticker,
+        value_proposition: data.value_proposition
+      
       }, {
         headers: {
           "Content-Type": "application/json"
         }
       });
+      console.log(response.data)
+      
       
 
       setContent(response.data.industry_landscape);
       setContent2(response.data.msgp);
       setContent3(response.data.tt);
       setContent4(response.data.in);
-      setContent5(response.data.top_5);
-      setContent6(response.data.insights);
+     
       setWordFile(response.data.file);
       setData(response.data.data);
       setType(response.data.type);
-      console.log(response);
+      // console.log(response);
     } catch (error) {
+      toast({
+        title: "ERROR API CALL",
+        description:"There is an error in making the call",
+        variant:"destructive"
+      })
       console.error("Error fetching data:", error);
     }
     setIsSubmitting(false);
     setLeft(false);
-    console.log(left)
   };
 
   const loadingMessages = [
@@ -106,21 +112,13 @@ function Page() {
   ];
   
 
-  const customToolbarOptions = [
-    [{ 'header': [1, 2, false] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
-    [{ direction: 'rtl' }], 
-    [{ indent: '-1' }, { indent: '+1' }],
-    ['link', 'image'],
-    ['clean'],
-  ];
+
 
   const form = useForm({
     defaultValues: {
       language: 'english',
       model: 'llama3-70b-8192',
-      sector:"",
+      ticker:"",
       value_proposition:""
     },
   });
@@ -130,6 +128,10 @@ function Page() {
     navigator.clipboard.writeText(text).then(() => {
       alert("Content copied to clipboard");
     }).catch((err) => {
+      toast({
+        title:"Copy Error",
+        description:"Could not copy text"
+      })
       console.error('Could not copy text: ', err);
     });
   };
@@ -194,6 +196,10 @@ function Page() {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Error downloading the file:', error);
+      toast({
+        title:"file download error",
+        description:"Error downloading the file"
+      })
     }
   };
 
@@ -269,7 +275,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     className="space-y-6"
                   >
                     <FormField
-                      name="sector"
+                      name="ticker"
                       control={form.control}
                       render={({ field }) => (
                         <FormItem>
@@ -473,7 +479,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       </SelectItem>
                     </SelectContent>
                   </Select>
-            
+                          <ExportToExcel/>
                             
                             <div className="  mt-6  flex  gap-2">
                               <div className="relative group">
