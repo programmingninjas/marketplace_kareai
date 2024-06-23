@@ -248,8 +248,6 @@ const [isopen, setIsopen] = useState<boolean>(false);
     "beforeend",
     `<style>${styles}</style>`
   );
- 
-
 
   
   return (
@@ -262,7 +260,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
             {left ? (<>
               <div className={`leftDiv w-1/2 h-full flex flex-col ${left ? "inline" : "block"}`}>
           <div className="py-4 text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
-                Market Research Agent{" "}
+                Financial Research Agent{" "}
               </div>
               <div className="p-6 mt-2 flex-1 overflow-hidden">
                 <Form {...form}>
@@ -276,7 +274,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mb-2  text-2xl font-bold text-zinc-800">
-                            Industry Sector
+                            Ticker symbol
                           </FormLabel>
                           <Input
                             className="overflow-y-auto mt-2 border border-zinc-400"
@@ -419,24 +417,21 @@ const [isopen, setIsopen] = useState<boolean>(false);
             </>):("")}
          
             <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden">
-              <Tabs className="w-full bg--200 " defaultValue="account">
+              <Tabs className="w-full bg--200 " defaultValue="Balance sheet">
                 <TabsList className="flex w-full  justify-evenly gap-2   text-zinc-900">
                 {/* <PanelRightClose onClick={toggleInput} className="cursor-pointer"/> */}
-                  <TabsTrigger value="account">Industry Landscape</TabsTrigger>
-                  <TabsTrigger value="password">Market Size</TabsTrigger>
-                  <TabsTrigger value="Graphs">Graphs</TabsTrigger>
-                  <TabsTrigger value="profile">Tech Trends</TabsTrigger>
-                  <TabsTrigger value="settings">News</TabsTrigger>
-                  <TabsTrigger value="billing">Predictions</TabsTrigger>
-                  <TabsTrigger value="support">Recommendations</TabsTrigger>
+                  <TabsTrigger value="Balance sheet">Balance sheet</TabsTrigger>
+                  <TabsTrigger value="Income Statement">Income Statement</TabsTrigger>
+                  <TabsTrigger value="Cash flow">Cash flow</TabsTrigger>
+                  <TabsTrigger value="Insights">Insights</TabsTrigger>
                   
                 </TabsList>
-                <TabsContent className="flex-1 overflow-hidden" value="account">
+                <TabsContent className="flex-1 overflow-hidden" value="Balance sheet">
                   <Card className="h-full">
                     <CardHeader>
                       <div className="flex justify-between  ">
                       <CardTitle className="text-zinc-900">
-                        Industry Landscape
+                        Balance sheet
 
                       </CardTitle>
                       <PanelRightClose onClick={toggleInput} className="cursor-pointer"/>
@@ -457,13 +452,30 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <Loader messages={loadingMessages} />
                         ) : (
                           <>
-                            <ReactQuill
-                              className="h-[400px] py-2 mb-10"
-                              modules={{ toolbar: customToolbarOptions }}
-                              value={content}
-                              onChange={setContent}
-                            />
-                            <div className=" py-2   flex  gap-2">
+                          <Select>
+                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                      <SelectValue placeholder="Select year" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="english">
+                        2024 
+                      </SelectItem>
+                      <SelectItem value="hindi">
+                        2023
+                      </SelectItem>
+                      <SelectItem value="german">
+                        2022
+                      </SelectItem>
+                      <SelectItem value="german">
+                        2021
+                      </SelectItem><SelectItem value="german">
+                        2020
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+            
+                            
+                            <div className="  mt-6  flex  gap-2">
                               <div className="relative group">
                                 <Copy
                                   className="w-5 cursor-pointer hover:text-blue-500"
@@ -502,12 +514,12 @@ const [isopen, setIsopen] = useState<boolean>(false);
                 </TabsContent>
                 <TabsContent
                   className="flex-1 overflow-hidden"
-                  value="password"
+                  value="Income Statement"
                 >
                   <Card className="h-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                        Market Size and Projections
+                      Income Statement
                       </CardTitle>
                       <CardDescription>
                         Current and expected growth of the market.
@@ -521,14 +533,30 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                          <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            modules={{ toolbar: customToolbarOptions }}
-                            value={content2}
-                            onChange={setContent2}
-                          />
+                         <Select>
+                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                      <SelectValue placeholder="Select year" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="english">
+                        2024 
+                      </SelectItem>
+                      <SelectItem value="hindi">
+                        2023
+                      </SelectItem>
+                      <SelectItem value="german">
+                        2022
+                      </SelectItem>
+                      <SelectItem value="german">
+                        2021
+                      </SelectItem><SelectItem value="german">
+                        2020
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                          
 
-                           <div className=" py-2   flex  gap-2">
+                           <div className="  mt-6  flex  gap-2">
                               <div className="relative group">
                                 <Copy
                                   className="w-5 cursor-pointer hover:text-blue-500"
@@ -564,11 +592,11 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     </CardContent>
                   </Card>
                 </TabsContent>
-                <TabsContent className="flex-1 overflow-hidden" value="Graphs">
+                <TabsContent className="flex-1 overflow-hidden" value="Cash flow">
                   <Card className="h-full ">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                        Graph
+                        Cash flow
                       </CardTitle>
                       <CardDescription>
                         Graph of the market size and projections.
@@ -579,8 +607,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                          <GraphComponent data={data} type={type} />
-                          {/* <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} /> */}
+                        <div className="data"></div>
                         </>
                       )}
                     </CardContent>
@@ -604,12 +631,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                        <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            modules={{ toolbar: customToolbarOptions }}
-                            value={content3}
-                            onChange={setContent3}
-                          />
+                        
                            <div className=" py-2   flex  gap-2">
                               <div className="relative group">
                                 <Copy
@@ -649,11 +671,11 @@ const [isopen, setIsopen] = useState<boolean>(false);
                 </TabsContent>
                 <TabsContent
                   className="flex-1 overflow-hidden"
-                  value="settings"
+                  value="Insights"
                 >
                   <Card className="h-full">
                     <CardHeader>
-                      <CardTitle className="text-zinc-900">News</CardTitle>
+                      <CardTitle className="text-zinc-900">Insights</CardTitle>
                       <CardDescription>
                         Latest news in the industry.
                       </CardDescription>
@@ -666,12 +688,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                        <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            value={content4}
-                            modules={{ toolbar: customToolbarOptions }}
-                            onChange={setContent4}
-                          />
+                        
                         <div className=" py-2   flex  gap-2">
                               <div className="relative group">
                                 <Copy
@@ -709,127 +726,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     </CardContent>
                   </Card>
                 </TabsContent>
-                <TabsContent className="flex-1 overflow-hidden" value="billing">
-                  <Card className="h-full">
-                    <CardHeader>
-                      <CardTitle className="text-zinc-900">
-                        Predictions
-                      </CardTitle>
-                      <CardDescription>
-                        Future predictions of the industry.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent
-                      className="h-full overflow-hidden"
-                      id="content5"
-                    >
-                      {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
-                      ) : (
-                        <>
-                        <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            value={content5}
-                            modules={{ toolbar: customToolbarOptions }}
-                            onChange={setContent5}
-                          />
-                         <div className=" py-2   flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content5)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() =>
-                                    downloadPDF(content5, "Predictions")
-                                  }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
-                              </div>
-                            </div>
-                          
-                        </>
-                      )}
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent className="flex-1 overflow-hidden" value="support">
-                  <Card className="h-full">
-                    <CardHeader>
-                      <CardTitle className="text-zinc-900">Recommendations</CardTitle>
-                      <CardDescription>
-                        As per your value proposition.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent
-                      className="h-full overflow-hidden"
-                      id="content6"
-                    >
-                      {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
-                      ) : (
-                        <>
-                        <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            modules={{ toolbar: customToolbarOptions }}
-                            value={content6}
-                            onChange={setContent6}
-                          />
-                           <div className=" py-2   flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content6)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() =>
-                                    downloadPDF(content6, "Recommendations")
-                                  }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
-                              </div>
-                            </div>
-                          
-                        </>
-                      )}
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
+                
+                             </Tabs>
               {isPopupOpen && (
   <div className="fixed top-[20%] right-0  bg-white cursor-pointer shadow-lg rounded-lg transition-all ease-in-out animate-slide-in">
     <Button
