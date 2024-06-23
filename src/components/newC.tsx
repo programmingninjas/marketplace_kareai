@@ -17,7 +17,6 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
     { sender: "Cosmo", text: "Hello! How can I assist you today?" },
-    { sender: "You", text: "Hello! How can I assist you today?" },
 
   ]);
 

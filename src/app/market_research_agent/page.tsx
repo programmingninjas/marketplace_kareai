@@ -65,7 +65,7 @@ function Page() {
     // setLeft(true)
     
     try {
-      const response = await axios.post(`https://99a2-2405-201-4041-c8-f033-2769-45d6-263.ngrok-free.app/api/market_research`, {
+      const response = await axios.post(`http://localhost:8000/api/market_research`, {
         sector: data.sector,
         value_proposition: data.value_proposition,
         model: data.model,
@@ -380,7 +380,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         OpenAI|GPT-4o
                       </SelectItem>
                       <SelectItem value="gemini-1.5-pro">
-                        Google|Gemini
+                        Google|Gemini Pro
+                      </SelectItem>
+                      <SelectItem value="claude-3-5-sonnet-20240620">
+                        Anthropic|Sonnet-3.5
                       </SelectItem>
                     </SelectContent>
                   </Select>
