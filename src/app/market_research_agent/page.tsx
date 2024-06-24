@@ -37,7 +37,7 @@ import axios from "axios";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // import styles
 // import html2pdf from 'html2pdf.js';
-import html2pdf from 'html2pdf.js'
+// import html2pdf from 'html2pdf.js'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NewComponent from "@/components/newC";
@@ -143,30 +143,30 @@ function Page() {
     });
   };
 
-  const generatePDF = (content: string, filename: string) => {
-    // Create a hidden div element and append the content
-    const hiddenDiv = document.createElement('div');
-    hiddenDiv.innerHTML = content;
-    document.body.appendChild(hiddenDiv);
+  // const generatePDF = (content: string, filename: string) => {
+  //   // Create a hidden div element and append the content
+  //   const hiddenDiv = document.createElement('div');
+  //   hiddenDiv.innerHTML = content;
+  //   document.body.appendChild(hiddenDiv);
 
-    // Define the pdf options
-    const pdfOptions = {
-      margin: 1,
-      filename: filename,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
+  //   // Define the pdf options
+  //   const pdfOptions = {
+  //     margin: 1,
+  //     filename: filename,
+  //     image: { type: 'jpeg', quality: 0.98 },
+  //     html2canvas: { scale: 2 },
+  //     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  //   };
 
-    // Convert the hidden div to PDF
-    html2pdf().from(hiddenDiv).set(pdfOptions).save().then(() => {
-      document.body.removeChild(hiddenDiv); // Clean up after download
-    });
-  };
+  //   // Convert the hidden div to PDF
+  //   html2pdf().from(hiddenDiv).set(pdfOptions).save().then(() => {
+  //     document.body.removeChild(hiddenDiv); // Clean up after download
+  //   });
+  // };
 
-  const downloadPDF = (content: string, contentId: string) => {
-    generatePDF(content, `${contentId}_market_research.pdf`);
-  };
+  // const downloadPDF = (content: string, contentId: string) => {
+  //   generatePDF(content, `${contentId}_market_research.pdf`);
+  // };
 
   const downloadWord = async (filename:string) => {
     try {
@@ -506,9 +506,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               <div className="relative group">
                                 <Save
                                   className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() =>
-                                    downloadPDF(content, "industry_landscape")
-                                  }
+                                  // onClick={() =>
+                                  //   downloadPDF(content, "industry_landscape")
+                                  // }
                                 />
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   PDF
@@ -570,9 +570,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() =>
-                                  downloadPDF(content2, "Market_Size")
-                                }
+                                // onClick={() =>
+                                //   downloadPDF(content2, "Market_Size")
+                                // }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
@@ -650,9 +650,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() =>
-                                  downloadPDF(content3, "tech_trends")
-                                }
+                                // onClick={() =>
+                                //   downloadPDF(content3, "tech_trends")
+                                // }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
@@ -711,7 +711,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => downloadPDF(content4, "News")}
+                                // onClick={() => downloadPDF(content4, "News")}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
@@ -769,9 +769,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() =>
-                                  downloadPDF(content5, "Predictions")
-                                }
+                                // onClick={() =>
+                                //   downloadPDF(content5, "Predictions")
+                                // }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
@@ -829,9 +829,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() =>
-                                  downloadPDF(content6, "Recommendations")
-                                }
+                                // onClick={() =>
+                                //   downloadPDF(content6, "Recommendations")
+                                // }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
