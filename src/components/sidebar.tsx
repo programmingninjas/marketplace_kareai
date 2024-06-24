@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
     <div className={`h-screen shadow-md flex flex-col font-sans text-base transition-all duration-300 ${isOpen ? 'w-64' : ''}`}>
       <div className="flex items-center justify-between p-4 mt-10">
         <div className='flex justify-between items-center w-full'>
-          <Link href="/"><Image src="./logo.jpg" alt="Logo" className={`h-8 mr-2 ${isOpen ? 'block' : 'hidden'}`} /></Link>
+          <Link href="/"><Image width={10} height={8} src="/logo.jpg" alt="Logo" className={`h-8 mr-2 ${isOpen ? 'block' : 'hidden'}`} /></Link>
           <button onClick={toggleSidebar} className="focus:outline-none">
             {isOpen ? <X className="w-6 h-6 text-zinc-900" /> : <Menu className="w-6 h-6 text-zinc-900" />}
           </button>

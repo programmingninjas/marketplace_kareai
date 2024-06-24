@@ -74,7 +74,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
       >
         <div className="flex flex-col h-full">
           <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
-            <Image className="h-6" src="/logo2.jpg" alt="Logo" />
+            <Image width={10} height={6} className="h-6" src="/logo2.jpg" alt="Logo" />
             <h3 className="text-lg font-medium text-zinc-800 font-semibold">Chat</h3>
             <Button
               className="top-4 left-4 w-4 h-2 bg-white dark:bg-gray-800 p-4 text-black rounded-full shadow-md"
@@ -109,7 +109,10 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                 
                 {message.sender === "You" && (
                   <Avatar className="w-8 h-8 border">
-                    <Image src="/avatar[1].jpg" alt="Avatar" />
+                    <Image 
+                    width={10}
+                    height={8}
+                    src="/avatar[1].jpg" alt="Avatar" />
                     <AvatarFallback>YO</AvatarFallback>
                   </Avatar>
 

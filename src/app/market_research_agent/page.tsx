@@ -864,6 +864,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
         className="bg-white rounded-full focus:outline-none w-full h-full"
       >
         <Image
+          width={10}
+          height={8}
           src="/logo2.jpg"
           className="object-fill w-full h-full"
           alt="Chat Logo"
@@ -882,6 +884,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     className=" bg-white rounded-full focus:outline-none"
                   >
                     <Image
+                      width={10}
+                      height={8}
                       src="/logo2.jpg"
                       className="object-fill w-full h-full"
                       alt="Chat Logo"
