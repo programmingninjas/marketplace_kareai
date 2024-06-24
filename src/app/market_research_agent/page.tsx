@@ -857,7 +857,6 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     </CardContent>
                   </Card>
                 </TabsContent>
-                hii
               </Tabs>
               <div
       className="fixed bottom-5 right-10 h-10  bg-white cursor-pointer drop-shadow-xl rounded-full transition-all ease-in-out animate-slide-in"
@@ -869,8 +868,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
         className="bg-white rounded-full focus:outline-none w-full h-full"
       >
         <Image
-          width={10}
-          height={8}
+          width={100}
+          height={100}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+
           src="/logo2.jpg"
           className="object-fill w-full h-full"
           alt="Chat Logo"
@@ -889,8 +890,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     className=" bg-white rounded-full focus:outline-none"
                   >
                     <Image
-                      width={10}
-                      height={8}
+                      width={100}
+                      height={100}
                       src="/logo2.jpg"
                       className="object-fill w-full h-full"
                       alt="Chat Logo"
