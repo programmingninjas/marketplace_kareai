@@ -48,6 +48,8 @@ import ExportToExcel from "@/components/Excel";
 import { useToast } from "@/components/ui/use-toast";
 import { title } from "process";
 import { Description } from "@radix-ui/react-toast";
+import Excel from "@/components/Excel";
+import Image from "next/image";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -117,9 +119,12 @@ function Page() {
   const form = useForm({
     defaultValues: {
       language: 'english',
+      year:'2020',
       model: 'llama3-70b-8192',
       ticker:"",
-      value_proposition:""
+      value_proposition:"",
+      
+
     },
   });
   const router = useRouter();
@@ -318,7 +323,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
       Advanced Options
     </AccordionTrigger>
     <AccordionContent className="border-t  border-gray-300">
-      <div className="flex items-center gap-6 p-4">
+      <div className="flex items-center justify-center gap-4 p-2">
         <FormField
           name="language"
           control={form.control}
@@ -335,7 +340,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     onValueChange={field.onChange}
                     value={field.value}
                   >
-                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                    <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
                       <SelectValue placeholder="Select Language" />
                     </SelectTrigger>
                     <SelectContent>
@@ -373,7 +378,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     onValueChange={field.onChange}
                     value={field.value}
                   >
-                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                    <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
                       <SelectValue placeholder="Select Model" />
                     </SelectTrigger>
                     <SelectContent>
@@ -394,7 +399,53 @@ const [isopen, setIsopen] = useState<boolean>(false);
             </FormItem>
           )}
         />
+        <FormField
+          name="year"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-semibold mb-2">
+                Year
+              </FormLabel>
+              <Controller
+                name="year"
+                control={form.control}
+                render={({ field }) => (
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
+                      <SelectValue placeholder="Select Year" />
+                    </SelectTrigger>
+                    <SelectContent>
+                    <SelectItem value="2020">
+                        2020
+                      </SelectItem>
+                      <SelectItem value="2021">
+                        2021
+                      </SelectItem>
+                      <SelectItem value="2022">
+                        2022
+                      </SelectItem>
+                      <SelectItem value="2023">
+                        2023
+                      </SelectItem>
+                      <SelectItem value="2024">
+                        2024
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      
       </div>
+
+      
     </AccordionContent>
   </AccordionItem>
 </Accordion>
@@ -458,28 +509,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <Loader messages={loadingMessages} />
                         ) : (
                           <>
-                          <Select>
-                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
-                      <SelectValue placeholder="Select year" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="english">
-                        2024 
-                      </SelectItem>
-                      <SelectItem value="hindi">
-                        2023
-                      </SelectItem>
-                      <SelectItem value="german">
-                        2022
-                      </SelectItem>
-                      <SelectItem value="german">
-                        2021
-                      </SelectItem><SelectItem value="german">
-                        2020
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                          <ExportToExcel/>
+                         
+                          <Excel/>
                             
                             <div className="  mt-6  flex  gap-2">
                               <div className="relative group">
@@ -740,7 +771,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
       onClick={handlePopupClick}
       className=" bg-white rounded-full focus:outline-none"
     >
-      <img 
+      <Image 
         src="/logo2.jpg" 
         className="object-fill w-full h-full"
         alt="Chat Logo"

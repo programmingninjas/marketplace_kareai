@@ -45,6 +45,7 @@ import Layout from "@/components/Layout";
 import MyResponsiveBar from "@/components/GraphC";
 import GraphComponent from "@/components/GraphC";
 import { useToast } from "@/components/ui/use-toast";
+import Image from "next/image";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -862,7 +863,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
         onClick={handlePopupClick}
         className="bg-white rounded-full focus:outline-none w-full h-full"
       >
-        <img
+        <Image
           src="/logo2.jpg"
           className="object-fill w-full h-full"
           alt="Chat Logo"
@@ -880,7 +881,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     onClick={handlePopupClick}
                     className=" bg-white rounded-full focus:outline-none"
                   >
-                    <img
+                    <Image
                       src="/logo2.jpg"
                       className="object-fill w-full h-full"
                       alt="Chat Logo"

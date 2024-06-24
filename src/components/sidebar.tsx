@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useSidebar } from '../context/SidebarContext';
+import Image from 'next/image';
 
 const Sidebar: React.FC = () => {
   const { isOpen, toggleSidebar } = useSidebar();
@@ -17,7 +18,7 @@ const Sidebar: React.FC = () => {
     <div className={`h-screen shadow-md flex flex-col font-sans text-base transition-all duration-300 ${isOpen ? 'w-64' : ''}`}>
       <div className="flex items-center justify-between p-4 mt-10">
         <div className='flex justify-between items-center w-full'>
-          <Link href="/"><img src="./logo.jpg" alt="Logo" className={`h-8 mr-2 ${isOpen ? 'block' : 'hidden'}`} /></Link>
+          <Link href="/"><Image src="./logo.jpg" alt="Logo" className={`h-8 mr-2 ${isOpen ? 'block' : 'hidden'}`} /></Link>
           <button onClick={toggleSidebar} className="focus:outline-none">
             {isOpen ? <X className="w-6 h-6 text-zinc-900" /> : <Menu className="w-6 h-6 text-zinc-900" />}
           </button>
