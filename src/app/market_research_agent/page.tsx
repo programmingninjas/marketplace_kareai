@@ -278,7 +278,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     <div className="relative group">
                       <PanelRightClose
                         onClick={toggleInput}
-                        className="cursor-pointer  hover:text-blue-600 mt-4"
+                        className="cursor-pointer  hover:text-blue-600 "
                       />
                       <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 mb-4 bg-white shadow-md text-zinc-900 text-xs rounded opacity-0 group-hover:opacity-100 font-[200] transition-opacity duration-300">
                         Tap to hide
