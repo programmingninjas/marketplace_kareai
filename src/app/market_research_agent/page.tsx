@@ -4,6 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import React, { useState, MouseEvent, useEffect } from 'react'
+import dynamic from 'next/dynamic';
+
 import Loader from "@/components/Loader";
 import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelRightClose, Save, WandIcon } from "lucide-react";
 import {
@@ -34,7 +36,10 @@ import {
 } from "@/components/ui/accordion"
 import Sidebar from "@/components/sidebar"
 import axios from "axios";
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
+})
 import 'react-quill/dist/quill.snow.css'; // import styles
 // import html2pdf from 'html2pdf.js';
 // import html2pdf from 'html2pdf.js'

@@ -34,7 +34,11 @@ import {
 } from "@/components/ui/accordion"
 import Sidebar from "@/components/sidebar"
 import axios from "axios";
-import ReactQuill from 'react-quill';
+import dynamic from "next/dynamic";
+// import ReactQuill from 'react-quill';
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
+})
 import 'react-quill/dist/quill.snow.css'; // import styles
 import Layout from "@/components/Layout";
 
