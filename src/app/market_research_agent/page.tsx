@@ -54,6 +54,8 @@ function Page() {
   const [content5, setContent5] = useState("");
   const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
+
   const [data, setData] = useState();
   const [type, setType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -259,178 +261,201 @@ const [isopen, setIsopen] = useState<boolean>(false);
 
   
   return (
-    <Layout >
+    <Layout>
       <div className="w-full h-screen flex overflow-hidden ">
-        
         <div className="w-full">
           <div className="py-5 w-full border-b-2 border-zinc-100"> </div>
           <div className="w-full  h-full flex  text-base text-zinc-800 overflow-hidden">
-            {left ? (<>
-              <div className={`leftDiv w-1/2 h-full flex flex-col ${left ? "inline" : "block"}`}>
-          <div className="py-4 text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
-                Market Research Agent{" "}
-              </div>
-              <div className="p-6 mt-2 flex-1 overflow-hidden">
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
-                  >
-                    <FormField
-                      name="sector"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="mb-2  text-2xl font-bold text-zinc-800">
-                            Industry Sector
-                          </FormLabel>
-                          <Input
-                            className="overflow-y-auto mt-2 border border-zinc-400"
-                            {...field}
-                          />
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+            {left ? (
+              <>
+                <div
+                  className={`leftDiv w-1/2 h-full flex flex-col ${
+                    left ? "inline" : "block"
+                  }`}
+                >
+                  <div className="py-4 flex items-center  justify-between pr-6  text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
+                    Market Research Agent
+                    <div className="relative group">
+                      <PanelRightClose
+                        onClick={toggleInput}
+                        className="cursor-pointer  hover:text-blue-600 mt-4"
+                      />
+                      <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 mb-4 bg-white shadow-md text-zinc-900 text-xs rounded opacity-0 group-hover:opacity-100 font-[200] transition-opacity duration-300">
+                        Tap to hide
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-6 mt-2 flex-1 overflow-hidden">
+                    <Form {...form}>
+                      <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-6"
+                      >
+                        <FormField
+                          name="sector"
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="mb-2  text-2xl font-bold text-zinc-800">
+                                Industry Sector
+                              </FormLabel>
+                              <Input
+                                className="overflow-y-auto mt-2 border border-zinc-400"
+                                {...field}
+                              />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-                    <FormField
-                      name="value_proposition"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-lg font-semibold">
-                            Value Proposition
-                          </FormLabel>
-                          <Input
-                            className="h-24  border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            {...field}
-                          />
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                        <FormField
+                          name="value_proposition"
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-lg font-semibold">
+                                Value Proposition
+                              </FormLabel>
+                              <Input
+                                className="h-24  border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                {...field}
+                              />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-<Accordion
-  className="border border-gray-400 "
-  type="single"
-  collapsible
->
-  <AccordionItem value="item-1">
-    <AccordionTrigger className="text-lg p-4">
-      Advanced Options
-    </AccordionTrigger>
-    <AccordionContent className="border-t  border-gray-300">
-      <div className="flex items-center gap-6 p-4">
-        <FormField
-          name="language"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-semibold mb-2">
-                Language
-              </FormLabel>
-              <Controller
-                name="language"
-                control={form.control}
-                render={({ field }) => (
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
-                      <SelectValue placeholder="Select Language" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="english">
-                        English (US)
-                      </SelectItem>
-                      <SelectItem value="hindi">
-                        Hindi
-                      </SelectItem>
-                      <SelectItem value="german">
-                        German
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                        <Accordion
+                          className="border border-gray-400 "
+                          type="single"
+                          collapsible
+                        >
+                          <AccordionItem value="item-1">
+                            <AccordionTrigger className="text-lg p-4">
+                              Advanced Options
+                            </AccordionTrigger>
+                            <AccordionContent className="border-t  border-gray-300">
+                              <div className="flex items-center gap-6 p-4">
+                                <FormField
+                                  name="language"
+                                  control={form.control}
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel className="text-sm font-semibold mb-2">
+                                        Language
+                                      </FormLabel>
+                                      <Controller
+                                        name="language"
+                                        control={form.control}
+                                        render={({ field }) => (
+                                          <Select
+                                            onValueChange={field.onChange}
+                                            value={field.value}
+                                          >
+                                            <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                                              <SelectValue placeholder="Select Language" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                              <SelectItem value="english">
+                                                English (US)
+                                              </SelectItem>
+                                              <SelectItem value="hindi">
+                                                Hindi
+                                              </SelectItem>
+                                              <SelectItem value="german">
+                                                German
+                                              </SelectItem>
+                                            </SelectContent>
+                                          </Select>
+                                        )}
+                                      />
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
 
-        <FormField
-          name="model"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-semibold mb-2">
-                Model
-              </FormLabel>
-              <Controller
-                name="model"
-                control={form.control}
-                render={({ field }) => (
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
-                      <SelectValue placeholder="Select Model" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="llama3-70b-8192">
-                        KareAI
-                      </SelectItem>
-                      <SelectItem value="gpt-4o">
-                        OpenAI|GPT-4o
-                      </SelectItem>
-                      <SelectItem value="gemini-1.5-pro">
-                        Google|Gemini Pro
-                      </SelectItem>
-                      <SelectItem value="claude-3-5-sonnet-20240620">
-                        Anthropic|Sonnet-3.5
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
+                                <FormField
+                                  name="model"
+                                  control={form.control}
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel className="text-sm font-semibold mb-2">
+                                        Model
+                                      </FormLabel>
+                                      <Controller
+                                        name="model"
+                                        control={form.control}
+                                        render={({ field }) => (
+                                          <Select
+                                            onValueChange={field.onChange}
+                                            value={field.value}
+                                          >
+                                            <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                                              <SelectValue placeholder="Select Model" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                              <SelectItem value="llama3-70b-8192">
+                                                KareAI
+                                              </SelectItem>
+                                              <SelectItem value="gpt-4o">
+                                                OpenAI|GPT-4o
+                                              </SelectItem>
+                                              <SelectItem value="gemini-1.5-pro">
+                                                Google|Gemini Pro
+                                              </SelectItem>
+                                              <SelectItem value="claude-3-5-sonnet-20240620">
+                                                Anthropic|Sonnet-3.5
+                                              </SelectItem>
+                                            </SelectContent>
+                                          </Select>
+                                        )}
+                                      />
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
 
-                    <Button
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-purple-700 to-[#540F66]"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Please wait
-                        </>
-                      ) : (
-                        <>
-                          <WandIcon className="m-2" />
-                          Run Agent
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                </Form>
-              </div>
-            </div>
-            </>):("")}
-         
-            <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden">
+                        <Button
+                          type="submit"
+                          className="w-full bg-gradient-to-r from-purple-700 to-[#540F66]"
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Please wait
+                            </>
+                          ) : (
+                            <>
+                              <WandIcon className="m-2" />
+                              Run Agent
+                            </>
+                          )}
+                        </Button>
+                      </form>
+                    </Form>
+                  </div>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
+
+            <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900   py-2 overflow-hidden"  onMouseUp={handleTextSelection}>
               <Tabs className="w-full bg--200 " defaultValue="account">
-                <TabsList className="flex w-full  justify-evenly gap-2   text-zinc-900">
-                {/* <PanelRightClose onClick={toggleInput} className="cursor-pointer"/> */}
+                <TabsList
+                  className={`flex w-full ${
+                    left ? "justify-evenly" : "justify-around gap-12"
+                  } text-zinc-900`}
+                >
+                  <PanelRightClose
+                    onClick={toggleInput}
+                    className={`cursor-pointer ${left ? "hidden" : "block"}`}
+                  />
                   <TabsTrigger value="account">Industry Landscape</TabsTrigger>
                   <TabsTrigger value="password">Market Size</TabsTrigger>
                   <TabsTrigger value="Graphs">Graphs</TabsTrigger>
@@ -438,26 +463,21 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <TabsTrigger value="settings">News</TabsTrigger>
                   <TabsTrigger value="billing">Predictions</TabsTrigger>
                   <TabsTrigger value="support">Recommendations</TabsTrigger>
-                  
                 </TabsList>
                 <TabsContent className="flex-1 overflow-hidden" value="account">
                   <Card className="h-full">
                     <CardHeader>
                       <div className="flex justify-between  ">
-                      <CardTitle className="text-zinc-900">
-                        Industry Landscape
-
-                      </CardTitle>
-                      <PanelRightClose onClick={toggleInput} className="cursor-pointer"/>
-
+                        <CardTitle className="text-zinc-900">
+                          Industry Landscape
+                        </CardTitle>
+                        {/* <PanelRightClose onClick={toggleInput} className="cursor-pointer"/> */}
                       </div>
-                      
+
                       <CardDescription>
                         Overview of the industry landscape.
                       </CardDescription>
-                      
                     </CardHeader>
-                    <div className="sample" onMouseUp={handleTextSelection}>
                       <CardContent
                         className="h-full overflow-hidden"
                         id="content1"
@@ -506,7 +526,6 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           </>
                         )}
                       </CardContent>
-                    </div>
                   </Card>
                 </TabsContent>
                 <TabsContent
@@ -537,37 +556,37 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             onChange={setContent2}
                           />
 
-                           <div className=" py-2   flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content2)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() =>
-                                    downloadPDF(content2, "Market_Size")
-                                  }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
+                          <div className=" py-2   flex  gap-2">
+                            <div className="relative group">
+                              <Copy
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => copyToClipboard(content2)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Copy
                               </div>
                             </div>
+                            <div className="relative group">
+                              <Save
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() =>
+                                  downloadPDF(content2, "Market_Size")
+                                }
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                PDF
+                              </div>
+                            </div>
+                            <div className="relative group">
+                              <FileText
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => downloadWord(wordFile)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Word
+                              </div>
+                            </div>
+                          </div>
                         </>
                       )}
                     </CardContent>
@@ -576,9 +595,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                 <TabsContent className="flex-1 overflow-hidden" value="Graphs">
                   <Card className="h-full ">
                     <CardHeader>
-                      <CardTitle className="text-zinc-900">
-                        Graph
-                      </CardTitle>
+                      <CardTitle className="text-zinc-900">Graph</CardTitle>
                       <CardDescription>
                         Graph of the market size and projections.
                       </CardDescription>
@@ -613,44 +630,43 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                        <ReactQuill
+                          <ReactQuill
                             className="h-[400px] py-2 mb-10"
                             modules={{ toolbar: customToolbarOptions }}
                             value={content3}
                             onChange={setContent3}
                           />
-                           <div className=" py-2   flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content3)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() =>
-                                    downloadPDF(content3, "tech_trends")
-                                  }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
+                          <div className=" py-2   flex  gap-2">
+                            <div className="relative group">
+                              <Copy
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => copyToClipboard(content3)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Copy
                               </div>
                             </div>
-                          
+                            <div className="relative group">
+                              <Save
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() =>
+                                  downloadPDF(content3, "tech_trends")
+                                }
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                PDF
+                              </div>
+                            </div>
+                            <div className="relative group">
+                              <FileText
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => downloadWord(wordFile)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Word
+                              </div>
+                            </div>
+                          </div>
                         </>
                       )}
                     </CardContent>
@@ -675,44 +691,41 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                        <ReactQuill
+                          <ReactQuill
                             className="h-[400px] py-2 mb-10"
                             value={content4}
                             modules={{ toolbar: customToolbarOptions }}
                             onChange={setContent4}
                           />
-                        <div className=" py-2   flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content4)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() =>
-                                    downloadPDF(content4, "News")
-                                  }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
+                          <div className=" py-2   flex  gap-2">
+                            <div className="relative group">
+                              <Copy
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => copyToClipboard(content4)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Copy
                               </div>
                             </div>
-                          
+                            <div className="relative group">
+                              <Save
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => downloadPDF(content4, "News")}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                PDF
+                              </div>
+                            </div>
+                            <div className="relative group">
+                              <FileText
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => downloadWord(wordFile)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Word
+                              </div>
+                            </div>
+                          </div>
                         </>
                       )}
                     </CardContent>
@@ -736,44 +749,43 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                        <ReactQuill
+                          <ReactQuill
                             className="h-[400px] py-2 mb-10"
                             value={content5}
                             modules={{ toolbar: customToolbarOptions }}
                             onChange={setContent5}
                           />
-                         <div className=" py-2   flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content5)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() =>
-                                    downloadPDF(content5, "Predictions")
-                                  }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
+                          <div className=" py-2   flex  gap-2">
+                            <div className="relative group">
+                              <Copy
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => copyToClipboard(content5)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Copy
                               </div>
                             </div>
-                          
+                            <div className="relative group">
+                              <Save
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() =>
+                                  downloadPDF(content5, "Predictions")
+                                }
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                PDF
+                              </div>
+                            </div>
+                            <div className="relative group">
+                              <FileText
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => downloadWord(wordFile)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Word
+                              </div>
+                            </div>
+                          </div>
                         </>
                       )}
                     </CardContent>
@@ -782,7 +794,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                 <TabsContent className="flex-1 overflow-hidden" value="support">
                   <Card className="h-full">
                     <CardHeader>
-                      <CardTitle className="text-zinc-900">Recommendations</CardTitle>
+                      <CardTitle className="text-zinc-900">
+                        Recommendations
+                      </CardTitle>
                       <CardDescription>
                         As per your value proposition.
                       </CardDescription>
@@ -795,71 +809,95 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader messages={loadingMessages} />
                       ) : (
                         <>
-                        <ReactQuill
+                          <ReactQuill
                             className="h-[400px] py-2 mb-10"
                             modules={{ toolbar: customToolbarOptions }}
                             value={content6}
                             onChange={setContent6}
                           />
-                           <div className=" py-2   flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content6)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() =>
-                                    downloadPDF(content6, "Recommendations")
-                                  }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
+                          <div className=" py-2   flex  gap-2">
+                            <div className="relative group">
+                              <Copy
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => copyToClipboard(content6)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Copy
                               </div>
                             </div>
-                          
+                            <div className="relative group">
+                              <Save
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() =>
+                                  downloadPDF(content6, "Recommendations")
+                                }
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                PDF
+                              </div>
+                            </div>
+                            <div className="relative group">
+                              <FileText
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => downloadWord(wordFile)}
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Word
+                              </div>
+                            </div>
+                          </div>
                         </>
                       )}
                     </CardContent>
                   </Card>
                 </TabsContent>
+                hii
               </Tabs>
-              {isPopupOpen && (
-  <div className="fixed top-[20%] right-0  bg-white cursor-pointer shadow-lg rounded-lg transition-all ease-in-out animate-slide-in">
-    <Button
-      onClick={handlePopupClick}
-      className=" bg-white rounded-full focus:outline-none"
+              <div
+      className="fixed bottom-5 right-10 h-10  bg-white cursor-pointer drop-shadow-xl rounded-full transition-all ease-in-out animate-slide-in"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <img 
-        src="/logo2.jpg" 
-        className="object-fill w-full h-full"
-        alt="Chat Logo"
+      <Button
         onClick={handlePopupClick}
-      />
-    </Button>
-  </div>
-)}
+        className="bg-white rounded-full focus:outline-none w-full h-full"
+      >
+        <img
+          src="/logo2.jpg"
+          className="object-fill w-full h-full"
+          alt="Chat Logo"
+        />
+      </Button>
+      {isHovered && (
+        <div className="absolute bottom-1/2 w-28  right-10 transform translate-y-1/2 mr-6   p-2  text-zinc-900 text-xs rounded shadow-lg z-50">
+          Open Chat Bot
+        </div>
+      )}
+    </div>       
+                 {isPopupOpen && (
+                <div className="fixed top-[20%] right-0  bg-white cursor-pointer shadow-lg rounded-lg transition-all ease-in-out animate-slide-in">
+                  <Button
+                    onClick={handlePopupClick}
+                    className=" bg-white rounded-full focus:outline-none"
+                  >
+                    <img
+                      src="/logo2.jpg"
+                      className="object-fill w-full h-full"
+                      alt="Chat Logo"
+                      onClick={handlePopupClick}
+                    />
+                  </Button>
+                  
+                </div>
+              )}
+              
 
               <NewComponent
                 isOpen={isopen}
                 selectedText={selectedText}
                 handleClose={handleClose}
               />
+              
             </div>
           </div>
         </div>
