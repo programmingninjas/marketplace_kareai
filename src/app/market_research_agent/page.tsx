@@ -168,43 +168,43 @@ function Page() {
   //   generatePDF(content, `${contentId}_market_research.pdf`);
   // };
 
-  const downloadWord = async (filename:string) => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/download_report/${filename}`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        },
-      });
+  // const downloadWord = async (filename:string) => {
+  //   try {
+  //     const response = await fetch(`http://localhost:8000/api/download_report/${filename}`, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Accept': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  //       },
+  //     });
 
-      if (!response.ok) {
-        throw new Error('File download failed');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('File download failed');
+  //     }
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
+  //     const blob = await response.blob();
+  //     const url = window.URL.createObjectURL(blob);
+  //     const a = document.createElement('a');
+  //     a.href = url;
 
-      // Optional: Parse the filename from the Content-Disposition header if available
-      const contentDisposition = response.headers.get('Content-Disposition');
-      let downloadFilename = filename;
-      if (contentDisposition) {
-        const match = contentDisposition.match(/filename="(.+)"/);
-        if (match) {
-          downloadFilename = match[1];
-        }
-      }
+  //     // Optional: Parse the filename from the Content-Disposition header if available
+  //     const contentDisposition = response.headers.get('Content-Disposition');
+  //     let downloadFilename = filename;
+  //     if (contentDisposition) {
+  //       const match = contentDisposition.match(/filename="(.+)"/);
+  //       if (match) {
+  //         downloadFilename = match[1];
+  //       }
+  //     }
 
-      a.download = downloadFilename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error downloading the file:', error);
-    }
-  };
+  //     a.download = downloadFilename;
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     a.remove();
+  //     window.URL.revokeObjectURL(url);
+  //   } catch (error) {
+  //     console.error('Error downloading the file:', error);
+  //   }
+  // };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -237,26 +237,26 @@ const [isopen, setIsopen] = useState<boolean>(false);
   const handleClose = () => {
     setIsopen(false);
   };
-  const styles = `
-  @keyframes slideIn {
-    0% {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  .animate-slide-in {
-    animation: slideIn 0.3s ease-out forwards;
-  }
-  `;
+  // const styles = `
+  // @keyframes slideIn {
+  //   0% {
+  //     transform: translateX(100%);
+  //     opacity: 0;
+  //   }
+  //   100% {
+  //     transform: translateX(0);
+  //     opacity: 1;
+  //   }
+  // }
+  // .animate-slide-in {
+  //   animation: slideIn 0.3s ease-out forwards;
+  // }
+  // `;
   
-  document.head.insertAdjacentHTML(
-    "beforeend",
-    `<style>${styles}</style>`
-  );
+  // document.head.insertAdjacentHTML(
+  //   "beforeend",
+  //   `<style>${styles}</style>`
+  // );
  
 
 
@@ -517,7 +517,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               <div className="relative group">
                                 <FileText
                                   className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => downloadWord(wordFile)}
+                                  // onClick={() => downloadWord(wordFile)}
                                 />
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Word
@@ -581,7 +581,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => downloadWord(wordFile)}
+                                // onClick={() => downloadWord(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -661,7 +661,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => downloadWord(wordFile)}
+                                // onClick={() => downloadWord(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -720,7 +720,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => downloadWord(wordFile)}
+                                // onClick={() => downloadWord(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -780,7 +780,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => downloadWord(wordFile)}
+                                // onClick={() => downloadWord(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -840,7 +840,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => downloadWord(wordFile)}
+                                // onClick={() => downloadWord(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
