@@ -7,7 +7,7 @@ import React, { useState, MouseEvent, useEffect } from 'react'
 import dynamic from 'next/dynamic';
 
 import Loader from "@/components/Loader";
-import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelRightClose, Save, WandIcon } from "lucide-react";
+import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelLeft, PanelLeftClose, PanelRightClose, Save, WandIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -60,7 +60,7 @@ function Page() {
   const [content5, setContent5] = useState("");
   const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
-  const [isHovered, setIsHovered] = useState(false);
+  const [tittle, setTittle] = useState("");
 
   const [data, setData] = useState();
   const [type, setType] = useState("");
@@ -71,6 +71,8 @@ function Page() {
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
+    setTittle(data.sector);
+      console.log(tittle)
     // setLeft(true)
     
     try {
@@ -85,7 +87,7 @@ function Page() {
         }
       });
       
-
+      
       setContent(response.data.industry_landscape);
       setContent2(response.data.msgp);
       setContent3(response.data.tt);
@@ -282,7 +284,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <div className="py-4 flex items-center  justify-between pr-6  text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
                     Market Research Agent
                     <div className="relative group">
-                      <PanelRightClose
+                      <PanelLeftClose
                         onClick={toggleInput}
                         className="cursor-pointer  hover:text-blue-600 "
                       />
@@ -606,7 +608,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         Graph of the market size and projections.
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className=" h-full overflow-hidden">
+                    <CardContent className=" h-full overflow-hidden justify-center text-center">
+                    <h3 className="text-xl">{tittle}</h3>
                       {isSubmitting ? (
                         <Loader messages={loadingMessages} />
                       ) : (
@@ -860,8 +863,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
               </Tabs>
               <div
       className="fixed bottom-5 right-10 h-10  bg-white cursor-pointer drop-shadow-xl rounded-full transition-all ease-in-out animate-slide-in"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => setIsPopupOpen(true)}
+      onMouseLeave={() => setIsPopupOpen(false)}
     >
       <Button
         onClick={handlePopupClick}
@@ -877,13 +880,13 @@ const [isopen, setIsopen] = useState<boolean>(false);
           alt="Chat Logo"
         />
       </Button>
-      {isHovered && (
-        <div className="absolute bottom-1/2 w-28  right-10 transform translate-y-1/2 mr-6   p-2  text-zinc-900 text-xs rounded shadow-lg z-50">
-          Open Chat Bot
+      {isPopupOpen && (
+        <div className="absolute bottom-1/2 w-40 bg-gradient-to-r from-purple-700 to-[#540F66] right-10 transform translate-y-1/2 mr-6   p-2  text-white text-xs rounded shadow-lg z-50">
+          Click to open the Chat 
         </div>
       )}
     </div>       
-                 {isPopupOpen && (
+                 {/* {isPopupOpen && (
                 <div className="fixed top-[20%] right-0  bg-white cursor-pointer shadow-lg rounded-lg transition-all ease-in-out animate-slide-in">
                   <Button
                     onClick={handlePopupClick}
@@ -901,7 +904,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   
                 </div>
               )}
-              
+               */}
 
               <NewComponent
                 isOpen={isopen}

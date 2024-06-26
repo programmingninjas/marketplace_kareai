@@ -17,7 +17,12 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
-    { sender: "Cosmo", text: "Hello! How can I assist you today?" },
+    { sender: "Cosmo", text: "Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },
+    { sender: "You", text: " How can I assist you today?Hello! How can I assist you today?" },
+    { sender: "Cosmo", text: "Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },
+    { sender: "You", text: "Hello! How can I assist you today?Hell How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },{ sender: "Cosmo", text: "Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },
+    { sender: "You", text: "Hello! How can I assist you today?Hell How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },
+
 
   ]);
 
@@ -68,14 +73,14 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     <div className="relative">
       <div className="p-4 cursor-text"></div>
       <div
-        className={`fixed top-0 right-0 bottom-0 w-[400px] bg-white dark:bg-gray-950 border-l shadow-lg z-50 transform transition-transform duration-300 ${
+        className={`fixed top-0 right-0 bottom-0 w-[450px] bg-white dark:bg-gray-950 border-l shadow-lg z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full">
           <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
             <Image width={30} height={100}  src="/logo2.jpg" alt="Logo" />
-            <h3 className="text-lg font-medium text-zinc-800 font-semibold">Chat</h3>
+            <h3 className="text-lg  text-zinc-800 font-semibold">Chat</h3>
             <Button
               className="top-4 left-4 w-4 h-2 bg-white dark:bg-gray-800 p-4 text-black rounded-full shadow-md"
               onClick={handleClose}
@@ -83,11 +88,11 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
               X
             </Button>
           </header>
-          <div className="flex-1 overflow-auto p-4">
+          <div className="flex-1 bg--100 overflow-auto p-4">
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex items-end gap-4 mb-4 ${message.sender === "You" ? "justify-end" : "justify-start"}`}
+                className={`flex  items-center gap-2 mb-4 ${message.sender === "You" ? "justify-end" : "justify-start"}`}
               >
                 {message.sender !== "You" && (
                   <Avatar className="w-8 h-8 bg-white">
@@ -97,11 +102,11 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                     </AvatarFallback>
                   </Avatar>
                 )}
-                <div className="max-w-[75%] flex">
+                <div className="bg--600 max-w-[85%] flex">
                   
                   <div
-                    className={`prose prose-stone rounded-full p-3 ${
-                      message.sender === "You" ? "bg-purple-600 text-white rounded-full" : ""
+                    className={`  max-w-full rounded-xl   ${
+                      message.sender === "You" ? "bg-purple-600 text-justify  text-white px-6 py-5" : "bg-slate-100 text-justify px-9 py-6 "
                     } break-words`}
                     dangerouslySetInnerHTML={{ __html: linkify(message.text) }}
                   />
@@ -110,7 +115,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                 {message.sender === "You" && (
                   <Avatar className="w-8 h-8 border">
                     <Image 
-                    width={10}
+                    width={100}
                     height={8}
                     src="/avatar[1].jpg" alt="Avatar" />
                     <AvatarFallback>YO</AvatarFallback>

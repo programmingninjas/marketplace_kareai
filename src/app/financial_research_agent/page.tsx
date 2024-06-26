@@ -101,6 +101,7 @@ function Page() {
     }
     setIsSubmitting(false);
     setLeft(false);
+    setResponseAvailable(true)
   };
 
   const loadingMessages = [
@@ -212,9 +213,9 @@ function Page() {
     setIsSidebarOpen(!isSidebarOpen);
   };
   const toggleInput = () => {
-    setLeft(!left);
-  };
+setLeft(true)  };
 
+  const [responseAvailable, setResponseAvailable] = useState(false);
 
 //chatbox states
 const [isopen, setIsopen] = useState<boolean>(false);
@@ -262,536 +263,296 @@ const [isopen, setIsopen] = useState<boolean>(false);
 
   
   return (
-    <Layout >
-      <div className="w-full h-screen flex overflow-hidden ">
-        
+    <Layout>
+      <div className="w-full h-screen flex">
         <div className="w-full">
-          <div className="py-5 w-full border-b-2 border-zinc-100"> </div>
-          <div className="w-full  h-full flex  text-base text-zinc-800 overflow-hidden">
-            {left ? (<>
-              <div className={`leftDiv w-1/2 h-full flex flex-col ${left ? "inline" : "block"}`}>
-          <div className="py-4 text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
-                Financial Research Agent{" "}
-              </div>
-              <div className="p-6 mt-2 flex-1 overflow-hidden">
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
-                  >
-                    <FormField
-                      name="ticker"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="mb-2  text-2xl font-bold text-zinc-800">
-                            Ticker symbol
-                          </FormLabel>
-                          <Input
-                            className="overflow-y-auto mt-2 border border-zinc-400"
-                            {...field}
-                          />
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+          <div className=" w-full border-b-2 border-zinc-100"></div>
+          {left ? ( <div className=" the div containing the form  w-full h-screen flex items-center justify-around text-base text-zinc-800">
 
-                    <FormField
-                      name="value_proposition"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-lg font-semibold">
-                            Value Proposition
-                          </FormLabel>
-                          <Input
-                            className="h-24  border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            {...field}
-                          />
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-<Accordion
-  className="border border-gray-400 "
-  type="single"
-  collapsible
->
-  <AccordionItem value="item-1">
-    <AccordionTrigger className="text-lg p-4">
-      Advanced Options
-    </AccordionTrigger>
-    <AccordionContent className="border-t  border-gray-300">
-      <div className="flex items-center justify-center gap-4 p-2">
-        <FormField
-          name="language"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-semibold mb-2">
-                Language
-              </FormLabel>
-              <Controller
+                
+<div className="  w-[600px] overflow-hidden">
+  <Form {...form}>
+    <form   onSubmit={form.handleSubmit(onSubmit)}
+className="space-y-6 w-full">
+      <FormField
+        name="ticker"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="mb-2 text-2xl font-bold text-zinc-800">
+              Ticker symbol
+            </FormLabel>
+            <Input
+              className="overflow-y-auto mt-2 border border-zinc-400"
+              {...field}
+            />
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        name="value_proposition"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="text-lg font-semibold">
+              Value Proposition
+            </FormLabel>
+            <Input
+              className="h-24 border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              {...field}
+            />
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <Accordion
+        className="border border-gray-400"
+        type="single"
+        collapsible
+      >
+        <AccordionItem value="item-1">
+          <AccordionTrigger className="text-lg p-4">
+            Advanced Options
+          </AccordionTrigger>
+          <AccordionContent className="border-t border-gray-300">
+            <div className="flex items-center justify-center gap-4 p-2">
+              <FormField
                 name="language"
                 control={form.control}
                 render={({ field }) => (
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
-                      <SelectValue placeholder="Select Language" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="english">
-                        English (US)
-                      </SelectItem>
-                      <SelectItem value="hindi">
-                        Hindi
-                      </SelectItem>
-                      <SelectItem value="german">
-                        German
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormItem>
+                    <FormLabel className="text-sm font-semibold mb-2">
+                      Language
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
+                      <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
+                        <SelectValue placeholder="Select Language" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="english">
+                          English (US)
+                        </SelectItem>
+                        <SelectItem value="hindi">
+                          Hindi
+                        </SelectItem>
+                        <SelectItem value="german">
+                          German
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          name="model"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-semibold mb-2">
-                Model
-              </FormLabel>
-              <Controller
+              <FormField
                 name="model"
                 control={form.control}
                 render={({ field }) => (
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
-                      <SelectValue placeholder="Select Model" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="llama3-70b-8192">
-                        KareAI
-                      </SelectItem>
-                      <SelectItem value="gpt-4o">
-                        OpenAI|GPT-4o
-                      </SelectItem>
-                      <SelectItem value="gemini-1.5-pro">
-                        Google|Gemini
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormItem>
+                    <FormLabel className="text-sm font-semibold mb-2">
+                      Model
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
+                      <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
+                        <SelectValue placeholder="Select Model" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="llama3-70b-8192">
+                          KareAI
+                        </SelectItem>
+                        <SelectItem value="gpt-4o">
+                          OpenAI|GPT-4o
+                        </SelectItem>
+                        <SelectItem value="gemini-1.5-pro">
+                          Google|Gemini
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="year"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-semibold mb-2">
-                Year
-              </FormLabel>
-              <Controller
+              <FormField
                 name="year"
                 control={form.control}
                 render={({ field }) => (
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
-                      <SelectValue placeholder="Select Year" />
-                    </SelectTrigger>
-                    <SelectContent>
-                    <SelectItem value="2020">
-                        2020
-                      </SelectItem>
-                      <SelectItem value="2021">
-                        2021
-                      </SelectItem>
-                      <SelectItem value="2022">
-                        2022
-                      </SelectItem>
-                      <SelectItem value="2023">
-                        2023
-                      </SelectItem>
-                      <SelectItem value="2024">
-                        2024
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormItem>
+                    <FormLabel className="text-sm font-semibold mb-2">
+                      Year
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
+                      <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
+                        <SelectValue placeholder="Select Year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="2020">
+                          2020
+                        </SelectItem>
+                        <SelectItem value="2021">
+                          2021
+                        </SelectItem>
+                        <SelectItem value="2022">
+                          2022
+                        </SelectItem>
+                        <SelectItem value="2023">
+                          2023
+                        </SelectItem>
+                        <SelectItem value="2024">
+                          2024
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      
-      </div>
-
-      
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-purple-700 to-[#540F66]"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Please wait
-                        </>
-                      ) : (
-                        <>
-                          <WandIcon className="m-2" />
-                          Run Agent
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                </Form>
-              </div>
             </div>
-            </>):("")}
-         
-            <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900  py-2 overflow-hidden">
-              <Tabs className="w-full bg--200 " defaultValue="Balance sheet">
-                <TabsList className="flex w-full  justify-evenly gap-2   text-zinc-900">
-                {/* <PanelRightClose onClick={toggleInput} className="cursor-pointer"/> */}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+      <Button
+        type="submit"
+        className="w-full bg-gradient-to-r from-purple-700 to-[#540F66]"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Please wait
+          </>
+        ) : (
+          <>
+            <WandIcon className="m-2" />
+            Run Agent
+          </>
+        )}
+      </Button>
+    </form>
+  </Form>
+</div>
+<Image
+alt="no image"
+width={400}
+height={400}
+src={"/img.avif"}
+
+/>
+
+</div>):("")}
+           
+          <div className={`w-full py-5  h-full border-l-2 border-zinc-100 ${responseAvailable ? ("block"): ("hidden")} justify-center text-zinc-900`}>
+              <Tabs className="w-full bg--200" defaultValue="Balance sheet">
+                <TabsList className="flex w-full justify-between px-6  text-zinc-900">
+                <PanelRightClose
+                    onClick={toggleInput}
+                    className={`cursor-pointer ${left ? "hidden" : "block"}`}
+                  />
                   <TabsTrigger value="Balance sheet">Balance sheet</TabsTrigger>
                   <TabsTrigger value="Income Statement">Income Statement</TabsTrigger>
                   <TabsTrigger value="Cash flow">Cash flow</TabsTrigger>
                   <TabsTrigger value="Insights">Insights</TabsTrigger>
-                  
                 </TabsList>
-                <TabsContent className="flex-1 overflow-hidden" value="Balance sheet">
+                <TabsContent className="flex-1 justify-center" value="Balance sheet">
+                  <Card className="h-full ">
+                    <CardHeader>
+                        <CardTitle className="text-zinc-900">Balance sheet</CardTitle>
+                      <CardDescription>Overview of the industry landscape.</CardDescription>
+                    </CardHeader>
+                      <CardContent className="h-full w-full " id="content1">
+                        {isSubmitting ? (
+                          <div className="w-full h-screen flex items-center justify-center">
+                          <Loader messages={loadingMessages} />
+                          </div>
+                        ) : (
+                          <div className="w-full h-full " id="pdf">
+                            <Excel/>
+                          </div>
+                        )}
+                      </CardContent>
+                  </Card>
+                </TabsContent>
+                <TabsContent className="flex-1" value="Income Statement">
                   <Card className="h-full">
                     <CardHeader>
-                      <div className="flex justify-between  ">
-                      <CardTitle className="text-zinc-900">
-                        Balance sheet
-
-                      </CardTitle>
-                      <PanelRightClose onClick={toggleInput} className="cursor-pointer"/>
-
-                      </div>
-                      
-                      <CardDescription>
-                        Overview of the industry landscape.
-                      </CardDescription>
-                      
+                      <CardTitle className="text-zinc-900">Income Statement</CardTitle>
+                      <CardDescription>Overview of the industry landscape.</CardDescription>
                     </CardHeader>
                     <div className="sample" onMouseUp={handleTextSelection}>
-                      <CardContent
-                        className="h-full overflow-hidden"
-                        id="content1"
-                      >
+                      <CardContent className="h-full w-full" id="content2">
                         {isSubmitting ? (
+                          <div className="w-full h-screen flex items-center justify-center">
                           <Loader messages={loadingMessages} />
+                          </div>
                         ) : (
-                          <>
-                         
-                          <Excel/>
-                            
-                            <div className="  mt-6  flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() =>
-                                  //   downloadPDF(content, "industry_landscape")
-                                  // }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
-                              </div>
-                            </div>
-                          </>
+                          <div className="w-full h-full" id="pdf">
+                            <p>Table content here...</p>
+                          </div>
                         )}
                       </CardContent>
                     </div>
                   </Card>
                 </TabsContent>
-                <TabsContent
-                  className="flex-1 overflow-hidden"
-                  value="Income Statement"
-                >
+                <TabsContent className="flex-1" value="Cash flow">
                   <Card className="h-full">
                     <CardHeader>
-                      <CardTitle className="text-zinc-900">
-                      Income Statement
-                      </CardTitle>
-                      <CardDescription>
-                        Current and expected growth of the market.
-                      </CardDescription>
+                      <CardTitle className="text-zinc-900">Cash flow</CardTitle>
+                      <CardDescription>Overview of the industry landscape.</CardDescription>
                     </CardHeader>
-                    <CardContent
-                      className="h-full overflow-hidden"
-                      id="content2"
-                    >
-                      {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
-                      ) : (
-                        <>
-                         <Select>
-                    <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
-                      <SelectValue placeholder="Select year" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="english">
-                        2024 
-                      </SelectItem>
-                      <SelectItem value="hindi">
-                        2023
-                      </SelectItem>
-                      <SelectItem value="german">
-                        2022
-                      </SelectItem>
-                      <SelectItem value="german">
-                        2021
-                      </SelectItem><SelectItem value="german">
-                        2020
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                          
-
-                           <div className="  mt-6  flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content2)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() =>
-                                  //   downloadPDF(content2, "Market_Size")
-                                  // }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
-                              </div>
-                            </div>
-                        </>
-                      )}
-                    </CardContent>
+                    <div className="sample" onMouseUp={handleTextSelection}>
+                      <CardContent className="h-full w-full" id="content3">
+                        {isSubmitting ? (
+                          <div className="w-full h-screen flex items-center justify-center">
+                          <Loader messages={loadingMessages} />
+                          </div>
+                        ) : (
+                          <div className="w-full h-full" id="pdf">
+                            <p>Table content here...</p>
+                          </div>
+                        )}
+                      </CardContent>
+                    </div>
                   </Card>
                 </TabsContent>
-                <TabsContent className="flex-1 overflow-hidden" value="Cash flow">
-                  <Card className="h-full ">
-                    <CardHeader>
-                      <CardTitle className="text-zinc-900">
-                        Cash flow
-                      </CardTitle>
-                      <CardDescription>
-                        Graph of the market size and projections.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className=" h-full overflow-hidden">
-                      {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
-                      ) : (
-                        <>
-                        <div className="data"></div>
-                        </>
-                      )}
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent className="flex-1 overflow-hidden" value="profile">
-                  <Card className="h-full">
-                    <CardHeader>
-                      <CardTitle className="text-zinc-900">
-                        Tech Trends
-                      </CardTitle>
-                      <CardDescription>
-                        Overview of technological trends in the industry.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent
-                      className="h-full overflow-hidden"
-                      id="content3"
-                    >
-                      {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
-                      ) : (
-                        <>
-                        
-                           <div className=" py-2   flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content3)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() =>
-                                  //   downloadPDF(content3, "tech_trends")
-                                  // }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
-                              </div>
-                            </div>
-                          
-                        </>
-                      )}
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent
-                  className="flex-1 overflow-hidden"
-                  value="Insights"
-                >
+                <TabsContent className="flex-1" value="Insights">
                   <Card className="h-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">Insights</CardTitle>
-                      <CardDescription>
-                        Latest news in the industry.
-                      </CardDescription>
+                      <CardDescription>Overview of the industry landscape.</CardDescription>
                     </CardHeader>
-                    <CardContent
-                      className="h-full overflow-hidden"
-                      id="content4"
-                    >
-                      {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
-                      ) : (
-                        <>
-                        
-                        <div className=" py-2   flex  gap-2">
-                              <div className="relative group">
-                                <Copy
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => copyToClipboard(content4)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Copy
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() =>
-                                  //   downloadPDF(content4, "News")
-                                  // }
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
-                              </div>
-                              <div className="relative group">
-                                <FileText
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() => downloadWord(wordFile)}
-                                />
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  Word
-                                </div>
-                              </div>
-                            </div>
-                          
-                        </>
-                      )}
-                    </CardContent>
+                    <div className="sample" onMouseUp={handleTextSelection}>
+                      <CardContent className="h-full w-full" id="content4">
+                        {isSubmitting ? (
+                          <div className="w-full h-screen flex items-center justify-center">
+                          <Loader messages={loadingMessages} />
+                          </div>
+                        ) : (
+                          <div className="w-full h-full" id="pdf">
+                            <p>Table content here...</p>
+                          </div>
+                        )}
+                      </CardContent>
+                    </div>
                   </Card>
                 </TabsContent>
-                
-                             </Tabs>
-              {isPopupOpen && (
-  <div className="fixed top-[20%] right-0  bg-white cursor-pointer shadow-lg rounded-lg transition-all ease-in-out animate-slide-in">
-    <Button
-      onClick={handlePopupClick}
-      className=" bg-white rounded-full focus:outline-none"
-    >
-      <Image 
-        width={10}
-        height={8}
-        src="/logo2.jpg" 
-        className="object-fill w-full h-full"
-        alt="Chat Logo"
-        onClick={handlePopupClick}
-      />
-    </Button>
-  </div>
-)}
-
-              <NewComponent
-                isOpen={isopen}
-                selectedText={selectedText}
-                handleClose={handleClose}
-              />
+              </Tabs>
             </div>
-          </div>
         </div>
       </div>
+      <NewComponent
+        isOpen={isopen}
+        selectedText={selectedText}
+        handleClose={handleClose}
+      />
     </Layout>
   );
 }
