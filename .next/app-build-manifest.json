@@ -1,0 +1,70 @@
+{
+  "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-53b5023ff8061853.js",
+      "static/chunks/fd9d1056-0dcea2177176ed69.js",
+      "static/chunks/23-069c662ebd7baa12.js",
+      "static/chunks/main-app-c1117b3dc42dabdc.js",
+      "static/chunks/app/_not-found/page-185a663b697a2140.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-53b5023ff8061853.js",
+      "static/chunks/fd9d1056-0dcea2177176ed69.js",
+      "static/chunks/23-069c662ebd7baa12.js",
+      "static/chunks/main-app-c1117b3dc42dabdc.js",
+      "static/css/fc099c8230b78230.css",
+      "static/css/dd766982906d8ab9.css",
+      "static/chunks/161-4b463733267d8f6f.js",
+      "static/chunks/170-c3e131cb82c28288.js",
+      "static/chunks/app/layout-8fca80c8ae27539b.js"
+    ],
+    "/financial_research_agent/page": [
+      "static/chunks/webpack-53b5023ff8061853.js",
+      "static/chunks/fd9d1056-0dcea2177176ed69.js",
+      "static/chunks/23-069c662ebd7baa12.js",
+      "static/chunks/main-app-c1117b3dc42dabdc.js",
+      "static/css/8b54669db085020c.css",
+      "static/chunks/161-4b463733267d8f6f.js",
+      "static/chunks/45-8a080d24a8ac1df0.js",
+      "static/chunks/916-880420eb6914c24b.js",
+      "static/chunks/29-96e775c173ccb0c0.js",
+      "static/chunks/869-dfab7602251d7095.js",
+      "static/chunks/app/financial_research_agent/page-b1940a6de1c3375a.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-53b5023ff8061853.js",
+      "static/chunks/fd9d1056-0dcea2177176ed69.js",
+      "static/chunks/23-069c662ebd7baa12.js",
+      "static/chunks/main-app-c1117b3dc42dabdc.js",
+      "static/chunks/161-4b463733267d8f6f.js",
+      "static/chunks/45-8a080d24a8ac1df0.js",
+      "static/chunks/app/page-c43519b54567774d.js"
+    ],
+    "/market_research_agent/page": [
+      "static/chunks/webpack-53b5023ff8061853.js",
+      "static/chunks/fd9d1056-0dcea2177176ed69.js",
+      "static/chunks/23-069c662ebd7baa12.js",
+      "static/chunks/main-app-c1117b3dc42dabdc.js",
+      "static/css/8b54669db085020c.css",
+      "static/chunks/161-4b463733267d8f6f.js",
+      "static/chunks/45-8a080d24a8ac1df0.js",
+      "static/chunks/916-880420eb6914c24b.js",
+      "static/chunks/0-b033cf69bf425e23.js",
+      "static/chunks/889-e4b3280e66c76c23.js",
+      "static/chunks/869-dfab7602251d7095.js",
+      "static/chunks/app/market_research_agent/page-0218ce4a3c65b9fd.js"
+    ],
+    "/medical_research_agent/page": [
+      "static/chunks/webpack-53b5023ff8061853.js",
+      "static/chunks/fd9d1056-0dcea2177176ed69.js",
+      "static/chunks/23-069c662ebd7baa12.js",
+      "static/chunks/main-app-c1117b3dc42dabdc.js",
+      "static/css/8b54669db085020c.css",
+      "static/chunks/161-4b463733267d8f6f.js",
+      "static/chunks/45-8a080d24a8ac1df0.js",
+      "static/chunks/916-880420eb6914c24b.js",
+      "static/chunks/869-dfab7602251d7095.js",
+      "static/chunks/app/medical_research_agent/page-a07877f76240b892.js"
+    ]
+  }
+}
