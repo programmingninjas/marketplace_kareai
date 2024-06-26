@@ -5,6 +5,7 @@ import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/com
 import { Label } from "@/components/ui/label"
 import React, { useState, MouseEvent, useEffect } from 'react'
 import dynamic from 'next/dynamic';
+import useDownloadWord from '@/hooks/useDownloadWord';
 
 import Loader from "@/components/Loader";
 import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelLeft, PanelLeftClose, PanelRightClose, Save, WandIcon } from "lucide-react";
@@ -175,43 +176,15 @@ function Page() {
   //   generatePDF(content, `${contentId}_market_research.pdf`);
   // };
 
-  // const downloadWord = async (filename:string) => {
-  //   try {
-  //     const response = await fetch(`http://localhost:8000/api/download_report/${filename}`, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Accept': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  //       },
-  //     });
+ 
+  
+  const [filename, setFilename] = useState('');
 
-  //     if (!response.ok) {
-  //       throw new Error('File download failed');
-  //     }
+  const handleDownload = (file: React.SetStateAction<string>) => {
+    setFilename(file);
+  };
+  useDownloadWord(filename);
 
-  //     const blob = await response.blob();
-  //     const url = window.URL.createObjectURL(blob);
-  //     const a = document.createElement('a');
-  //     a.href = url;
-
-  //     // Optional: Parse the filename from the Content-Disposition header if available
-  //     const contentDisposition = response.headers.get('Content-Disposition');
-  //     let downloadFilename = filename;
-  //     if (contentDisposition) {
-  //       const match = contentDisposition.match(/filename="(.+)"/);
-  //       if (match) {
-  //         downloadFilename = match[1];
-  //       }
-  //     }
-
-  //     a.download = downloadFilename;
-  //     document.body.appendChild(a);
-  //     a.click();
-  //     a.remove();
-  //     window.URL.revokeObjectURL(url);
-  //   } catch (error) {
-  //     console.error('Error downloading the file:', error);
-  //   }
-  // };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -511,12 +484,12 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 </div>
                               </div>
                               <div className="relative group">
-                                <Save
+                                {/* <Save
                                   className="w-5 cursor-pointer hover:text-blue-500"
                                   // onClick={() =>
                                   //   downloadPDF(content, "industry_landscape")
                                   // }
-                                />
+                                /> */}
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   PDF
                                 </div>
@@ -524,7 +497,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               <div className="relative group">
                                 <FileText
                                   className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() => downloadWord(wordFile)}
+                                  onClick={() => handleDownload(wordFile)}
                                 />
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Word
@@ -575,12 +548,12 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
-                              <Save
+                              {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() =>
                                 //   downloadPDF(content2, "Market_Size")
                                 // }
-                              />
+                              /> */}
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
                               </div>
@@ -588,7 +561,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() => downloadWord(wordFile)}
+                                          onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -656,12 +629,12 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
-                              <Save
+                              {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() =>
                                 //   downloadPDF(content3, "tech_trends")
                                 // }
-                              />
+                              /> */}
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
                               </div>
@@ -669,7 +642,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() => downloadWord(wordFile)}
+                                          onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -717,10 +690,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
-                              <Save
+                              {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() => downloadPDF(content4, "News")}
-                              />
+                              /> */}
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
                               </div>
@@ -728,7 +701,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() => downloadWord(wordFile)}
+                                          onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -775,12 +748,12 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
-                              <Save
+                              {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() =>
                                 //   downloadPDF(content5, "Predictions")
                                 // }
-                              />
+                              /> */}
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
                               </div>
@@ -788,7 +761,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() => downloadWord(wordFile)}
+                                          onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -835,12 +808,12 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
-                              <Save
+                              {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() =>
                                 //   downloadPDF(content6, "Recommendations")
                                 // }
-                              />
+                              /> */}
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF
                               </div>
@@ -848,7 +821,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() => downloadWord(wordFile)}
+                                          onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -886,25 +859,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
         </div>
       )}
     </div>       
-                 {/* {isPopupOpen && (
-                <div className="fixed top-[20%] right-0  bg-white cursor-pointer shadow-lg rounded-lg transition-all ease-in-out animate-slide-in">
-                  <Button
-                    onClick={handlePopupClick}
-                    className=" bg-white rounded-full focus:outline-none"
-                  >
-                    <Image
-                      width={100}
-                      height={100}
-                      src="/logo2.jpg"
-                      className="object-fill w-full h-full"
-                      alt="Chat Logo"
-                      onClick={handlePopupClick}
-                    />
-                  </Button>
-                  
-                </div>
-              )}
-               */}
+                
 
               <NewComponent
                 isOpen={isopen}
