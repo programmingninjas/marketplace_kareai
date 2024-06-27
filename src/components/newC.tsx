@@ -2,7 +2,7 @@ import React, { useState, useEffect, MouseEvent } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import Loader from './Loader';
+import Loader2 from './Loader2';
 import { Wand } from 'lucide-react';
 import Image from 'next/image';
 
@@ -125,7 +125,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                 
               </div>
             ))}
-            {isLoading && <Loader messages={["Thinking.", "Thinking..", "Thinking..."]} />}
+            {isLoading && <Loader2 messages={["Thinking.", "Thinking..", "Thinking..."]} />}
           </div>
           <div className="bg-gray-100 dark:bg-gray-800 px-4 py-3 border-t">
             <div className="relative">
