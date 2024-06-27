@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { IconSquareRoundedX } from "@tabler/icons-react";
 
@@ -11,7 +11,7 @@ const loadingStates = [
     text: "Fetching information...",
   },
   {
-    text: "Analysing gathered information...",
+    text: "Analyzing gathered information...",
   },
   {
     text: "Synthesizing information...",
@@ -32,14 +32,11 @@ const loadingStates = [
 
 export default function MultiStepLoaderDemo() {
   const [loading, setLoading] = useState(true);
+
   return (
     <div className="h-full w-full flex items-center justify-center">
       {/* Core Loader Modal */}
       <Loader loadingStates={loadingStates} loading={loading} duration={2000} />
-
-     
-
-     
     </div>
   );
 }

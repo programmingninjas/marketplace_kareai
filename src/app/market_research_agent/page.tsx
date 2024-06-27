@@ -65,7 +65,7 @@ function Page() {
 
   const [data, setData] = useState();
   const [type, setType] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(true)
   const [graph, setGraph] = useState(false);
   const [left, setLeft] = useState(true);
   const {toast} = useToast();

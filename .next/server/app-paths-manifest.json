@@ -1,9 +1,5 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
+  "/test/page": "app/test/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/financial_research_agent/page": "app/financial_research_agent/page.js",
-  "/market_research_agent/page": "app/market_research_agent/page.js",
-  "/medical_research_agent/page": "app/medical_research_agent/page.js",
-  "/page": "app/page.js",
-  "/test/page": "app/test/page.js"
+  "/market_research_agent/page": "app/market_research_agent/page.js"
 }

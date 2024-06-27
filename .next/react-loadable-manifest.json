@@ -1,17 +1,8 @@
 {
   "app\\market_research_agent\\page.tsx -> react-quill": {
-    "id": 98436,
+    "id": "app\\market_research_agent\\page.tsx -> react-quill",
     "files": [
-      "static/chunks/8012d7e2.aa39ea76f1c57760.js",
-      "static/chunks/688.cf4b69c39fc03553.js"
-    ]
-  },
-  "app\\medical_research_agent\\page.tsx -> react-quill": {
-    "id": 98436,
-    "files": [
-      "static/chunks/8012d7e2.aa39ea76f1c57760.js",
-      "static/chunks/916-add4ca45bd469928.js",
-      "static/chunks/436.e0aa1d83afdea27c.js"
+      "static/chunks/_app-pages-browser_node_modules_react-quill_lib_index_js.js"
     ]
   }
 }

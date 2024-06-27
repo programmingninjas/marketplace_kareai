@@ -109,18 +109,15 @@ export const MultiStepLoader = ({
       setCurrentState(0);
       return;
     }
-    const timeout = setTimeout(() => {
-      setCurrentState((prevState) =>
-        loop
-          ? prevState === loadingStates.length - 1
-            ? 0
-            : prevState + 1
-          : Math.min(prevState + 1, loadingStates.length - 1)
-      );
-    }, duration);
 
-    return () => clearTimeout(timeout);
-  }, [currentState, loading, loop, loadingStates.length, duration]);
+    if (currentState < loadingStates.length - 1) {
+      const timeout = setTimeout(() => {
+        setCurrentState((prevState) => prevState + 1);
+      }, duration);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentState, loading, loadingStates.length, duration]);
+
   return (
     <AnimatePresence mode="wait">
       {loading && (
@@ -136,7 +133,7 @@ export const MultiStepLoader = ({
           }}
           className="w-full h-full fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-2xl"
         >
-          <div className="h-96  relative">
+          <div className="h-96 relative">
             <LoaderCore value={currentState} loadingStates={loadingStates} />
           </div>
 
