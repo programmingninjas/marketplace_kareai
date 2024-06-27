@@ -464,7 +464,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         id="content1"
                       >
                         {isSubmitting ? (
-                          <Loader messages={loadingMessages} />
+                          <div className="w-[400px]">
+                            <Loader  />
+
+                          </div>
                         ) : (
                           <>
                             <ReactQuill
@@ -527,7 +530,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       id="content2"
                     >
                       {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
+                          <Loader  />
                       ) : (
                         <>
                           <ReactQuill
@@ -584,7 +587,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     <CardContent className=" h-full overflow-hidden justify-center text-center">
                     <h3 className="text-xl">{tittle}</h3>
                       {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
+                          <Loader  />
                       ) : (
                         <>
                           <GraphComponent data={data} type={type} />
@@ -609,7 +612,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       id="content3"
                     >
                       {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
+                          <Loader  />
                       ) : (
                         <>
                           <ReactQuill
@@ -670,7 +673,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       id="content4"
                     >
                       {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
+                          <Loader  />
                       ) : (
                         <>
                           <ReactQuill
@@ -728,7 +731,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       id="content5"
                     >
                       {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
+                          <Loader  />
                       ) : (
                         <>
                           <ReactQuill
@@ -788,7 +791,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       id="content6"
                     >
                       {isSubmitting ? (
-                        <Loader messages={loadingMessages} />
+                        <Loader />
                       ) : (
                         <>
                           <ReactQuill

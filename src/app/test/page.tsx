@@ -5,41 +5,42 @@ import { IconSquareRoundedX } from "@tabler/icons-react";
 
 const loadingStates = [
   {
-    text: "Initializing model...",
+    text: "Buying a condo",
   },
   {
-    text: "Fetching information...",
+    text: "Travelling in a flight",
   },
   {
-    text: "Analysing gathered information...",
+    text: "Meeting Tyler Durden",
   },
   {
-    text: "Synthesizing information...",
+    text: "He makes soap",
   },
   {
-    text: "Finalizing analysis...",
+    text: "We goto a bar",
   },
   {
-    text: "Refining the output quality",
+    text: "Start a fight",
   },
   {
-    text: "Almost ready with your response...",
+    text: "We like it",
   },
   {
-    text: "Here you go !!",
+    text: "Welcome to F**** C***",
   },
 ];
 
 export default function MultiStepLoaderDemo() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   return (
-    <div className="h-full w-full flex items-center justify-center">
+    <div className="w-full h-[60vh] flex items-center justify-center">
       {/* Core Loader Modal */}
       <Loader loadingStates={loadingStates} loading={loading} duration={2000} />
 
-     
+      {/* The buttons are for demo only, remove it in your actual code ⬇️ */}
+      
 
-     
+      
     </div>
   );
 }
