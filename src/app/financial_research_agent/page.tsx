@@ -471,7 +471,7 @@ src={"/img.avif"}
                       <CardContent className="h-full w-full " id="content1">
                         {isSubmitting ? (
                           <div className="w-full h-screen flex items-center justify-center">
-                          <Loader messages={loadingMessages} />
+                          <Loader  />
                           </div>
                         ) : (
                           <div className="w-full h-full " id="pdf">
@@ -491,7 +491,7 @@ src={"/img.avif"}
                       <CardContent className="h-full w-full" id="content2">
                         {isSubmitting ? (
                           <div className="w-full h-screen flex items-center justify-center">
-                          <Loader messages={loadingMessages} />
+                          <Loader  />
                           </div>
                         ) : (
                           <div className="w-full h-full" id="pdf">
@@ -512,7 +512,7 @@ src={"/img.avif"}
                       <CardContent className="h-full w-full" id="content3">
                         {isSubmitting ? (
                           <div className="w-full h-screen flex items-center justify-center">
-                          <Loader messages={loadingMessages} />
+                          <Loader  />
                           </div>
                         ) : (
                           <div className="w-full h-full" id="pdf">
@@ -533,7 +533,7 @@ src={"/img.avif"}
                       <CardContent className="h-full w-full" id="content4">
                         {isSubmitting ? (
                           <div className="w-full h-screen flex items-center justify-center">
-                          <Loader messages={loadingMessages} />
+                          <Loader  />
                           </div>
                         ) : (
                           <div className="w-full h-full" id="pdf">

@@ -201,7 +201,7 @@ function Page() {
                   </CardHeader>
                   <CardContent className="h-full overflow-hidden">
                     {isSubmitting ? (
-                      <Loader messages={loadingMessages}/>
+                      <Loader/>
                     ) : (
                       <>
                         <ReactQuill className="h-[400px] py-5 mb-5 " modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} />
