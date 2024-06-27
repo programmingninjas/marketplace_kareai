@@ -17,13 +17,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
-    { sender: "Cosmo", text: "Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },
-    { sender: "You", text: " How can I assist you today?Hello! How can I assist you today?" },
-    { sender: "Cosmo", text: "Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },
-    { sender: "You", text: "Hello! How can I assist you today?Hell How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },{ sender: "Cosmo", text: "Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },
-    { sender: "You", text: "Hello! How can I assist you today?Hell How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?Hello! How can I assist you today?" },
-
-
+    { sender: "Cosmo", text: "Hello! how can i assist you today?" },
   ]);
 
   useEffect(() => {

@@ -44,11 +44,11 @@ function page() {
   </CardContent>
 </Card>
 </Link>
-<Link href={"/medical_research_agent"}>
+<Link href={"/"}>
 <Card className='border-2 text-[#540F66]'>
   <CardHeader>
     <CardTitle>Medical Research Agent</CardTitle>
-    <CardDescription>Helps to find related medical researches</CardDescription>
+    <CardDescription>Coming Soon...</CardDescription>
   </CardHeader>
   <CardContent>
     <p>Based on the query given it searches</p>
@@ -56,12 +56,12 @@ function page() {
   </CardContent>
 </Card>
 </Link>
-<Link href={"/financial_research_agent"}>
+<Link href={"/"}>
 
 <Card className='border-2 text-[#540F66]'>
   <CardHeader>
     <CardTitle>Financial Analytics Agent</CardTitle>
-    <CardDescription>Analyses financial insights of selected company</CardDescription>
+    <CardDescription>Coming Soon...</CardDescription>
   </CardHeader>
   <CardContent>
     <p>Based on company it analyses the earnings</p>

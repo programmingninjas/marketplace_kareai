@@ -25,9 +25,6 @@ const loadingStates = [
   {
     text: "Almost ready with your response...",
   },
-  {
-    text: "Here you go !!",
-  },
 ];
 
 export default function MultiStepLoaderDemo() {
@@ -36,7 +33,7 @@ export default function MultiStepLoaderDemo() {
   return (
     <div className="h-full w-full flex items-center justify-center">
       {/* Core Loader Modal */}
-      <Loader loadingStates={loadingStates} loading={loading} duration={2000} />
+      <Loader loadingStates={loadingStates} loading={loading} duration={5000} />
     </div>
   );
 }
