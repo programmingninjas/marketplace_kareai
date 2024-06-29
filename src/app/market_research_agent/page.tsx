@@ -52,6 +52,7 @@ import MyResponsiveBar from "@/components/GraphC";
 import GraphComponent from "@/components/GraphC";
 import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -138,7 +139,8 @@ function Page() {
       language: 'english',
       model: 'llama3-70b-8192',
       sector:"",
-      value_proposition:""
+      value_proposition:"",
+      doc:""
     },
   });
   const router = useRouter();
@@ -297,10 +299,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               <FormLabel className="text-lg font-semibold">
                                 Value Proposition
                               </FormLabel>
-                              <Input
-                                className="h-24  border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                {...field}
-                              />
+                              <Textarea
+        className="h-24 overflow-y-auto border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        {...field}
+      />
                               <FormMessage />
                             </FormItem>
                           )}
@@ -333,7 +335,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                             onValueChange={field.onChange}
                                             value={field.value}
                                           >
-                                            <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                                            <SelectTrigger className="-[120px] bg-gray-50 border border-gray-300 rounded-md">
                                               <SelectValue placeholder="Select Language" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -371,7 +373,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                             onValueChange={field.onChange}
                                             value={field.value}
                                           >
-                                            <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                                            <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
                                               <SelectValue placeholder="Select Model" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -395,6 +397,24 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                     </FormItem>
                                   )}
                                 />
+                                  <FormField
+                          name="doc"
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                                      <FormLabel className="text-sm font-semibold mb-2">
+                                      File
+                              </FormLabel>
+                              <Input
+                              type="file"
+                                className="w-[120px] bg-gray-50 border border-gray-300 rounded-md"
+                                {...field}
+                              />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                               
                               </div>
                             </AccordionContent>
                           </AccordionItem>
@@ -440,7 +460,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <TabsTrigger value="account">Industry Landscape</TabsTrigger>
                   <TabsTrigger value="password">Market Size</TabsTrigger>
                   <TabsTrigger value="Graphs">Graphs</TabsTrigger>
-                  <TabsTrigger value="profile">Tech Trends</TabsTrigger>
+                  <TabsTrigger value="profile">Comparitive analysis</TabsTrigger>
                   <TabsTrigger value="settings">News</TabsTrigger>
                   <TabsTrigger value="billing">Predictions</TabsTrigger>
                   <TabsTrigger value="support">Recommendations</TabsTrigger>
@@ -601,10 +621,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <Card className="h-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                        Tech Trends
+                      Comparitive Analysis
                       </CardTitle>
                       <CardDescription>
-                        Overview of technological trends in the industry.
+                        Overview of competition in the industry.
                       </CardDescription>
                     </CardHeader>
                     <CardContent
@@ -844,7 +864,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
     >
       <Button
         onClick={handlePopupClick}
-        className="bg-white rounded-full focus:outline-none w-full h-full"
+        className={`bg-white rounded-full focus:outline-none w-full transition-all ease-in h-full ${isPopupOpen ? "bg-gradient-to-r from-purple-700 to-[#540F66]" : ("")}`}
       >
         <Image
           width={100}
@@ -852,15 +872,15 @@ const [isopen, setIsopen] = useState<boolean>(false);
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 
           src="/logo2.jpg"
-          className="object-fill w-full h-full"
+          className="object-fill w-full h-full "
           alt="Chat Logo"
         />
       </Button>
-      {isPopupOpen && (
+      {/* {isPopupOpen && (
         <div className="absolute bottom-1/2 w-40 bg-gradient-to-r from-purple-700 to-[#540F66] right-10 transform translate-y-1/2 mr-6   p-2  text-white text-xs rounded shadow-lg z-50">
           Click to open the Chat 
         </div>
-      )}
+      )} */}
     </div>       
                 
 

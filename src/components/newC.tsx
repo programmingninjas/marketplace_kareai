@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import Loader2 from './Loader2';
-import { Wand } from 'lucide-react';
+import { RefreshCw, Wand, X } from 'lucide-react';
 import Image from 'next/image';
 
 interface NewComponentProps {
@@ -20,7 +20,13 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     { sender: "Cosmo", text: "Hello! how can i assist you today?" },
   ]);
 
+  const refresh = () => {
+    console.log("refreshed")
+  }
+  
+
   useEffect(() => {
+    if (!selectedText) return;
     setMessageText(selectedText);
   }, [selectedText]);
 
@@ -72,7 +78,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
         }`}
       >
         <div className="flex flex-col h-full">
-          <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
+          {/* <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
             <Image width={30} height={100}  src="/logo2.jpg" alt="Logo" />
             <h3 className="text-lg  text-zinc-800 font-semibold">Chat</h3>
             <Button
@@ -81,6 +87,17 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
             >
               X
             </Button>
+          </header> */}
+              <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
+            <Image width={30} height={100} src="/logo2.jpg" alt="Logo" />
+            <h3 className="text-lg text-zinc-800 font-semibold">Chat</h3>
+
+            <div className='flex gap-3 items-center'>
+              <RefreshCw onClick={refresh} className='w-5 cursor-pointer opacity-80'/>
+             
+                
+                <X className='w-6 opacity-80 cursor-pointer' onClick={handleClose}/>
+            </div>
           </header>
           <div className="flex-1 bg--100 overflow-auto p-4">
             {messages.map((message, index) => (
@@ -99,8 +116,8 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                 <div className="bg--600 max-w-[85%] flex">
                   
                   <div
-                    className={`  max-w-full rounded-xl   ${
-                      message.sender === "You" ? "bg-purple-600 text-justify  text-white px-6 py-5" : "bg-slate-100 text-justify px-9 py-6 "
+                    className={`  max-w-full rounded-xl text-sm  ${
+                      message.sender === "You" ? "bg-purple-600 text-justify  text-white px-5 py-4" : "bg-slate-100 text-justify px-7 py-5 "
                     } break-words`}
                     dangerouslySetInnerHTML={{ __html: linkify(message.text) }}
                   />
