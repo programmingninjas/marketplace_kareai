@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 import useDownloadWord from '@/hooks/useDownloadWord';
 
 import Loader from "@/components/Loader";
-import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelLeft, PanelLeftClose, PanelRightClose, Save, WandIcon } from "lucide-react";
+import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelLeft, PanelLeftClose, PanelRightClose, Save, Triangle, WandIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -502,7 +502,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <TabsTrigger value="billing">Predictions</TabsTrigger>
                   <TabsTrigger value="support">Recommendations</TabsTrigger>
                 </TabsList>
-                <TabsContent className="flex-1 " value="account">
+                <TabsContent className="flex-1 overflow-hidden" value="account">
                   <Card className="h-full">
                     <CardHeader>
                       <div className="flex justify-between  ">
@@ -899,17 +899,18 @@ const [isopen, setIsopen] = useState<boolean>(false);
     >
       <Button
         onClick={handlePopupClick}
-        className={`bg-white rounded-full focus:outline-none w-full transition-all ease-in h-full ${isPopupOpen ? "bg-gradient-to-r from-purple-700 to-[#540F66]" : ("")}`}
+        className={`bg-white  rounded-full focus:outline-none w-full transition-all ease-in h-full ${isPopupOpen ? "bg-gradient-to-r from-purple-700 to-[#540F66]" : ("")}`}
       >
-        <Image
+        <Triangle className={`text-black ${isPopupOpen ? "text-white" : ("")}`}/>
+        {/* <Image
           width={100}
           height={100}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 
           src="/logo2.jpg"
-          className="object-fill w-full h-full "
+          className="object-fill w-full h-full  "
           alt="Chat Logo"
-        />
+        /> */}
       </Button>
       {/* {isPopupOpen && (
         <div className="absolute bottom-1/2 w-40 bg-gradient-to-r from-purple-700 to-[#540F66] right-10 transform translate-y-1/2 mr-6   p-2  text-white text-xs rounded shadow-lg z-50">
