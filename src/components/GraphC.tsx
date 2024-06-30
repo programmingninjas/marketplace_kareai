@@ -6,10 +6,12 @@ import { ResponsivePie } from "@nivo/pie";
 import { ResponsiveBar } from "@nivo/bar";
 interface props{
     data : any,
-    type: string
+    type: string,
+    source: any 
+
 }
 
-const GraphComponent: React.FC<props> = ({data,type}) => {
+const GraphComponent: React.FC<props> = ({data,type, source}) => {
     const [graphData, setGraphData] = useState<any>(data);
     const [graphType, setGraphType] = useState<string | null>(type);
 console.log(data);
@@ -93,6 +95,8 @@ console.log(data);
                          }}
                      />
                  )}
+                 <h3 className="text-xl">{source}</h3>
+
              </div>
          </main>
      );

@@ -5,6 +5,8 @@ import { Textarea } from '@/components/ui/textarea';
 import Loader2 from './Loader2';
 import { RefreshCw, Wand, X } from 'lucide-react';
 import Image from 'next/image';
+import axios from 'axios';
+import { toast } from './ui/use-toast';
 
 interface NewComponentProps {
   isOpen: boolean;
@@ -14,16 +16,14 @@ interface NewComponentProps {
 
 const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handleClose }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [clientid, setClientid] = useState("");
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
     { sender: "Cosmo", text: "Hello! how can i assist you today?" },
   ]);
 
-  const refresh = () => {
-    console.log("refreshed")
-  }
-  
+ 
 
   useEffect(() => {
     if (!selectedText) return;
@@ -40,6 +40,8 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     const client_id = Date.now().toString();
     const wsInstance = new WebSocket(`ws://98.70.9.194:8000/ws/${client_id}`);
     setWs(wsInstance);
+    setClientid(client_id);
+
 
     wsInstance.onmessage = handleIncomingMessage;
 
@@ -47,6 +49,17 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
       wsInstance.close();
     };
   }, []);
+
+  const refresh = async () => {
+    console.log("refreshed")
+   
+    const response = await axios.post(`http://98.70.9.194:8000/api/refresh_session/${clientid}`)
+    toast({
+      title: "Chat refreshed",
+      description: "Your chat is now refreshed"
+    })
+  }
+  
 
   const sendMessage = () => {
     if (ws && ws.readyState === WebSocket.OPEN) {
@@ -99,7 +112,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                 <X className='w-6 opacity-80 cursor-pointer' onClick={handleClose}/>
             </div>
           </header>
-          <div className="flex-1 bg--100 overflow-auto p-4">
+          <div className="flex-1 bg--100 overflow-auto p-4 custom-scrollbar">
             {messages.map((message, index) => (
               <div
                 key={index}

@@ -41,6 +41,8 @@
     "react-pdf-html": "^2.0.4",
     "react-quill": "^2.0.0",
     "react-spreadsheet": "^0.9.4",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.0",
     "sharp": "^0.33.4",
     "socket.io-client": "^4.7.5",
     "tailwind-merge": "^2.3.0",

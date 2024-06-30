@@ -1,6 +1,8 @@
 "use client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm'
+
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import React, { useState, MouseEvent, useEffect } from 'react'
@@ -53,6 +55,7 @@ import GraphComponent from "@/components/GraphC";
 import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
+import MarkdownRenderer from "@/components/Markdown";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -62,7 +65,8 @@ function Page() {
   const [content5, setContent5] = useState("");
   const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
-  const [tittle, setTittle] = useState("");
+  const [tittle, setTittle] = useState("title");
+  const [source, setSource] = useState("source");
 
   const [data, setData] = useState();
   const [type, setType] = useState("");
@@ -73,8 +77,6 @@ function Page() {
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
-    setTittle(data.sector);
-      console.log(tittle)
     // setLeft(true)
     
     try {
@@ -99,6 +101,9 @@ function Page() {
       setWordFile(response.data.file);
       setData(response.data.data);
       setType(response.data.type);
+      setTittle(response.data.title);
+      setSource(response.data.source);
+
       console.log(response);
     } catch (error) {
       toast({
@@ -177,7 +182,7 @@ function Page() {
   // const downloadPDF = (content: string, contentId: string) => {
   //   generatePDF(content, `${contentId}_market_research.pdf`);
   // };
-
+  
  
   
   const [filename, setFilename] = useState('');
@@ -210,6 +215,38 @@ const [isopen, setIsopen] = useState<boolean>(false);
 
     } 
   };
+
+
+  const markdown = `### Comparative Analysis of Top 10 Key Competitors in Precision Medicine
+
+    | *Company*               | *Investment in Precision Medicine* | *Focus Areas*                        | *Market Presence*                   | *Partnerships*                           |       
+    |---------------------------|--------------------------------------|---------------------------------------|---------------------------------------|--------------------------------------------|        
+    | *Novartis*              | High                                 | Oncology, Cardiovascular, Rare Diseases | Global                                | Various biotech and academic institutions  |      
+    | *AstraZeneca*           | Medium                               | Asthma, Metabolic Disorders, Oncology | Strong in Respiratory and Metabolic   | Collaboration with research organizations  |        
+    | *Pfizer*                | High                                 | Oncology, Rare Diseases, Vaccines     | Strong in Oncology and Vaccines       | Academic and industry collaborations       |        
+    | *Roche*                 | High                                 | Oncology, Neuroscience, Infectious Diseases | Global                                | Partnerships with diagnostics companies    |  
+    | *Johnson & Johnson*     | High                                 | Oncology, Immunology, Neuroscience    | Global                                | Collaborations with biotech companies      |        
+    | *Alnylam Pharmaceuticals* | Medium                               | Genetic Medicines                     | Specialized in RNAi therapeutics      | Industry and academic partnerships         |      
+    | *Biogen*                | Medium                               | Neuroscience, Rare Diseases           | Specialized in Neurology              | Collaborations with genetic research companies |    
+    | *BioMarin*              | Medium                               | Rare Genetic Diseases                 | Specialized in Rare Diseases          | Industry collaborations                    |        
+    | *Amgen*                 | Medium                               | Oncology, Cardiovascular, Inflammation | Strong in Oncology and Cardiovascular | Partnerships with biotech firms            |       
+    | *Bristol Myers Squibb*  | Medium                               | Oncology, Immunology, Cardiovascular  | Strong in Oncology and Immunology     | Academic and industry partnerships         |        
+    
+    ### Key Insights
+    
+    1. *High Investment in Precision Medicine*: Companies like Novartis, Pfizer, Roche, and Johnson & Johnson are leading with high investments in precision medicine, reflecting their commitment to advancing personalized healthcare solutions.
+    
+    2. *Focus Areas*: Oncology is a common focus area for most of the top competitors, emphasizing the importance of precision medicine in cancer treatment. Other significant areas include rare diseases, cardiovascular, and metabolic disorders.
+    
+    3. *Global Market Presence*: Major pharmaceutical companies such as Novartis, Roche, and Johnson & Johnson have a strong global market presence, leveraging their extensive networks to promote precision medicine solutions.
+    
+    4. *Collaborations and Partnerships*: Strategic partnerships with academic institutions, biotech firms, and diagnostics companies are crucial for innovation and development in precision medicine. Companies like Pfizer and Roche have extensive collaboration networks.
+    
+    5. *Specialization in Rare Diseases*: Companies like Alnylam Pharmaceuticals, Biogen, and BioMarin are specialized in treating rare genetic disorders, highlighting the role of precision medicine in addressing unmet medical needs.
+    
+    6. *Diverse Therapeutic Areas*: Precision medicine is being applied across a wide range of therapeutic areas beyond oncology, including neuroscience, immunology, and infectious diseases, demonstrating its broad potential.
+    
+    This comparison provides a snapshot of the competitive landscape in the precision medicine industry, highlighting the key players, their strategic focuses, and the collaborative efforts driving advancements in personalized healthcare.`
 
   const handlePopupClick = () => {
     setIsPopupOpen(false);
@@ -446,7 +483,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
               ""
             )}
 
-            <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900   py-2 overflow-hidden"  onMouseUp={handleTextSelection}>
+            <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900   py-2 overflow-y-auto "  onMouseUp={handleTextSelection}>
               <Tabs className="w-full bg--200 " defaultValue="account">
                 <TabsList
                   className={`flex w-full ${
@@ -465,7 +502,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <TabsTrigger value="billing">Predictions</TabsTrigger>
                   <TabsTrigger value="support">Recommendations</TabsTrigger>
                 </TabsList>
-                <TabsContent className="flex-1 overflow-hidden" value="account">
+                <TabsContent className="flex-1 " value="account">
                   <Card className="h-full">
                     <CardHeader>
                       <div className="flex justify-between  ">
@@ -606,19 +643,22 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     </CardHeader>
                     <CardContent className=" h-full overflow-hidden justify-center text-center">
                     <h3 className="text-xl">{tittle}</h3>
+
                       {isSubmitting ? (
                           <Loader  />
                       ) : (
                         <>
-                          <GraphComponent data={data} type={type} />
+                          <GraphComponent data={data} type={type} source={source} />
                           {/* <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} /> */}
                         </>
                       )}
+                    <h3 className="text-xl">{source}</h3>
+
                     </CardContent>
                   </Card>
                 </TabsContent>
-                <TabsContent className="flex-1 overflow-hidden" value="profile">
-                  <Card className="h-full">
+                <TabsContent className="flex-1 " value="profile">
+                  <Card className="h-full w-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
                       Comparitive Analysis
@@ -628,20 +668,15 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       </CardDescription>
                     </CardHeader>
                     <CardContent
-                      className="h-full overflow-hidden"
+                      className="h-full w-full overflow-y-auto  "
                       id="content3"
                     >
                       {isSubmitting ? (
                           <Loader  />
                       ) : (
                         <>
-                          <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            modules={{ toolbar: customToolbarOptions }}
-                            value={content3}
-                            onChange={setContent3}
-                          />
-                          <div className=" py-2   flex  gap-2">
+                        <MarkdownRenderer tt={content3} />
+      <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <Copy
                                 className="w-5 cursor-pointer hover:text-blue-500"

@@ -1,4 +1,4 @@
-// File: C:\Users\progr\OneDrive\Desktop\KareAI MP\finalkare\src\app\layout.tsx
+// File: C:\Users\Daniyal\Desktop\marketplace_kareai\src\app\layout.tsx
 import * as entry from '../../../src/app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
