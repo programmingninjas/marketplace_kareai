@@ -84,7 +84,8 @@ function Page() {
         sector: data.sector,
         value_proposition: data.value_proposition,
         model: data.model,
-        language: data.language
+        language: data.language,
+        doc: data.doc
       }, {
         headers: {
           "Content-Type": "application/json"
@@ -217,37 +218,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
   };
 
 
-  const markdown = `### Comparative Analysis of Top 10 Key Competitors in Precision Medicine
-
-    | *Company*               | *Investment in Precision Medicine* | *Focus Areas*                        | *Market Presence*                   | *Partnerships*                           |       
-    |---------------------------|--------------------------------------|---------------------------------------|---------------------------------------|--------------------------------------------|        
-    | *Novartis*              | High                                 | Oncology, Cardiovascular, Rare Diseases | Global                                | Various biotech and academic institutions  |      
-    | *AstraZeneca*           | Medium                               | Asthma, Metabolic Disorders, Oncology | Strong in Respiratory and Metabolic   | Collaboration with research organizations  |        
-    | *Pfizer*                | High                                 | Oncology, Rare Diseases, Vaccines     | Strong in Oncology and Vaccines       | Academic and industry collaborations       |        
-    | *Roche*                 | High                                 | Oncology, Neuroscience, Infectious Diseases | Global                                | Partnerships with diagnostics companies    |  
-    | *Johnson & Johnson*     | High                                 | Oncology, Immunology, Neuroscience    | Global                                | Collaborations with biotech companies      |        
-    | *Alnylam Pharmaceuticals* | Medium                               | Genetic Medicines                     | Specialized in RNAi therapeutics      | Industry and academic partnerships         |      
-    | *Biogen*                | Medium                               | Neuroscience, Rare Diseases           | Specialized in Neurology              | Collaborations with genetic research companies |    
-    | *BioMarin*              | Medium                               | Rare Genetic Diseases                 | Specialized in Rare Diseases          | Industry collaborations                    |        
-    | *Amgen*                 | Medium                               | Oncology, Cardiovascular, Inflammation | Strong in Oncology and Cardiovascular | Partnerships with biotech firms            |       
-    | *Bristol Myers Squibb*  | Medium                               | Oncology, Immunology, Cardiovascular  | Strong in Oncology and Immunology     | Academic and industry partnerships         |        
-    
-    ### Key Insights
-    
-    1. *High Investment in Precision Medicine*: Companies like Novartis, Pfizer, Roche, and Johnson & Johnson are leading with high investments in precision medicine, reflecting their commitment to advancing personalized healthcare solutions.
-    
-    2. *Focus Areas*: Oncology is a common focus area for most of the top competitors, emphasizing the importance of precision medicine in cancer treatment. Other significant areas include rare diseases, cardiovascular, and metabolic disorders.
-    
-    3. *Global Market Presence*: Major pharmaceutical companies such as Novartis, Roche, and Johnson & Johnson have a strong global market presence, leveraging their extensive networks to promote precision medicine solutions.
-    
-    4. *Collaborations and Partnerships*: Strategic partnerships with academic institutions, biotech firms, and diagnostics companies are crucial for innovation and development in precision medicine. Companies like Pfizer and Roche have extensive collaboration networks.
-    
-    5. *Specialization in Rare Diseases*: Companies like Alnylam Pharmaceuticals, Biogen, and BioMarin are specialized in treating rare genetic disorders, highlighting the role of precision medicine in addressing unmet medical needs.
-    
-    6. *Diverse Therapeutic Areas*: Precision medicine is being applied across a wide range of therapeutic areas beyond oncology, including neuroscience, immunology, and infectious diseases, demonstrating its broad potential.
-    
-    This comparison provides a snapshot of the competitive landscape in the precision medicine industry, highlighting the key players, their strategic focuses, and the collaborative efforts driving advancements in personalized healthcare.`
-
+  
   const handlePopupClick = () => {
     setIsPopupOpen(false);
     setIsopen(true);
@@ -355,7 +326,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               Advanced Options
                             </AccordionTrigger>
                             <AccordionContent className="border-t  border-gray-300">
-                              <div className="flex items-center gap-6 p-4">
+                              <div className="flex items-center gap-8 p-4">
                                 <FormField
                                   name="language"
                                   control={form.control}
@@ -372,7 +343,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                             onValueChange={field.onChange}
                                             value={field.value}
                                           >
-                                            <SelectTrigger className="-[120px] bg-gray-50 border border-gray-300 rounded-md">
+                                            <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
                                               <SelectValue placeholder="Select Language" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -410,7 +381,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                             onValueChange={field.onChange}
                                             value={field.value}
                                           >
-                                            <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
+                                            <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
                                               <SelectValue placeholder="Select Model" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -434,25 +405,26 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                     </FormItem>
                                   )}
                                 />
-                                  <FormField
+                                  
+                               
+                              </div>
+                              <FormField
                           name="doc"
                           control={form.control}
                           render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="ml-4">
                                       <FormLabel className="text-sm font-semibold mb-2">
                                       File
                               </FormLabel>
                               <Input
                               type="file"
-                                className="w-[120px] bg-gray-50 border border-gray-300 rounded-md"
+                                className="w-[392px] bg-gray-50 border border-gray-300 rounded-md"
                                 {...field}
                               />
                               <FormMessage />
                             </FormItem>
                           )}
                         />
-                               
-                              </div>
                             </AccordionContent>
                           </AccordionItem>
                         </Accordion>
