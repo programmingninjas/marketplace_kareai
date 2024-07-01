@@ -3,8 +3,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 interface props{
-    tt:string, 
-
+    tt:any, 
+    
 }
 const markdownContent = `| **Company**             | **Revenue (Billion $)** | **R&D Expenditure (Billion $)** | **Net Profit (Billion $)** | **Market Cap (Billion $)** | **Employee Count** | **Key Products** | **Geographical Focus** |
 |-------------------------|-------------------------|---------------------------------|----------------------------|----------------------------|---------------------|------------------|------------------------|

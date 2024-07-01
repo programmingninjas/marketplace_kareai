@@ -56,6 +56,7 @@ import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import MarkdownRenderer from "@/components/Markdown";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -255,7 +256,17 @@ const [isopen, setIsopen] = useState<boolean>(false);
     <Layout>
       <div className="w-full h-screen flex overflow-hidden ">
         <div className="w-full">
-          <div className="py-5 w-full border-b-2 border-zinc-100"> </div>
+          <div className="py-3 w-full border-b-2 flex justify-between px-3  border-zinc-100"> 
+            <Image
+            src={"/logo.jpg"}
+            alt="no"
+            width={90}
+            height={100}
+            />
+          <SignedIn>
+              <UserButton afterSignOutUrl="/sign-in" />
+            </SignedIn>
+          </div>
           <div className="w-full  h-full flex  text-base text-zinc-800 overflow-hidden">
             {left ? (
               <>

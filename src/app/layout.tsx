@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Poppins } from 'next/font/google'
 import { SidebarProvider } from "@/context/SidebarContext";
 import { Toaster } from "@/components/ui/toaster";
+import { ClerkProvider } from "@clerk/nextjs";
  
 const roboto = Poppins({
   weight: '500',
@@ -34,7 +35,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={roboto.className}>
+            <ClerkProvider  appearance={{
+          layout: {
+            socialButtonsVariant: "iconButton",
+            logoImageUrl: "/logo2.jpg",
+          },
+          // variables: {
+          //   colorText: "#fff",
+          //   colorPrimary: "#0E78F9",
+          //   colorBackground: "#1C1F2E",
+          //   colorInputBackground: "#252A41",
+          //   colorInputText: "#fff",
+          // },
+        }}>
+
       <body className={roboto.className} >
+
       <Toaster/>
       <SidebarProvider>
 
@@ -43,6 +59,7 @@ export default function RootLayout({
         </SidebarProvider>
 
         </body>
+        </ClerkProvider>
     </html>
   );
 }
