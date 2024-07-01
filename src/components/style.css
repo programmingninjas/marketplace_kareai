@@ -1,0 +1,18 @@
+.spreadsheet-container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .spreadsheet {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+  
+  .spreadsheet .Spreadsheet__row {
+    height: 40px; /* Adjust row height if needed */
+  }
+  
+  .spreadsheet .Spreadsheet__cell {
+    min-width: 200px; /* Adjust cell width if needed */
+  }

@@ -2,5 +2,5 @@
   "/page": "app/page.js",
   "/market_research_agent/page": "app/market_research_agent/page.js",
   "/(auth)/sign-in/[[...sign-in]]/page": "app/(auth)/sign-in/[[...sign-in]]/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/financial_research_agent/page": "app/financial_research_agent/page.js"
 }

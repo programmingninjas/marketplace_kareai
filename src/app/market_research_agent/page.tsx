@@ -884,7 +884,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
         onClick={handlePopupClick}
         className={`bg-white  rounded-full focus:outline-none w-full transition-all ease-in h-full ${isPopupOpen ? "bg-gradient-to-r from-purple-700 to-[#540F66]" : ("")}`}
       >
-        <Triangle className={`text-black ${isPopupOpen ? "text-white" : ("")}`}/>
+        <Triangle className={`text-purple-800 ${isPopupOpen ? "text-white" : ("")}`}/>
         {/* <Image
           width={100}
           height={100}

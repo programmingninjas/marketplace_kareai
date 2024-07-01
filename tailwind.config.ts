@@ -20,6 +20,15 @@ const config = {
     },
     
     extend: {
+      height: {
+        'screen': '100vh',
+      },
+      width: {
+        'full': '100%',
+      },
+      minWidth: {
+        '200px': '200px',
+      },
       fontFamily: {
         sans: ['Roboto', 'sans-serif'],
         primary: 'var(--primary-color)',

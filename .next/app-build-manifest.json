@@ -21,6 +21,12 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(auth)/sign-in/[[...sign-in]]/page.js"
+    ],
+    "/financial_research_agent/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/financial_research_agent/page.css",
+      "static/chunks/app/financial_research_agent/page.js"
     ]
   }
 }
