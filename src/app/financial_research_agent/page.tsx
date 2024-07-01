@@ -84,11 +84,10 @@ function Page() {
     
     try {
       const response = await axios.post(`http://98.70.9.194:8000/api/financial_agent`, {
-        sector: data.sector,
+        ticker: data.ticker,
         value_proposition: data.value_proposition,
         model: data.model,
         language: data.language,
-        doc: data.doc
       }, {
         headers: {
           "Content-Type": "application/json"
