@@ -651,7 +651,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       </CardDescription>
                     </CardHeader>
                     <CardContent
-                      className="h-full w-full overflow-y-auto  "
+                      className="h-full w-full overflow-x-hidden overflow-y-auto  "
                       id="content3"
                     >
                       {isSubmitting ? (

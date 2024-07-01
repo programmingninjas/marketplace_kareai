@@ -58,6 +58,7 @@ import { Textarea } from "@/components/ui/textarea";
 import MarkdownRenderer from "@/components/Markdown";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import Excel from "@/components/Excel";
+import TestGraphs from "@/components/GraphC";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -100,7 +101,9 @@ function Page() {
       setContent3(response.data.financial_data.cash_flow);
       setContent4(response.data.insights);
       
-      setData(response.data.graphs);
+      setData(response.data.graphs.assets);
+      setContent5(response.data.graphs.liabilities)
+      setContent6(response.data.graphs.balance_sheet)
       setType(response.data.type);
       setTittle(response.data.title);
       setSource(response.data.source);
@@ -153,13 +156,13 @@ function Page() {
   });
   const router = useRouter();
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      alert("Content copied to clipboard");
-    }).catch((err) => {
-      console.error('Could not copy text: ', err);
-    });
-  };
+  // const copyToClipboard = (text: string) => {
+  //   navigator.clipboard.writeText(text).then(() => {
+  //     alert("Content copied to clipboard");
+  //   }).catch((err) => {
+  //     console.error('Could not copy text: ', err);
+  //   });
+  // };
 
   // const generatePDF = (content: string, filename: string) => {
   //   // Create a hidden div element and append the content
@@ -502,6 +505,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <TabsTrigger value="Income Statement">Income Statement</TabsTrigger>
                   <TabsTrigger value="Cash flow">Cash flow</TabsTrigger>
                   <TabsTrigger value="insights">Insights</TabsTrigger>
+                  <TabsTrigger value="Graphs">Graphs</TabsTrigger>
+
 
                 </TabsList>
                 <TabsContent className="flex-1 " value="Balance sheet">
@@ -523,32 +528,13 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       ) : (
                         <>
                         {/* <MarkdownRenderer tt={content3} /> */}
-                        <div className="w-full bg-blue-100 h-full"
+                        <div className="w-full bg--100 h-full"
                         >
                         <Excel balance_sheet={content}/>
 
                         </div>
                           <div className=" py-2   flex  gap-2">
-                            <div className="relative group">
-                              <Copy
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => copyToClipboard(content3)}
-                              />
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Copy
-                              </div>
-                            </div>
-                            <div className="relative group">
-                              {/* <Save
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() =>
-                                //   downloadPDF(content3, "tech_trends")
-                                // }
-                              /> */}
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                PDF
-                              </div>
-                            </div>
+                            
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
@@ -585,26 +571,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         {/* <MarkdownRenderer tt={content3} /> */}
                         <Excel balance_sheet={content2}/>
       <div className=" py-2   flex  gap-2">
-                            <div className="relative group">
-                              <Copy
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => copyToClipboard(content3)}
-                              />
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Copy
-                              </div>
-                            </div>
-                            <div className="relative group">
-                              {/* <Save
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() =>
-                                //   downloadPDF(content3, "tech_trends")
-                                // }
-                              /> */}
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                PDF
-                              </div>
-                            </div>
+                            
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
@@ -641,26 +608,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         {/* <MarkdownRenderer tt={content3} /> */}
                         <Excel balance_sheet={content3}/>
       <div className=" py-2   flex  gap-2">
-                            <div className="relative group">
-                              <Copy
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => copyToClipboard(content3)}
-                              />
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Copy
-                              </div>
-                            </div>
-                            <div className="relative group">
-                              {/* <Save
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() =>
-                                //   downloadPDF(content3, "tech_trends")
-                                // }
-                              /> */}
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                PDF
-                              </div>
-                            </div>
+                            
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
@@ -698,24 +646,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <>
                         <MarkdownRenderer tt={content4} />
                         <div className=" py-2   flex  gap-2">
-                            <div className="relative group">
-                              <Copy
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => copyToClipboard(content4)}
-                              />
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Copy
-                              </div>
-                            </div>
-                            <div className="relative group">
-                              {/* <Save
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() => downloadPDF(content4, "News")}
-                              /> */}
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                PDF
-                              </div>
-                            </div>
+                            
+                            
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
@@ -746,7 +678,11 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <Loader  />
                       ) : (
                         <>
-                          <GraphComponent data={data} type={type} source={source} />
+                          <GraphComponent data={data} type={type} source = {source}  />
+                          <GraphComponent data={content5} type={type} source = {source}  />
+                          <GraphComponent data={content6} type={type} source = {source}  />
+                          {/* <TestGraphs/> */}
+
                           {/* <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} /> */}
                         </>
                       )}

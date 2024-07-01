@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -20,10 +20,9 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
-    { sender: "Cosmo", text: "Hello! how can i assist you today?" },
-  ]);
+    { sender: "Cosmo", text: "Hello! how can I assist you today?" },
 
- 
+  ]);
 
   useEffect(() => {
     if (!selectedText) return;
@@ -42,7 +41,6 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     setWs(wsInstance);
     setClientid(client_id);
 
-
     wsInstance.onmessage = handleIncomingMessage;
 
     return () => {
@@ -51,15 +49,15 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   }, []);
 
   const refresh = async () => {
-    console.log("refreshed")
-   
-    const response = await axios.post(`http://98.70.9.194:8000/api/refresh_session/${clientid}`)
+    console.log("refreshed");
+
+    const response = await axios.post(`http://98.70.9.194:8000/api/refresh_session/${clientid}`);
     toast({
       title: "Chat refreshed",
-      description: "Your chat is now refreshed"
-    })
-  }
-  
+      description: "Your chat is now refreshed",
+    });
+    setMessages([{ sender: "Cosmo", text: "Hello! how can I assist you today?" }]);
+  };
 
   const sendMessage = () => {
     if (ws && ws.readyState === WebSocket.OPEN) {
@@ -91,62 +89,43 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
         }`}
       >
         <div className="flex flex-col h-full">
-          {/* <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
-            <Image width={30} height={100}  src="/logo2.jpg" alt="Logo" />
-            <h3 className="text-lg  text-zinc-800 font-semibold">Chat</h3>
-            <Button
-              className="top-4 left-4 w-4 h-2 bg-white dark:bg-gray-800 p-4 text-black rounded-full shadow-md"
-              onClick={handleClose}
-            >
-              X
-            </Button>
-          </header> */}
-              <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
+          <header className="bg-white dark:bg-gray-800 px-4 py-3 border-b flex items-center justify-between gap-3">
             <Image width={30} height={100} src="/logo2.jpg" alt="Logo" />
             <h3 className="text-lg text-zinc-800 font-semibold">Chat</h3>
 
             <div className='flex gap-3 items-center'>
               <RefreshCw onClick={refresh} className='w-5 cursor-pointer opacity-80'/>
-             
-                
-                <X className='w-6 opacity-80 cursor-pointer' onClick={handleClose}/>
+              <X className='w-6 opacity-80 cursor-pointer' onClick={handleClose}/>
             </div>
           </header>
           <div className="flex-1 bg--100 overflow-auto p-4 custom-scrollbar">
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex  items-center gap-2 mb-4 ${message.sender === "You" ? "justify-end" : "justify-start"}`}
+                className={`flex items-center gap-2 mb-4 ${message.sender === "You" ? "justify-end" : "justify-start"}`}
               >
                 {message.sender !== "You" && (
                   <Avatar className="w-8 h-8 bg-white">
                     <AvatarFallback className="bg-white">
-                      
                       <Wand className="text-purple-700" />
                     </AvatarFallback>
                   </Avatar>
                 )}
                 <div className="bg--600 max-w-[85%] flex">
-                  
                   <div
-                    className={`  max-w-full rounded-xl text-sm  ${
-                      message.sender === "You" ? "bg-purple-600 text-justify  text-white px-5 py-4" : "bg-slate-100 text-justify px-7 py-5 "
-                    } break-words`}
+                    className={`max-w-full rounded-xl text-sm ${message.sender === "You" ? "bg-purple-600 text-justify text-white px-5 py-4" : "bg-slate-100 text-justify px-7 py-5"} break-words`}
                     dangerouslySetInnerHTML={{ __html: linkify(message.text) }}
                   />
                 </div>
-                
                 {message.sender === "You" && (
                   <Avatar className="w-8 h-8 border">
                     <Image 
-                    width={100}
-                    height={8}
-                    src="/avatar[1].jpg" alt="Avatar" />
+                      width={100}
+                      height={8}
+                      src="/avatar[1].jpg" alt="Avatar" />
                     <AvatarFallback>YO</AvatarFallback>
                   </Avatar>
-
                 )}
-                
               </div>
             ))}
             {isLoading && <Loader2 messages={["Thinking.", "Thinking..", "Thinking..."]} />}
