@@ -18,7 +18,7 @@ console.log(data);
 
 
      return (
-         <main className="flex  justify-evenly  items-center h-[500px]">
+         <main className="flex  justify-evenly border-b-2 border-zinc-100  items-center h-[500px]">
             
              <div className="w-full max-w-2xl h-96">
                  {graphType === 'Pie Chart' && (
@@ -95,7 +95,6 @@ console.log(data);
                          }}
                      />
                  )}
-                 <h3 className="text-xl">{source}</h3>
 
              </div>
          </main>
@@ -105,10 +104,10 @@ console.log(data);
 
 
 
-//testing import React, { useEffect, useState } from "react";
+// testing 
+// import React, { useEffect, useState } from "react";
 // import { ResponsivePie } from "@nivo/pie";
 // import { ResponsiveBar } from "@nivo/bar";
-// import { useState } from "react";
 
 // const GraphComponent: React.FC<any> = ({ data, type, source }) => {
 //   const [graphData, setGraphData] = useState<any>(data);
@@ -217,7 +216,7 @@ console.log(data);
 //   };
 
 //   return (
-//     <div>
+//     <div className="flex flex-col items-center justify-center gap-">
 //       <GraphComponent data={data.assets} type="Pie Chart" source="Assets" />
 //       <GraphComponent data={data.liabilities} type="Bar Chart" source="Liabilities" />
 //       <GraphComponent data={data.balance_sheet} type="Bar Chart" source="Balance Sheet" />

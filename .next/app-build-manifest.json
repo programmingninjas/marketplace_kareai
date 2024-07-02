@@ -1,9 +1,10 @@
 {
   "pages": {
-    "/page": [
+    "/financial_research_agent/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/css/app/financial_research_agent/page.css",
+      "static/chunks/app/financial_research_agent/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -11,22 +12,10 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/market_research_agent/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/market_research_agent/page.css",
-      "static/chunks/app/market_research_agent/page.js"
-    ],
-    "/(auth)/sign-in/[[...sign-in]]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(auth)/sign-in/[[...sign-in]]/page.js"
-    ],
-    "/financial_research_agent/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/financial_research_agent/page.css",
-      "static/chunks/app/financial_research_agent/page.js"
+      "static/chunks/app/page.js"
     ]
   }
 }

@@ -7,7 +7,7 @@ import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/com
 import { Label } from "@/components/ui/label"
 import React, { useState, MouseEvent, useEffect } from 'react'
 import dynamic from 'next/dynamic';
-import useDownloadWord from '@/hooks/useDownloadWord';
+import useDownload from '@/hooks/useDownload';
 
 import Loader from "@/components/Loader";
 import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelLeft, PanelLeftClose, PanelRightClose, Save, Triangle, WandIcon } from "lucide-react";
@@ -69,7 +69,7 @@ function Page() {
   const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
   const [tittle, setTittle] = useState("title");
-  const [source, setSource] = useState("source");
+  const [source, setSource] = useState("");
 
   const [data, setData] = useState();
   const [type, setType] = useState("");
@@ -77,9 +77,19 @@ function Page() {
   const [graph, setGraph] = useState(false);
   const [left, setLeft] = useState(true);
   const {toast} = useToast();
+  const [sector, setSector] = useState("")
+
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
+
+    //source setting
+
+      setSector(data.ticker);
+      console.log(sector)
+      setSource(`https://finance.yahoo.com/quote/${sector}`)
+      console.log(source)
+
     // setLeft(true)
     
     try {
@@ -105,7 +115,7 @@ function Page() {
       setContent6(response.data.graphs.balance_sheet)
       setType(response.data.type);
       setTittle(response.data.title);
-      setSource(response.data.source);
+      
 
       console.log(response);
     } catch (error) {
@@ -132,6 +142,8 @@ function Page() {
   ];
   
 
+    
+      
   const customToolbarOptions = [
     [{ 'header': [1, 2, false] }],
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
@@ -195,7 +207,7 @@ function Page() {
   const handleDownload = (file: React.SetStateAction<string>) => {
     setFilename(file);
   };
-  useDownloadWord(filename);
+  useDownload(filename);
 
 
   const toggleSidebar = () => {
@@ -259,14 +271,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
     <Layout>
       <div className="w-full h-screen flex overflow-hidden ">
         <div className="w-full">
-          <div className="py-3 w-full border-b-2 flex justify-between px-3  border-zinc-100"> 
-            <Image
-            src={"/logo.jpg"}
-            alt="no"
-            width={90}
-            height={100}
-            />
-          <SignedIn>
+          <div className="py-3 w-full border-b-2 flex justify-between px-3  border-zinc-100">
+            <Image src={"/logo.jpg"} alt="no" width={90} height={100} />
+            <SignedIn>
               <UserButton afterSignOutUrl="/sign-in" />
             </SignedIn>
           </div>
@@ -322,9 +329,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 Value Proposition
                               </FormLabel>
                               <Textarea
-        className="h-24 overflow-y-auto border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        {...field}
-      />
+                                className="h-24 overflow-y-auto border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                {...field}
+                              />
                               <FormMessage />
                             </FormItem>
                           )}
@@ -419,46 +426,44 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                     </FormItem>
                                   )}
                                 />
-                                  <FormField
-                name="year"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-semibold mb-2">
-                      Year
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
-                      <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
-                        <SelectValue placeholder="Select Year" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="2020">
-                          2020
-                        </SelectItem>
-                        <SelectItem value="2021">
-                          2021
-                        </SelectItem>
-                        <SelectItem value="2022">
-                          2022
-                        </SelectItem>
-                        <SelectItem value="2023">
-                          2023
-                        </SelectItem>
-                        <SelectItem value="2024">
-                          2024
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-                               
+                                <FormField
+                                  name="year"
+                                  control={form.control}
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel className="text-sm font-semibold mb-2">
+                                        Year
+                                      </FormLabel>
+                                      <Select
+                                        onValueChange={field.onChange}
+                                        value={field.value}
+                                      >
+                                        <SelectTrigger className="w-[120px] bg-gray-50 border border-gray-300 rounded-md">
+                                          <SelectValue placeholder="Select Year" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="2020">
+                                            2020
+                                          </SelectItem>
+                                          <SelectItem value="2021">
+                                            2021
+                                          </SelectItem>
+                                          <SelectItem value="2022">
+                                            2022
+                                          </SelectItem>
+                                          <SelectItem value="2023">
+                                            2023
+                                          </SelectItem>
+                                          <SelectItem value="2024">
+                                            2024
+                                          </SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
                               </div>
-                              
                             </AccordionContent>
                           </AccordionItem>
                         </Accordion>
@@ -489,7 +494,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
               ""
             )}
 
-            <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900   py-2 overflow-y-auto "  onMouseUp={handleTextSelection}>
+            <div
+              className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900   py-2 overflow-y-auto "
+              onMouseUp={handleTextSelection}
+            >
               <Tabs className="w-full bg--200 " defaultValue="Balance sheet">
                 <TabsList
                   className={`flex w-full ${
@@ -501,21 +509,22 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     className={`cursor-pointer ${left ? "hidden" : "block"}`}
                   />
                   <TabsTrigger value="Balance sheet">Balance sheet</TabsTrigger>
-                  <TabsTrigger value="Income Statement">Income Statement</TabsTrigger>
+                  <TabsTrigger value="Income Statement">
+                    Income Statement
+                  </TabsTrigger>
                   <TabsTrigger value="Cash flow">Cash flow</TabsTrigger>
                   <TabsTrigger value="insights">Insights</TabsTrigger>
                   <TabsTrigger value="Graphs">Graphs</TabsTrigger>
-
-
                 </TabsList>
                 <TabsContent className="flex-1 " value="Balance sheet">
                   <Card className="h-full w-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                      Balance sheet Analysis
+                        Balance sheet Analysis
                       </CardTitle>
                       <CardDescription>
-                        Overview of Balance sheet based on the provided the ticker symbol.
+                        Overview of Balance sheet based on the provided the
+                        ticker symbol.
                       </CardDescription>
                     </CardHeader>
                     <CardContent
@@ -523,21 +532,18 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       id="content3"
                     >
                       {isSubmitting ? (
-                          <Loader  />
+                        <Loader />
                       ) : (
                         <>
-                        {/* <MarkdownRenderer tt={content3} /> */}
-                        <div className="w-full bg--100 h-full"
-                        >
-                        <Excel balance_sheet={content}/>
-
-                        </div>
+                          {/* <MarkdownRenderer tt={content3} /> */}
+                          <div className="w-full bg--100 h-full">
+                            <Excel balance_sheet={content} />
+                          </div>
                           <div className=" py-2   flex  gap-2">
-                            
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                          onClick={() => handleDownload(wordFile)}
+                                onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -548,15 +554,16 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       )}
                     </CardContent>
                   </Card>
-                  </TabsContent>
-                  <TabsContent className="flex-1 " value="Income Statement">
+                </TabsContent>
+                <TabsContent className="flex-1 " value="Income Statement">
                   <Card className="h-full w-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                      Income statement Analysis
+                        Income statement Analysis
                       </CardTitle>
                       <CardDescription>
-                        Overview of Income statement of the provided ticker symbol.
+                        Overview of Income statement of the provided ticker
+                        symbol.
                       </CardDescription>
                     </CardHeader>
                     <CardContent
@@ -564,17 +571,16 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       id="content3"
                     >
                       {isSubmitting ? (
-                          <Loader  />
+                        <Loader />
                       ) : (
                         <>
-                        {/* <MarkdownRenderer tt={content3} /> */}
-                        <Excel balance_sheet={content2}/>
-      <div className=" py-2   flex  gap-2">
-                            
+                          {/* <MarkdownRenderer tt={content3} /> */}
+                          <Excel balance_sheet={content2} />
+                          <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                          onClick={() => handleDownload(wordFile)}
+                                onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -590,7 +596,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <Card className="h-full w-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                      Cash Flow Analysis
+                        Cash Flow Analysis
                       </CardTitle>
                       <CardDescription>
                         Overview of Cash Flow in the industry.
@@ -601,17 +607,16 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       id="content3"
                     >
                       {isSubmitting ? (
-                          <Loader  />
+                        <Loader />
                       ) : (
                         <>
-                        {/* <MarkdownRenderer tt={content3} /> */}
-                        <Excel balance_sheet={content3}/>
-      <div className=" py-2   flex  gap-2">
-                            
+                          {/* <MarkdownRenderer tt={content3} /> */}
+                          <Excel balance_sheet={content3} />
+                          <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                          onClick={() => handleDownload(wordFile)}
+                                onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -623,7 +628,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     </CardContent>
                   </Card>
                 </TabsContent>
-                
+
                 <TabsContent
                   className="flex-1 overflow-hidden"
                   value="insights"
@@ -640,17 +645,20 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       id="content4"
                     >
                       {isSubmitting ? (
-                          <Loader  />
+                        <Loader />
                       ) : (
                         <>
-                        <MarkdownRenderer tt={content4} />
-                        <div className=" py-2   flex  gap-2">
-                            
-                            
+                          <ReactQuill
+                            className="h-[400px] py-2 mb-10"
+                            modules={{ toolbar: customToolbarOptions }}
+                            value={content4}
+                            onChange={setContent4}
+                          />
+                          <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                          onClick={() => handleDownload(wordFile)}
+                                onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -671,37 +679,60 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       </CardDescription>
                     </CardHeader>
                     <CardContent className=" h-full overflow-hidden justify-center text-center">
-                    <h3 className="text-xl">{tittle}</h3>
+                      <h3 className="text-xl">{tittle}</h3>
 
                       {isSubmitting ? (
-                          <Loader  />
+                        <Loader />
                       ) : (
                         <>
-                          <GraphComponent data={data} type={type} source = {source}  />
-                          <GraphComponent data={content5} type={type} source = {source}  />
-                          <GraphComponent data={content6} type={type} source = {source}  />
+                          <div className="w-full flex flex-col gap-3">
+                            <GraphComponent
+                              data={data}
+                              type={type}
+                              source={source}
+                            />
+                            <GraphComponent
+                              data={content5}
+                              type={type}
+                              source={source}
+                            />
+                            <GraphComponent
+                              data={content6}
+                              type={type}
+                              source={source}
+                            />
+                            <Link href={`${source}`}>
+                              <h3>Source</h3>
+                            </Link>
+                          </div>
                           {/* <TestGraphs/> */}
 
                           {/* <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} /> */}
                         </>
                       )}
-                    <h3 className="text-xl">{source}</h3>
-
                     </CardContent>
                   </Card>
-                </TabsContent>       
+                </TabsContent>
               </Tabs>
               <div
-      className="fixed bottom-5 right-10 h-10  bg-white cursor-pointer drop-shadow-xl rounded-full transition-all ease-in-out animate-slide-in"
-      onMouseEnter={() => setIsPopupOpen(true)}
-      onMouseLeave={() => setIsPopupOpen(false)}
-    >
-      <Button
-        onClick={handlePopupClick}
-        className={`bg-white  rounded-full focus:outline-none w-full transition-all ease-in h-full ${isPopupOpen ? "bg-gradient-to-r from-purple-700 to-[#540F66]" : ("")}`}
-      >
-        <Triangle className={`text-purple-800 ${isPopupOpen ? "text-white" : ("")}`}/>
-        {/* <Image
+                className="fixed bottom-5 right-10 h-10  bg-white cursor-pointer drop-shadow-xl rounded-full transition-all ease-in-out animate-slide-in"
+                onMouseEnter={() => setIsPopupOpen(true)}
+                onMouseLeave={() => setIsPopupOpen(false)}
+              >
+                <Button
+                  onClick={handlePopupClick}
+                  className={`bg-white  rounded-full focus:outline-none w-full transition-all ease-in h-full ${
+                    isPopupOpen
+                      ? "bg-gradient-to-r from-purple-700 to-[#540F66]"
+                      : ""
+                  }`}
+                >
+                  <Triangle
+                    className={`text-purple-800 ${
+                      isPopupOpen ? "text-white" : ""
+                    }`}
+                  />
+                  {/* <Image
           width={100}
           height={100}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -710,21 +741,19 @@ const [isopen, setIsopen] = useState<boolean>(false);
           className="object-fill w-full h-full  "
           alt="Chat Logo"
         /> */}
-      </Button>
-      {/* {isPopupOpen && (
+                </Button>
+                {/* {isPopupOpen && (
         <div className="absolute bottom-1/2 w-40 bg-gradient-to-r from-purple-700 to-[#540F66] right-10 transform translate-y-1/2 mr-6   p-2  text-white text-xs rounded shadow-lg z-50">
           Click to open the Chat 
         </div>
       )} */}
-    </div>       
-                
+              </div>
 
               <NewComponent
                 isOpen={isopen}
                 selectedText={selectedText}
                 handleClose={handleClose}
               />
-              
             </div>
           </div>
         </div>
