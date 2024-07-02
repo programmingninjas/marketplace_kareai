@@ -106,21 +106,33 @@
 
 
 
-import React from 'react';
+import useDownload from '@/hooks/useDownload';
+import { FileText } from 'lucide-react';
+import React, { useState } from 'react';
 import Spreadsheet from 'react-spreadsheet';
 
 interface ExcelProps {
   balance_sheet: any;
+  url:string
 }
 
-const Excel: React.FC<ExcelProps> = ({ balance_sheet }) => {
+
+
+  
+
+const Excel: React.FC<ExcelProps> = ({ balance_sheet,url }) => {
   const columnLabels = ["Metric", "Value"];
 
   const data = Object.entries(balance_sheet).map(([metric, value]) => [
     { value: metric },
     { value: value !== null ? value : '' },
   ]);
+  const [filename, setFilename] = useState('');
 
+  const handleDownload = () => {
+    setFilename(`${url}`);
+  };
+  useDownload(filename);
   return (
     <div className='w-full h-full'>
       <Spreadsheet
@@ -128,6 +140,18 @@ const Excel: React.FC<ExcelProps> = ({ balance_sheet }) => {
         data={data}
         columnLabels={columnLabels}
       />
+       <div className=" flex gap-2 py-2">
+                            <div className="relative group">
+                              <FileText
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() => handleDownload()}
+                              />
+                              
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Word
+                              </div>
+                            </div>
+                          </div>
     </div>
   );
 };

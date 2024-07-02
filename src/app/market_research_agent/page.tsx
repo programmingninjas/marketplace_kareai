@@ -405,7 +405,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                               <SelectItem value="gemini-1.5-pro">
                                                 Google|Gemini Pro
                                               </SelectItem>
-                                              <SelectItem value="claude-3-5-sonnet-20240620">
+                                              <SelectItem className="cursor-not-allowed" value="claude-3-5-sonnet-20240620">
                                                 Anthropic|Sonnet-3.5
                                               </SelectItem>
                                             </SelectContent>
@@ -429,7 +429,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </FormLabel>
                               <Input
                               type="file"
-                                className="w-[392px] bg-gray-50 border border-gray-300 rounded-md"
+                                className="w-[392px] cursor-not-allowed bg-gray-50 border border-gray-300 rounded-md"
                                 {...field}
                               />
                               <FormMessage />
@@ -631,7 +631,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <Loader  />
                       ) : (
                         <>
-                          <GraphComponent data={data} type={type} source={source} />
+                          <GraphComponent data={data} type={type} source={source} title={""}/>
                           {/* <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} /> */}
                         </>
                       )}

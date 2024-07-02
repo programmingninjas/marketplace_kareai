@@ -4,7 +4,7 @@ const useDownload = (filename) => {
   useEffect(() => {
     const downloadFile = async () => {
       try {
-        const response = await fetch(`http://98.70.9.194:8000/api/download_report/${filename}`, {
+        const response = await fetch(`http://98.70.9.194:8000/${filename}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',

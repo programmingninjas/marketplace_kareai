@@ -412,7 +412,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                               <SelectItem value="gemini-1.5-pro">
                                                 Google|Gemini Pro
                                               </SelectItem>
-                                              <SelectItem value="claude-3-5-sonnet-20240620">
+                                              <SelectItem className="cursor-not-allowed" value="claude-3-5-sonnet-20240620">
                                                 Anthropic|Sonnet-3.5
                                               </SelectItem>
                                             </SelectContent>
@@ -534,9 +534,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <>
                           {/* <MarkdownRenderer tt={content3} /> */}
                           <div className="w-full bg--100 h-full">
-                            <Excel balance_sheet={content} />
+                            <Excel balance_sheet={content} url={"api/download_balance_sheet/"} />
                           </div>
-                          <div className=" py-2   flex  gap-2">
+                          {/* <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
@@ -546,7 +546,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 Word
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                         </>
                       )}
                     </CardContent>
@@ -572,8 +572,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       ) : (
                         <>
                           {/* <MarkdownRenderer tt={content3} /> */}
-                          <Excel balance_sheet={content2} />
-                          <div className=" py-2   flex  gap-2">
+                          {/* <div className=" mb-20 py-2">
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
@@ -583,7 +582,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 Word
                               </div>
                             </div>
-                          </div>
+                          </div> */}
+                          <Excel balance_sheet={content2} url={"api/download_income_statement/"} />
+                         
                         </>
                       )}
                     </CardContent>
@@ -609,8 +610,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       ) : (
                         <>
                           {/* <MarkdownRenderer tt={content3} /> */}
-                          <Excel balance_sheet={content3} />
-                          <div className=" py-2   flex  gap-2">
+                          <Excel balance_sheet={content3} url={"api/download_cash_flow/"} />
+                          {/* <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
@@ -620,7 +621,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 Excel
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                         </>
                       )}
                     </CardContent>
@@ -656,7 +657,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => handleDownload(wordFile)}
+                                onClick={() => handleDownload("api/download_insights/")}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
