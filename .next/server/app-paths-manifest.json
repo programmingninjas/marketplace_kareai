@@ -1,6 +1,6 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/market_research_agent/page": "app/market_research_agent/page.js",
-  "/(auth)/sign-in/[[...sign-in]]/page": "app/(auth)/sign-in/[[...sign-in]]/page.js",
-  "/financial_research_agent/page": "app/financial_research_agent/page.js"
+  "/financial_analytics_agent/page": "app/financial_analytics_agent/page.js",
+  "/market_research_agent/page": "app/market_research_agent/page.js"
 }

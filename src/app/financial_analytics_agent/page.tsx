@@ -93,9 +93,9 @@ function Page() {
     // setLeft(true)
     
     try {
-      const response = await axios.post(`http://98.70.9.194:8000/api/financial_agent`, {
+      const response = await axios.post(`http://localhost:8000/api/financial_analytics`, {
         ticker: data.ticker,
-        value_proposition: data.value_proposition,
+        year: data.year,
         model: data.model,
         language: data.language,
       }, {
@@ -113,10 +113,7 @@ function Page() {
       setData(response.data.graphs.assets);
       setContent5(response.data.graphs.liabilities)
       setContent6(response.data.graphs.balance_sheet)
-      setType(response.data.type);
-      setTittle(response.data.title);
-      
-
+      setType("Pie Chart");
       console.log(response);
     } catch (error) {
       toast({
@@ -286,7 +283,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   }`}
                 >
                   <div className="py-4 flex items-center  justify-between pr-6  text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
-                    Financial Research Agent
+                    Financial Analytics Agent
                     <div className="relative group">
                       <PanelLeftClose
                         onClick={toggleInput}
@@ -520,10 +517,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <Card className="h-full w-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                        Balance sheet Analysis
+                        Balance Sheet
                       </CardTitle>
                       <CardDescription>
-                        Overview of Balance sheet based on the provided the
+                        Overview of balance sheet of the provided the
                         ticker symbol.
                       </CardDescription>
                     </CardHeader>
@@ -559,10 +556,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <Card className="h-full w-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                        Income statement Analysis
+                        Income Statement
                       </CardTitle>
                       <CardDescription>
-                        Overview of Income statement of the provided ticker
+                        Overview of income statement of the provided ticker
                         symbol.
                       </CardDescription>
                     </CardHeader>
@@ -596,10 +593,11 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <Card className="h-full w-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                        Cash Flow Analysis
+                        Cash Flow 
                       </CardTitle>
                       <CardDescription>
-                        Overview of Cash Flow in the industry.
+                        Overview of Cash Flow of the provided ticker
+                        symbol.
                       </CardDescription>
                     </CardHeader>
                     <CardContent
@@ -619,7 +617,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 onClick={() => handleDownload(wordFile)}
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Word
+                                Excel
                               </div>
                             </div>
                           </div>
@@ -637,7 +635,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     <CardHeader>
                       <CardTitle className="text-zinc-900">Insights</CardTitle>
                       <CardDescription>
-                        Latest Insights of the industry.
+                        Insights based on 5 financial metrics.
                       </CardDescription>
                     </CardHeader>
                     <CardContent
@@ -675,7 +673,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     <CardHeader>
                       <CardTitle className="text-zinc-900">Graph</CardTitle>
                       <CardDescription>
-                        Graph of the market size and projections.
+                        Visualization of financial data.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className=" h-full overflow-hidden justify-center text-center">

@@ -81,7 +81,7 @@ function Page() {
     // setLeft(true)
     
     try {
-      const response = await axios.post(`http://98.70.9.194:8000/api/market_research`, {
+      const response = await axios.post(`http://localhost:8000/api/market_research`, {
         sector: data.sector,
         value_proposition: data.value_proposition,
         model: data.model,

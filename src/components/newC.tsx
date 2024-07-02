@@ -25,8 +25,6 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
     { sender: "Cosmo", text: "Hello! How can I assist you today?" },
-    { sender: "You", text: "Hello! How can I assist you today?" },
-
   ]);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -50,7 +48,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     const image = user.imageUrl;
     console.log(image)
     console.log(client_id);
-    const wsInstance = new WebSocket(`ws://98.70.9.194:8000/ws/${client_id}`);
+    const wsInstance = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
     setWs(wsInstance);
     setClientid(client_id);
     setImage(image)
@@ -69,7 +67,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
 
   const refresh = async () => {
     console.log("refreshed");
-    const response = await axios.post(`http://98.70.9.194:8000/api/refresh_session/${clientid}`);
+    const response = await axios.post(`http://localhost:8000/api/refresh_session?client_id=${clientid}`);
     toast({
       title: "Chat refreshed",
       description: "Your chat is now refreshed"
