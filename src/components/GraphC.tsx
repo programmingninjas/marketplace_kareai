@@ -7,20 +7,23 @@ import { ResponsiveBar } from "@nivo/bar";
 interface props{
     data : any,
     type: string,
-    source: any 
+    source: any ,
+    title:string
 
 }
 
-const GraphComponent: React.FC<props> = ({data,type, source}) => {
+const GraphComponent: React.FC<props> = ({data,type, source,title}) => {
     const [graphData, setGraphData] = useState<any>(data);
     const [graphType, setGraphType] = useState<string | null>(type);
 console.log(data);
 
 
      return (
-         <main className="flex  justify-evenly border-b-2 border-zinc-100  items-center h-[500px]">
+         <main className="flex  justify-evenly   items-center h-[500px]">
             
              <div className="w-full max-w-2xl h-96">
+             <h3>{title}</h3>
+
                  {graphType === 'Pie Chart' && (
                      <ResponsivePie
                          data={graphData}

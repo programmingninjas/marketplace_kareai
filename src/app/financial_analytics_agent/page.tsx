@@ -93,7 +93,7 @@ function Page() {
     // setLeft(true)
     
     try {
-      const response = await axios.post(`http://localhost:8000/api/financial_analytics`, {
+      const response = await axios.post(`http://98.70.9.194:8000/api/financial_analytics`, {
         ticker: data.ticker,
         year: data.year,
         model: data.model,
@@ -677,7 +677,6 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       </CardDescription>
                     </CardHeader>
                     <CardContent className=" h-full overflow-hidden justify-center text-center">
-                      <h3 className="text-xl">{tittle}</h3>
 
                       {isSubmitting ? (
                         <Loader />
@@ -688,19 +687,22 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               data={data}
                               type={type}
                               source={source}
+                              title={"Assets distribution"}
                             />
                             <GraphComponent
                               data={content5}
                               type={type}
                               source={source}
+                              title={"Liabilities distribution"}
                             />
                             <GraphComponent
                               data={content6}
                               type={type}
                               source={source}
+                              title={"Balancesheet overview"}
                             />
                             <Link href={`${source}`}>
-                              <h3>Source</h3>
+                              <h3 className="mb-20 hover:text-blue-500">Source</h3>
                             </Link>
                           </div>
                           {/* <TestGraphs/> */}
