@@ -402,10 +402,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                               <SelectItem value="gpt-4o">
                                                 OpenAI|GPT-4o
                                               </SelectItem>
-                                              <SelectItem value="gemini-1.5-pro">
+                                              <SelectItem className="cursor-not-allowed" aria-disabled  value="gemini-1.5-pro">
                                                 Google|Gemini Pro
                                               </SelectItem>
-                                              <SelectItem className="cursor-not-allowed" value="claude-3-5-sonnet-20240620">
+                                              <SelectItem className="cursor-not-allowed" aria-disabled value="claude-3-5-sonnet-20240620">
                                                 Anthropic|Sonnet-3.5
                                               </SelectItem>
                                             </SelectContent>
@@ -635,7 +635,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           {/* <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} /> */}
                         </>
                       )}
-                    <h3 className="text-xl">{source}</h3>
+                      <Link href={`${source}`}>
+                      <h3 className="text-xl">source</h3>
+
+                      </Link>
 
                     </CardContent>
                   </Card>
@@ -659,7 +662,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       ) : (
                         <>
                         <MarkdownRenderer tt={content3} />
-      <div className=" py-2   flex  gap-2">
+      <div className=" py-2 mb-10  flex  gap-2">
                             <div className="relative group">
                               <Copy
                                 className="w-5 cursor-pointer hover:text-blue-500"

@@ -409,10 +409,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                               <SelectItem value="gpt-4o">
                                                 OpenAI|GPT-4o
                                               </SelectItem>
-                                              <SelectItem value="gemini-1.5-pro">
+                                              <SelectItem className="cursor-not-allowed" aria-disabled value="gemini-1.5-pro">
                                                 Google|Gemini Pro
                                               </SelectItem>
-                                              <SelectItem className="cursor-not-allowed" value="claude-3-5-sonnet-20240620">
+                                              <SelectItem className="cursor-not-allowed" aria-disabled value="claude-3-5-sonnet-20240620">
                                                 Anthropic|Sonnet-3.5
                                               </SelectItem>
                                             </SelectContent>
