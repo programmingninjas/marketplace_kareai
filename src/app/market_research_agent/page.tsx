@@ -402,10 +402,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                               <SelectItem value="gpt-4o">
                                                 OpenAI|GPT-4o
                                               </SelectItem>
-                                              <SelectItem className="cursor-not-allowed" aria-disabled  value="gemini-1.5-pro">
+                                              <SelectItem className="cursor-not-allowed" disabled  value="gemini-1.5-pro">
                                                 Google|Gemini Pro
                                               </SelectItem>
-                                              <SelectItem className="cursor-not-allowed" aria-disabled value="claude-3-5-sonnet-20240620">
+                                              <SelectItem className="cursor-not-allowed" disabled value="claude-3-5-sonnet-20240620">
                                                 Anthropic|Sonnet-3.5
                                               </SelectItem>
                                             </SelectContent>
@@ -429,7 +429,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </FormLabel>
                               <Input
                               type="file"
-                                className="w-[392px] cursor-not-allowed bg-gray-50 border border-gray-300 rounded-md"
+                              disabled
+                                className="w-[392px] cursor-not-allowed  bg-gray-50 border border-gray-300 rounded-md"
                                 {...field}
                               />
                               <FormMessage />
