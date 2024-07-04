@@ -22,7 +22,7 @@ const useDownload = (filename) => {
 
         // Optional: Parse the filename from the Content-Disposition header if available
         const contentDisposition = response.headers.get('Content-Disposition');
-        let downloadFilename = filename;
+        let downloadFilename = "Report";
         if (contentDisposition) {
           const match = contentDisposition.match(/filename="(.+)"/);
           if (match) {

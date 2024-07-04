@@ -81,19 +81,22 @@ function Page() {
     // setLeft(true)
     
     try {
-      const response = await axios.post(`http://localhost:8000/api/market_research`, {
+      const response = await axios.post(`http://98.70.9.194:8000/api/market_research`, {
         sector: data.sector,
         value_proposition: data.value_proposition,
         model: data.model,
         language: data.language,
-        doc: data.doc
+        //doc: data.doc
       }, {
         headers: {
           "Content-Type": "application/json"
         }
       });
       
-      
+      // Store the response data in local storage
+      localStorage.setItem('marketResearchData', JSON.stringify(response.data));
+  
+      // Set the state with the response data
       setContent(response.data.industry_landscape);
       setContent2(response.data.msgp);
       setContent3(response.data.tt);
@@ -105,20 +108,46 @@ function Page() {
       setType(response.data.type);
       setTittle(response.data.title);
       setSource(response.data.source);
-
+  
       console.log(response);
     } catch (error) {
       toast({
         title: "ERROR API CALL",
-        description:"There is an error in making the call",
-        variant:"destructive"
-      })
+        description: "There is an error in making the call",
+        variant: "destructive"
+      });
       console.error("Error fetching data:", error);
     }
     setIsSubmitting(false);
     setLeft(false);
-    console.log(left)
+    console.log(left);
   };
+  
+  // Function to load data from local storage
+  const loadDataFromLocalStorage = () => {
+    const storedData = localStorage.getItem('marketResearchData');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+  
+      setContent(parsedData.industry_landscape);
+      setContent2(parsedData.msgp);
+      setContent3(parsedData.tt);
+      setContent4(parsedData.in);
+      setContent5(parsedData.top_5);
+      setContent6(parsedData.insights);
+      setWordFile(parsedData.file);
+      setData(parsedData.data);
+      setType(parsedData.type);
+      setTittle(parsedData.title);
+      setSource(parsedData.source);
+    }
+  };
+  
+  // Call this function on component mount or wherever appropriate
+  useEffect(() => {
+    loadDataFromLocalStorage();
+  }, []);
+  
 
   const loadingMessages = [
     "Initializing model...",
@@ -644,7 +673,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     </CardContent>
                   </Card>
                 </TabsContent>
-                <TabsContent className="flex-1 " value="profile">
+                <TabsContent className="flex-1" value="profile">
                   <Card className="h-full w-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">

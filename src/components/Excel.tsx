@@ -148,7 +148,7 @@ const Excel: React.FC<ExcelProps> = ({ balance_sheet,url }) => {
                               />
                               
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Word
+                                Excel
                               </div>
                             </div>
                           </div>

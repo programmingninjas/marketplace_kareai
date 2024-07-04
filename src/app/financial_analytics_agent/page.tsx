@@ -82,16 +82,14 @@ function Page() {
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
-
-    //source setting
-
-      setSector(data.ticker);
-      console.log(sector)
-      setSource(`https://finance.yahoo.com/quote/${sector}`)
-      console.log(source)
-
-    // setLeft(true)
-    
+  
+    // source setting
+    setSector(data.ticker);
+    console.log(sector);
+    const newSource = `https://finance.yahoo.com/quote/${data.ticker}`;
+    setSource(newSource);
+    console.log(newSource);
+  
     try {
       const response = await axios.post(`http://98.70.9.194:8000/api/financial_analytics`, {
         ticker: data.ticker,
@@ -103,30 +101,58 @@ function Page() {
           "Content-Type": "application/json"
         }
       });
-      
-      
+  
+      // Store the response data in local storage
+      localStorage.setItem('financialData', JSON.stringify(response.data));
+  
+      // Set the state with the response data
       setContent(response.data.financial_data.balance_sheet);
       setContent2(response.data.financial_data.income_statement);
       setContent3(response.data.financial_data.cash_flow);
       setContent4(response.data.insights);
       
       setData(response.data.graphs.assets);
-      setContent5(response.data.graphs.liabilities)
-      setContent6(response.data.graphs.balance_sheet)
+      setContent5(response.data.graphs.liabilities);
+      setContent6(response.data.graphs.balance_sheet);
       setType("Pie Chart");
+      
       console.log(response);
     } catch (error) {
       toast({
         title: "ERROR API CALL",
-        description:"There is an error in making the call",
-        variant:"destructive"
-      })
+        description: "There is an error in making the call",
+        variant: "destructive"
+      });
       console.error("Error fetching data:", error);
     }
     setIsSubmitting(false);
     setLeft(false);
-    console.log(left)
+    console.log(left);
   };
+  
+  // Function to load data from local storage
+  const loadDataFromLocalStorage = () => {
+    const storedData = localStorage.getItem('financialData');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+  
+      setContent(parsedData.financial_data.balance_sheet);
+      setContent2(parsedData.financial_data.income_statement);
+      setContent3(parsedData.financial_data.cash_flow);
+      setContent4(parsedData.insights);
+      
+      setData(parsedData.graphs.assets);
+      setContent5(parsedData.graphs.liabilities);
+      setContent6(parsedData.graphs.balance_sheet);
+      setType("Pie Chart");
+    }
+  };
+  
+  // Call this function on component mount or wherever appropriate
+  useEffect(() => {
+    loadDataFromLocalStorage();
+  }, []);
+  
 
   const loadingMessages = [
     "Initializing model...",
@@ -688,19 +714,19 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               data={data}
                               type={type}
                               source={source}
-                              title={"Assets distribution"}
+                              title={"Assets Distribution"}
                             />
                             <GraphComponent
                               data={content5}
                               type={type}
                               source={source}
-                              title={"Liabilities distribution"}
+                              title={"Liabilities Distribution"}
                             />
                             <GraphComponent
                               data={content6}
                               type={type}
                               source={source}
-                              title={"Balancesheet overview"}
+                              title={"Balance Sheet Overview"}
                             />
                             <Link href={`${source}`}>
                               <h3 className="mb-20 hover:text-blue-500">Source</h3>

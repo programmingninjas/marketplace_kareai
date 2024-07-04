@@ -13,10 +13,12 @@ import {
 import React from 'react'
 import Layout from '@/components/Layout'
 import { SignOutButton, SignedIn, UserButton } from '@clerk/nextjs';
+import { useUser } from '@clerk/clerk-react';
 // import { NavbarDemo } from '@/components/Navbar'
 
 
 function page() {
+  const { user } = useUser();
   return (
     <Layout>
 
@@ -24,7 +26,7 @@ function page() {
 
         <div className='w-full h-full px-5 bg--300 '>
           <div className=' w-full flex justify-between items-center p-4 mt-10 '>
-            <h1 className='  font-bold text-3xl font-sans  '><span className='text-[#A785B2]'>Hello,</span> <span className='text-[#540F66]'>Ayan</span>  </h1>
+            <h1 className='  font-bold text-3xl font-sans  '><span className='text-[#A785B2]'>Hello,</span> <span className='text-[#540F66]'>{user?.firstName}</span>  </h1>
             <SignedIn>
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
@@ -52,8 +54,7 @@ function page() {
                 </CardContent>
               </Card>
             </Link>
-            <Link href={"/"}>
-              <Card className='border-2 text-[#540F66]'>
+              <Card className='border-2 text-[#540F66] cursor-not-allowed'>
                 <CardHeader>
                   <CardTitle>Medical Research Agent</CardTitle>
                   <CardDescription>Coming Soon...</CardDescription>
@@ -63,7 +64,6 @@ function page() {
                   <p>for related medical research papers.</p>
                 </CardContent>
               </Card>
-            </Link>
             <Link href={"/financial_analytics_agent"}>
 
               <Card className='border-2 text-[#540F66]'>
