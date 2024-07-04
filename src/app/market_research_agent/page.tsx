@@ -677,7 +677,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   <Card className="h-full w-full">
                     <CardHeader>
                       <CardTitle className="text-zinc-900">
-                      Comparitive Analysis
+                      Competitive Analysis
                       </CardTitle>
                       <CardDescription>
                         Overview of competition in the industry.
