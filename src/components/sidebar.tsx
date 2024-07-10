@@ -20,7 +20,14 @@ const Sidebar: React.FC = () => {
         <div className='flex justify-between items-center w-full'>
           <Link href="/"><Image width={100} height={50} src="/logo.jpg" alt="Logo" className={`h-8 mr-2 ${isOpen ? 'block' : 'hidden'}`} /></Link>
           <button onClick={toggleSidebar} className="focus:outline-none">
-            {isOpen ? <X className="w-6 h-6 text-zinc-900" /> : <Menu className="w-6 h-6 text-zinc-900" />}
+            {isOpen ? <X className="w-6 h-6 text-zinc-900" /> : 
+            <div>
+              <Image
+              width={25}
+              height={100}
+              alt='no'
+              src="/logo2.jpg"/>
+              <Menu className="w-6 h-6 mt text-zinc-900" /></div>}
           </button>
         </div>
       </div>

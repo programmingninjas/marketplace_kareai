@@ -1,8 +1,8 @@
-// import React from 'react';
-// import Spreadsheet from 'react-spreadsheet';
+// // import React from 'react';
+// // import Spreadsheet from 'react-spreadsheet';
 
-// const Excel: React.FC = () => {
-//   const columnLabels = ["Metric", "Value"];
+// // const Excel: React.FC = () => {
+// //   const columnLabels = ["Metric", "Value"];
 
 //   const data = [
 //     [{ value: "Treasury Shares Number" }, { value: 0.0 }],
@@ -92,12 +92,79 @@
 //   ];
 
 //   return (
-//     <div className='w-full h-full'>
-//       <Spreadsheet
-//         className='w-full h-full overflow-auto'
-//         data={data}
-//         columnLabels={columnLabels}
-//       />
+//     <div className='w-full h-full flex flex-col'>
+//       <div className='flex-grow overflow-auto'>
+//         <Spreadsheet
+//           className='w-full h-full'
+//           data={data}
+//           columnLabels={columnLabels}
+//         />
+//       </div>
+//       <div className="bg-gray-900 mb-10 flex gap-2 py-2">
+//         <div className="relative group">
+//           <FileText
+//             className="w-5 cursor-pointer hover:text-blue-500"
+//             onClick={handleDownload}
+//           />
+//           <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+//             Excel
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+  
+
+// // export default Excel;
+
+
+
+// import useDownload from '@/hooks/useDownload';
+// import { FileText } from 'lucide-react';
+// import React, { useState, useEffect } from 'react';
+// import Spreadsheet from 'react-spreadsheet';
+
+// interface ExcelProps {
+//   balance_sheet: any;
+//   url: string;
+// }
+
+
+// const Excel: React.FC<ExcelProps> = ({ balance_sheet, url }) => {
+  
+//   const columnLabels = ["Metric", "Value"];
+
+//   const data = Object.entries(balance_sheet).map(([metric, value]) => [
+//     { value: metric },
+//     { value: value !== null ? value : '' },
+//   ]);
+//   const [filename, setFilename] = useState('');
+
+//   const handleDownload = () => {
+//     setFilename(`${url}`);
+//   };
+//   useDownload(filename);
+
+//   return (
+//     <div className='w-full h-full flex flex-col'>
+//       <div className='flex-grow overflow-auto'>
+//         <Spreadsheet
+//           className='w-full h-full'
+//           data={data}
+//           columnLabels={columnLabels}
+//         />
+//       </div>
+//       <div className="bg--900 mb-10 flex gap-2 py-2">
+//         <div className="relative group">
+//           <FileText
+//             className="w-5 cursor-pointer hover:text-blue-500"
+//             onClick={handleDownload}
+//           />
+//           <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+//             Excel
+//           </div>
+//         </div>
+//       </div>
 //     </div>
 //   );
 // };
@@ -105,22 +172,17 @@
 // export default Excel;
 
 
-
 import useDownload from '@/hooks/useDownload';
 import { FileText } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Spreadsheet from 'react-spreadsheet';
 
 interface ExcelProps {
   balance_sheet: any;
-  url:string
+  url: string;
 }
 
-
-
-  
-
-const Excel: React.FC<ExcelProps> = ({ balance_sheet,url }) => {
+const Excel: React.FC<ExcelProps> = ({ balance_sheet, url }) => {
   const columnLabels = ["Metric", "Value"];
 
   const data = Object.entries(balance_sheet).map(([metric, value]) => [
@@ -133,25 +195,27 @@ const Excel: React.FC<ExcelProps> = ({ balance_sheet,url }) => {
     setFilename(`${url}`);
   };
   useDownload(filename);
+
   return (
-    <div className='w-full h-full'>
-      <Spreadsheet
-        className='w-full h-full overflow-auto'
-        data={data}
-        columnLabels={columnLabels}
-      />
-       <div className=" bg--900 mb-10 flex gap-2 py-2">
-                            <div className="relative group">
-                              <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => handleDownload()}
-                              />
-                              
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Excel
-                              </div>
-                            </div>
-                          </div>
+    <div className='w-full h-full flex flex-col'>
+      <div className='flex-grow overflow-auto custom-spreadsheet'>
+        <Spreadsheet
+          className='w-full h-full'
+          data={data}
+          columnLabels={columnLabels}
+        />
+      </div>
+      <div className="bg--900 mb-10 flex gap-2 py-2">
+        <div className="relative group">
+          <FileText
+            className="w-5 cursor-pointer hover:text-blue-500"
+            onClick={handleDownload}
+          />
+          <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            Excel
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

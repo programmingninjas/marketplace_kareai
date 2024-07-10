@@ -84,8 +84,8 @@
 
     --radius: 0.5rem;
 
-    --primary-color: #540F66;
-    --secondary-color: #A785B2;
+    --primary-color: black;
+    --secondary-color: white;
 
     --scrollbar-track: var(--primary);
     --scrollbar-thumb: var(--secondary);
@@ -95,6 +95,11 @@
     scrollbar-width: thin;
     scrollbar-color: #9d4edd #f3e8ff; /* Thumb color, Track color */
   }
+  .custom-spreadsheet .Spreadsheet__cell {
+    min-width: 200px;  /* Adjust the width */
+    height: 50px;      /* Adjust the height */
+  }
+  
 
   .custom-scrollbar::-webkit-scrollbar {
     width: 10px;

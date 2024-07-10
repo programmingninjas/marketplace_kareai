@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 import useDownloadWord from '@/hooks/useDownloadWord';
 
 import Loader from "@/components/Loader";
-import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelLeft, PanelLeftClose, PanelRightClose, Save, Triangle, WandIcon } from "lucide-react";
+import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, InfoIcon, PanelLeft, PanelLeftClose, PanelRightClose, RefreshCwIcon, Save, Triangle, WandIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -57,6 +57,14 @@ import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import MarkdownRenderer from "@/components/Markdown";
 import { SignedIn, UserButton } from "@clerk/nextjs";
+import router from "next/router";
+const defaultValues = {
+  language: 'english',
+  model: 'llama3-70b-8192',
+  sector: '',
+  value_proposition: '',
+  files: null,
+};
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -75,27 +83,44 @@ function Page() {
   const [graph, setGraph] = useState(false);
   const [left, setLeft] = useState(true);
   const {toast} = useToast();
+  const form = useForm({
+    defaultValues: {
+      sector: '',
+      value_proposition: '',
+      language: 'english',
+      model: 'llama3-70b-8192',
+      Company_name:'',
+      files: null as FileList | null,
+    },
+  });
+
   const onSubmit = async (data: any) => {
     console.log(data);
     setIsSubmitting(true);
-    // setLeft(true)
-    
+
+    const formData = new FormData();
+    formData.append('sector', data.sector);
+    formData.append('value_proposition', data.value_proposition);
+    formData.append('model', data.model);
+    formData.append('language', data.language);
+    // formData.append('Company_name', data.Company_name);
+
+
+    if (data.files && data.files[0]) {
+      formData.append('files', data.files[0]);
+      console.log(data.files[0])
+    }
+
     try {
-      const response = await axios.post(`http://98.70.9.194:8000/api/market_research`, {
-        sector: data.sector,
-        value_proposition: data.value_proposition,
-        model: data.model,
-        language: data.language,
-        //doc: data.doc
-      }, {
+      const response = await axios.post('https://8f48-49-36-144-200.ngrok-free.app/api/market_research', formData, {
         headers: {
-          "Content-Type": "application/json"
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      
+
       // Store the response data in local storage
       localStorage.setItem('marketResearchData', JSON.stringify(response.data));
-  
+
       // Set the state with the response data
       setContent(response.data.industry_landscape);
       setContent2(response.data.msgp);
@@ -108,27 +133,26 @@ function Page() {
       setType(response.data.type);
       setTittle(response.data.title);
       setSource(response.data.source);
-  
+
       console.log(response);
     } catch (error) {
       toast({
-        title: "ERROR API CALL",
-        description: "There is an error in making the call",
-        variant: "destructive"
+        title: 'ERROR API CALL',
+        description: 'There is an error in making the call',
+        variant: 'destructive',
       });
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     }
     setIsSubmitting(false);
     setLeft(false);
     console.log(left);
   };
-  
-  // Function to load data from local storage
+
   const loadDataFromLocalStorage = () => {
     const storedData = localStorage.getItem('marketResearchData');
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-  
+
       setContent(parsedData.industry_landscape);
       setContent2(parsedData.msgp);
       setContent3(parsedData.tt);
@@ -142,23 +166,56 @@ function Page() {
       setSource(parsedData.source);
     }
   };
-  
-  // Call this function on component mount or wherever appropriate
+
   useEffect(() => {
     loadDataFromLocalStorage();
   }, []);
-  
 
-  const loadingMessages = [
-    "Initializing model...",
-    "Fetching information...",
-    "Analysing gathered information...",
-    "Synthesizing information...",
-    "Refining output quality...",
-    "Finalizing analysis...",
-    "Almost ready with your response..."
-  ];
-  
+  const [filename, setFilename] = useState('');
+
+  const handleDownload = (file: string) => {
+    setFilename(file);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+  const toggleInput = () => {
+    setLeft(!left);
+  };
+
+  // Chatbox states
+  const [isopen, setIsopen] = useState<boolean>(false);
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const [selectedText, setSelectedText] = useState<string>('');
+
+  const handleTextSelection = (event: MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const selectedText = window.getSelection()?.toString() || '';
+    setSelectedText(selectedText);
+    if (selectedText.length > 0) {
+      setIsPopupOpen(true);
+    }
+  };
+
+  const refresh = () => {
+    console.log('refreshed');
+    localStorage.clear(); // Clears the local storage
+    toast({
+      title: 'Chat refreshed',
+      description: 'Your chat is now refreshed and local storage is cleared',
+    });
+  };
+
+  const handlePopupClick = () => {
+    setIsPopupOpen(false);
+    setIsopen(true);
+  };
+
+  const handleClose = () => {
+    setIsopen(false);
+  };
+
 
   const customToolbarOptions = [
     [{ 'header': [1, 2, false] }],
@@ -170,17 +227,6 @@ function Page() {
     ['clean'],
   ];
 
-  const form = useForm({
-    defaultValues: {
-      language: 'english',
-      model: 'llama3-70b-8192',
-      sector:"",
-      value_proposition:"",
-      doc:""
-    },
-  });
-  const router = useRouter();
-
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
       alert("Content copied to clipboard");
@@ -188,315 +234,190 @@ function Page() {
       console.error('Could not copy text: ', err);
     });
   };
-
-  // const generatePDF = (content: string, filename: string) => {
-  //   // Create a hidden div element and append the content
-  //   const hiddenDiv = document.createElement('div');
-  //   hiddenDiv.innerHTML = content;
-  //   document.body.appendChild(hiddenDiv);
-
-  //   // Define the pdf options
-  //   const pdfOptions = {
-  //     margin: 1,
-  //     filename: filename,
-  //     image: { type: 'jpeg', quality: 0.98 },
-  //     html2canvas: { scale: 2 },
-  //     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-  //   };
-
-  //   // Convert the hidden div to PDF
-  //   html2pdf().from(hiddenDiv).set(pdfOptions).save().then(() => {
-  //     document.body.removeChild(hiddenDiv); // Clean up after download
-  //   });
-  // };
-
-  // const downloadPDF = (content: string, contentId: string) => {
-  //   generatePDF(content, `${contentId}_market_research.pdf`);
-  // };
-  
- 
-  
-  const [filename, setFilename] = useState('');
-
-  const handleDownload = (file: React.SetStateAction<string>) => {
-    setFilename(file);
-  };
-  useDownloadWord(filename);
-
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-  const toggleInput = () => {
-    setLeft(!left);
-  };
-
-
-//chatbox states
-const [isopen, setIsopen] = useState<boolean>(false);
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-  const [selectedText, setSelectedText] = useState<string>("");
-
-  const handleTextSelection = (event: MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const selectedText = window.getSelection()?.toString() || "";
-    setSelectedText(selectedText);
-    if(selectedText.length > 0){
-      setIsPopupOpen(true);
-
-    } 
-  };
-
-
-  
-  const handlePopupClick = () => {
-    setIsPopupOpen(false);
-    setIsopen(true);
-  };
-
-  const handleClose = () => {
-    setIsopen(false);
-  };
-  // const styles = `
-  // @keyframes slideIn {
-  //   0% {
-  //     transform: translateX(100%);
-  //     opacity: 0;
-  //   }
-  //   100% {
-  //     transform: translateX(0);
-  //     opacity: 1;
-  //   }
-  // }
-  // .animate-slide-in {
-  //   animation: slideIn 0.3s ease-out forwards;
-  // }
-  // `;
-  
-  // document.head.insertAdjacentHTML(
-  //   "beforeend",
-  //   `<style>${styles}</style>`
-  // );
- 
-
-
-  
   return (
     <Layout>
-      <div className="w-full h-screen flex overflow-hidden ">
+      <div className="w-full h-screen flex overflow-x-hidden ">
         <div className="w-full">
-          <div className="py-3 w-full border-b-2 flex justify-between px-3  border-zinc-100"> 
-            <Image
-            src={"/logo.jpg"}
-            alt="no"
-            width={90}
-            height={100}
-            />
-          <SignedIn>
+          <div className="py-3 w-full border-b-2 flex justify-end px-3 border-zinc-100">
+            <SignedIn>
               <UserButton afterSignOutUrl="/sign-in" />
             </SignedIn>
           </div>
-          <div className="w-full  h-full flex  text-base text-zinc-800 overflow-hidden">
+          <div className="w-full h-full flex text-base overflow-hidden text-zinc-800">
             {left ? (
-              <>
-                <div
-                  className={`leftDiv w-1/2 h-full flex flex-col ${
-                    left ? "inline" : "block"
-                  }`}
-                >
-                  <div className="py-4 flex items-center  justify-between pr-6  text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
-                    Market Research Agent
-                    <div className="relative group">
-                      <PanelLeftClose
-                        onClick={toggleInput}
-                        className="cursor-pointer  hover:text-blue-600 "
-                      />
-                      <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 mb-4 bg-white shadow-md text-zinc-900 text-xs rounded opacity-0 group-hover:opacity-100 font-[200] transition-opacity duration-300">
-                        Tap to hide
-                      </div>
+              <div className="leftDiv w-1/2 h-full flex overflow-x-hidden flex-col">
+                <div className="py-4 flex items-center justify-between pr-6 overflow-x-hidden text-zinc-900 font-bold text-3xl ml-6 mb- bg-white">
+                  Category Playbook
+                  <div className="relative group">
+                    <PanelLeftClose
+                      onClick={toggleInput}
+                      className="cursor-pointer hover:text-blue-600"
+                    />
+                    <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 mb-4 bg-white shadow-md text-zinc-900 text-xs rounded opacity-0 group-hover:opacity-100 font-[200] transition-opacity duration-300">
+                      Tap to hide
                     </div>
                   </div>
-                  <div className="p-6 mt-2 flex-1 overflow-hidden">
-                    <Form {...form}>
-                      <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-6"
-                      >
-                        <FormField
-                          name="sector"
-                          control={form.control}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="mb-2  text-2xl font-bold text-zinc-800">
-                                Industry Sector
-                              </FormLabel>
-                              <Input
-                                className="overflow-y-auto mt-2 border border-zinc-400"
-                                {...field}
-                              />
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          name="value_proposition"
-                          control={form.control}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-lg font-semibold">
-                                Value Proposition
-                              </FormLabel>
-                              <Textarea
-        className="h-24 overflow-y-auto border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        {...field}
-      />
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <Accordion
-                          className="border border-gray-400 "
-                          type="single"
-                          collapsible
-                        >
-                          <AccordionItem value="item-1">
-                            <AccordionTrigger className="text-lg p-4">
-                              Advanced Options
-                            </AccordionTrigger>
-                            <AccordionContent className="border-t  border-gray-300">
-                              <div className="flex items-center gap-8 p-4">
-                                <FormField
-                                  name="language"
-                                  control={form.control}
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormLabel className="text-sm font-semibold mb-2">
-                                        Language
-                                      </FormLabel>
-                                      <Controller
-                                        name="language"
-                                        control={form.control}
-                                        render={({ field }) => (
-                                          <Select
-                                            onValueChange={field.onChange}
-                                            value={field.value}
-                                          >
-                                            <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
-                                              <SelectValue placeholder="Select Language" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                              <SelectItem value="english">
-                                                English (US)
-                                              </SelectItem>
-                                              <SelectItem value="hindi">
-                                                Hindi
-                                              </SelectItem>
-                                              <SelectItem value="german">
-                                                German
-                                              </SelectItem>
-                                            </SelectContent>
-                                          </Select>
-                                        )}
-                                      />
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-
-                                <FormField
-                                  name="model"
-                                  control={form.control}
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormLabel className="text-sm font-semibold mb-2">
-                                        Model
-                                      </FormLabel>
-                                      <Controller
-                                        name="model"
-                                        control={form.control}
-                                        render={({ field }) => (
-                                          <Select
-                                            onValueChange={field.onChange}
-                                            value={field.value}
-                                          >
-                                            <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
-                                              <SelectValue placeholder="Select Model" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                              <SelectItem value="llama3-70b-8192">
-                                                KareAI
-                                              </SelectItem>
-                                              <SelectItem value="gpt-4o">
-                                                OpenAI|GPT-4o
-                                              </SelectItem>
-                                              <SelectItem className="cursor-not-allowed" disabled  value="gemini-1.5-pro">
-                                                Google|Gemini Pro
-                                              </SelectItem>
-                                              <SelectItem className="cursor-not-allowed" disabled value="claude-3-5-sonnet-20240620">
-                                                Anthropic|Sonnet-3.5
-                                              </SelectItem>
-                                            </SelectContent>
-                                          </Select>
-                                        )}
-                                      />
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                                  
-                               
-                              </div>
-                              <FormField
-                          name="doc"
-                          control={form.control}
-                          render={({ field }) => (
-                            <FormItem className="ml-4">
-                                      <FormLabel className="text-sm font-semibold mb-2">
-                                      File
-                              </FormLabel>
-                              <Input
-                              type="file"
-                              disabled
-                                className="w-[392px] cursor-not-allowed  bg-gray-50 border border-gray-300 rounded-md"
-                                {...field}
-                              />
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                            </AccordionContent>
-                          </AccordionItem>
-                        </Accordion>
-
-                        <Button
-                          type="submit"
-                          className="w-full bg-gradient-to-r from-purple-700 to-[#540F66]"
-                          disabled={isSubmitting}
-                        >
-                          {isSubmitting ? (
-                            <>
-                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                              Please wait
-                            </>
-                          ) : (
-                            <>
-                              <WandIcon className="m-2" />
-                              Run Agent
-                            </>
-                          )}
-                        </Button>
-                      </form>
-                    </Form>
-                  </div>
                 </div>
-              </>
+                <div className="px-6 py-2 mt- overflow-y-auto flex-1">
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                      <FormField
+                        name="sector"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="mb-2 text-2xl font-bold text-zinc-800">Category Name</FormLabel>
+                            <Input placeholder="Enter your category" className="overflow-y-auto mt-2 border border-zinc-400" {...field} />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        name="value_proposition"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-lg font-semibold">Product/Service</FormLabel>
+                            <Textarea
+                              placeholder="Enter the Product/Service description name"
+                              className="h-24 overflow-y-auto border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                              {...field}
+                            />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                         <FormField
+                        name="Company_name"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex items-center gap-2">
+                            <FormLabel className="text-lg font-semibold">Company Name </FormLabel>
+
+                            <div className="relative group">
+                              <InfoIcon
+                                className="w-4 cursor-pointer hover:text-blue-500"
+                                
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Enter the name of the company
+                              </div>
+                            </div>
+                            </div>
+                            
+                            <Textarea
+                              placeholder="Enter the company name"
+                              className="h-24 overflow-y-auto border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                              {...field}
+                            />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Accordion className="border border-gray-400" type="single" collapsible>
+                        <AccordionItem value="item-1">
+                          <AccordionTrigger className="text-lg p-4">Advanced Options</AccordionTrigger>
+                          <AccordionContent className="border-t border-gray-300">
+                            <div className="flex items-center gap-8 p-4">
+                              <FormField
+                                name="language"
+                                control={form.control}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel className="text-sm font-semibold mb-2">Language</FormLabel>
+                                    <Controller
+                                      name="language"
+                                      control={form.control}
+                                      render={({ field }) => (
+                                        <Select onValueChange={field.onChange} value={field.value}>
+                                          <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                                            <SelectValue placeholder="Select Language" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="english">English (US)</SelectItem>
+                                            <SelectItem value="hindi">Hindi</SelectItem>
+                                            <SelectItem value="german">German</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      )}
+                                    />
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                name="model"
+                                control={form.control}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel className="text-sm font-semibold mb-2">Model</FormLabel>
+                                    <Controller
+                                      name="model"
+                                      control={form.control}
+                                      render={({ field }) => (
+                                        <Select onValueChange={field.onChange} value={field.value}>
+                                          <SelectTrigger className="w-[180px] bg-gray-50 border border-gray-300 rounded-md">
+                                            <SelectValue placeholder="Select Model" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="llama3-70b-8192">Default</SelectItem>
+                                            <SelectItem value="gpt-4o">Premium</SelectItem>
+                                            
+                                          </SelectContent>
+                                        </Select>
+                                      )}
+                                    />
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                            <FormField
+                              name="files"
+                              control={form.control}
+                              render={({ field }) => (
+                                <FormItem className="ml-4">
+                                  <FormLabel className="text-sm font-semibold mb-2">File</FormLabel>
+                                  <Input
+                                      type="file"
+                                      className="w-[392px] cursor-pointer bg-gray-50 border border-gray-300 rounded-md"
+                                      onChange={(e) => {
+                                        const files = e.target.files;
+                                        if (files) {
+                                          field.onChange(files);
+                                        }
+                                      }}
+                                    />
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                      <Button type="submit" className="w-full bg-gradient-to-r from-purple-700 to-[#540F66]" disabled={isSubmitting}>
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Please wait
+                          </>
+                        ) : (
+                          <>
+                            <WandIcon className="m-2" />
+                            Run Agent
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                </div>
+              </div>
             ) : (
-              ""
+              ''
             )}
 
-            <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900   py-2 overflow-y-auto "  onMouseUp={handleTextSelection}>
+            <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900 overflow-x-hidden   py-2 overflow-y-auto "  onMouseUp={handleTextSelection}>
               <Tabs className="w-full bg--200 " defaultValue="account">
                 <TabsList
                   className={`flex w-full ${
@@ -509,9 +430,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                   />
                   <TabsTrigger value="account">Industry Landscape</TabsTrigger>
                   <TabsTrigger value="password">Market Size</TabsTrigger>
-                  <TabsTrigger value="Graphs">Graphs</TabsTrigger>
+                  <TabsTrigger value="Graphs">Visualisation</TabsTrigger>
                   <TabsTrigger value="profile">Comparitive analysis</TabsTrigger>
-                  <TabsTrigger value="settings">News</TabsTrigger>
+                  <TabsTrigger value="settings">Category Alert</TabsTrigger>
                   <TabsTrigger value="billing">Predictions</TabsTrigger>
                   <TabsTrigger value="support">Recommendations</TabsTrigger>
                 </TabsList>
@@ -530,7 +451,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       </CardDescription>
                     </CardHeader>
                       <CardContent
-                        className="h-full overflow-hidden"
+                      className="h-full w-full overflow-y-auto  "
                         id="content1"
                       >
                         {isSubmitting ? (
@@ -540,12 +461,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           </div>
                         ) : (
                           <>
-                            <ReactQuill
-                              className="h-[400px] py-2 mb-10"
-                              modules={{ toolbar: customToolbarOptions }}
-                              value={content}
-                              onChange={setContent}
-                            />
+                                                     <MarkdownRenderer tt={content} />
+
                             <div className=" py-2   flex  gap-2">
                               <div className="relative group">
                                 <Copy
@@ -555,17 +472,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Copy
                                 </div>
-                              </div>
-                              <div className="relative group">
-                                {/* <Save
-                                  className="w-5 cursor-pointer hover:text-blue-500"
-                                  // onClick={() =>
-                                  //   downloadPDF(content, "industry_landscape")
-                                  // }
-                                /> */}
-                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  PDF
-                                </div>
+                               
                               </div>
                               <div className="relative group">
                                 <FileText
@@ -576,6 +483,28 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                   Word
                                 </div>
                               </div>
+                              <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                              
+                              <div className="relative group">
+                                {/* <Save
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  // onClick={() =>
+                                  //   downloadPDF(content, "industry_landscape")
+                                  // }
+                                /> */}
+                                {/* <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  PDF
+                                </div> */}
+                              </div>
+                            
                             </div>
                           </>
                         )}
@@ -603,12 +532,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <Loader  />
                       ) : (
                         <>
-                          <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            modules={{ toolbar: customToolbarOptions }}
-                            value={content2}
-                            onChange={setContent2}
-                          />
+                                                    <MarkdownRenderer tt={content2} />
+
 
                           <div className=" py-2   flex  gap-2">
                             <div className="relative group">
@@ -621,6 +546,24 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => handleDownload(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                              <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                            <div className="relative group">
                               {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() =>
@@ -631,15 +574,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 PDF
                               </div>
                             </div>
-                            <div className="relative group">
-                              <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                          onClick={() => handleDownload(wordFile)}
-                              />
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Word
-                              </div>
-                            </div>
+
+                           
                           </div>
                         </>
                       )}
@@ -665,10 +601,13 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           {/* <ReactQuill className="h-[400px] py-2 mb-10" modules={{toolbar:customToolbarOptions}} value={content} onChange={setContent} /> */}
                         </>
                       )}
-                      <Link href={`${source}`}>
-                      <h3 className="text-xl">source</h3>
+                       {/* <Link href={source} passHref>
+        <a target="_blank" rel="noopener noreferrer">
+          <h3 className="text-xl">source</h3>
+        </a>
+      </Link> */}
+                            <h3 className="text-xl"  onClick={() => router.push(`${source}`)}>source</h3>
 
-                      </Link>
 
                     </CardContent>
                   </Card>
@@ -703,6 +642,24 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => handleDownload(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                              <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                            <div className="relative group">
                               {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() =>
@@ -713,15 +670,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 PDF
                               </div>
                             </div>
-                            <div className="relative group">
-                              <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                          onClick={() => handleDownload(wordFile)}
-                              />
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Word
-                              </div>
-                            </div>
+                            
                           </div>
                         </>
                       )}
@@ -747,12 +696,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <Loader  />
                       ) : (
                         <>
-                          <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            value={content4}
-                            modules={{ toolbar: customToolbarOptions }}
-                            onChange={setContent4}
-                          />
+                                                    <MarkdownRenderer tt={content4} />
+
                           <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <Copy
@@ -764,6 +709,24 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => handleDownload(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                              <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                            <div className="relative group">
                               {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() => downloadPDF(content4, "News")}
@@ -772,15 +735,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 PDF
                               </div>
                             </div>
-                            <div className="relative group">
-                              <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                          onClick={() => handleDownload(wordFile)}
-                              />
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Word
-                              </div>
-                            </div>
+                            
                           </div>
                         </>
                       )}
@@ -805,12 +760,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <Loader  />
                       ) : (
                         <>
-                          <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            value={content5}
-                            modules={{ toolbar: customToolbarOptions }}
-                            onChange={setContent5}
-                          />
+                                                    <MarkdownRenderer tt={content5} />
+
                           <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <Copy
@@ -822,6 +773,24 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => handleDownload(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                              <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                            <div className="relative group">
                               {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() =>
@@ -832,15 +801,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 PDF
                               </div>
                             </div>
-                            <div className="relative group">
-                              <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                          onClick={() => handleDownload(wordFile)}
-                              />
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Word
-                              </div>
-                            </div>
+                            
                           </div>
                         </>
                       )}
@@ -865,12 +826,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader />
                       ) : (
                         <>
-                          <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            modules={{ toolbar: customToolbarOptions }}
-                            value={content6}
-                            onChange={setContent6}
-                          />
+                                                   <MarkdownRenderer tt={content6} />
+
                           <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <Copy
@@ -882,6 +839,24 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                             <div className="relative group">
+                                <FileText
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => handleDownload(wordFile)}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Word
+                                </div>
+                              </div>
+                              <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                            <div className="relative group">
                               {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
                                 // onClick={() =>
@@ -892,15 +867,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 PDF
                               </div>
                             </div>
-                            <div className="relative group">
-                              <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                          onClick={() => handleDownload(wordFile)}
-                              />
-                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Word
-                              </div>
-                            </div>
+                            
                           </div>
                         </>
                       )}

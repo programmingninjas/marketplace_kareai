@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { ResponsivePie } from "@nivo/pie";
 import { ResponsiveBar } from "@nivo/bar";
+import router, { useRouter } from "next/router";
 interface props{
     data : any,
     type: string,
@@ -15,6 +16,7 @@ interface props{
 const GraphComponent: React.FC<props> = ({data,type, source,title}) => {
     const [graphData, setGraphData] = useState<any>(data);
     const [graphType, setGraphType] = useState<string | null>(type);
+    const router = useRouter();
 console.log(data);
 
 
@@ -73,8 +75,8 @@ console.log(data);
                          }}
                      />
                  )}
-
-             </div>
+                            <h3 className="text-xl"  onClick={() => router.push(`${source}`)}>source</h3>
+                            </div>
          </main>
      );
  };

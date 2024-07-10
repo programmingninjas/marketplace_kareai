@@ -59,6 +59,7 @@ import MarkdownRenderer from "@/components/Markdown";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import Excel from "@/components/Excel";
 import TestGraphs from "@/components/GraphC";
+import Component from "@/components/GraphFc";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -343,7 +344,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           )}
                         />
 
-                        <FormField
+                        {/* <FormField
                           name="value_proposition"
                           control={form.control}
                           render={({ field }) => (
@@ -358,7 +359,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
 
                         <Accordion
                           className="border border-gray-400 "
@@ -435,10 +436,18 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                               <SelectItem value="gpt-4o">
                                                 OpenAI|GPT-4o
                                               </SelectItem>
-                                              <SelectItem className="cursor-not-allowed" disabled value="gemini-1.5-pro">
+                                              <SelectItem
+                                                className="cursor-not-allowed"
+                                                disabled
+                                                value="gemini-1.5-pro"
+                                              >
                                                 Google|Gemini Pro
                                               </SelectItem>
-                                              <SelectItem className="cursor-not-allowed" disabled value="claude-3-5-sonnet-20240620">
+                                              <SelectItem
+                                                className="cursor-not-allowed"
+                                                disabled
+                                                value="claude-3-5-sonnet-20240620"
+                                              >
                                                 Anthropic|Sonnet-3.5
                                               </SelectItem>
                                             </SelectContent>
@@ -531,13 +540,14 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     onClick={toggleInput}
                     className={`cursor-pointer ${left ? "hidden" : "block"}`}
                   />
+                  <TabsTrigger value="Graphs">Dashboard</TabsTrigger>
+                  <TabsTrigger value="insights">Insights</TabsTrigger>
+
                   <TabsTrigger value="Balance sheet">Balance sheet</TabsTrigger>
                   <TabsTrigger value="Income Statement">
                     Income Statement
                   </TabsTrigger>
                   <TabsTrigger value="Cash flow">Cash flow</TabsTrigger>
-                  <TabsTrigger value="insights">Insights</TabsTrigger>
-                  <TabsTrigger value="Graphs">Graphs</TabsTrigger>
                 </TabsList>
                 <TabsContent className="flex-1 " value="Balance sheet">
                   <Card className="h-full w-full">
@@ -546,8 +556,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         Balance Sheet
                       </CardTitle>
                       <CardDescription>
-                        Overview of balance sheet of the provided the
-                        ticker symbol.
+                        Overview of balance sheet of the provided the ticker
+                        symbol.
                       </CardDescription>
                     </CardHeader>
                     <CardContent
@@ -560,7 +570,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <>
                           {/* <MarkdownRenderer tt={content3} /> */}
                           <div className="w-full bg--100 h-full">
-                            <Excel balance_sheet={content} url={"api/download_balance_sheet/"} />
+                            <Excel
+                              balance_sheet={content}
+                              url={"api/download_balance_sheet/"}
+                            />
                           </div>
                           {/* <div className=" py-2   flex  gap-2">
                             <div className="relative group">
@@ -609,8 +622,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               </div>
                             </div>
                           </div> */}
-                          <Excel balance_sheet={content2} url={"api/download_income_statement/"} />
-                         
+                          <Excel
+                            balance_sheet={content2}
+                            url={"api/download_income_statement/"}
+                          />
                         </>
                       )}
                     </CardContent>
@@ -619,12 +634,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                 <TabsContent className="flex-1 " value="Cash flow">
                   <Card className="h-full w-full">
                     <CardHeader>
-                      <CardTitle className="text-zinc-900">
-                        Cash Flow 
-                      </CardTitle>
+                      <CardTitle className="text-zinc-900">Cash Flow</CardTitle>
                       <CardDescription>
-                        Overview of Cash Flow of the provided ticker
-                        symbol.
+                        Overview of Cash Flow of the provided ticker symbol.
                       </CardDescription>
                     </CardHeader>
                     <CardContent
@@ -636,7 +648,10 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       ) : (
                         <>
                           {/* <MarkdownRenderer tt={content3} /> */}
-                          <Excel balance_sheet={content3} url={"api/download_cash_flow/"} />
+                          <Excel
+                            balance_sheet={content3}
+                            url={"api/download_cash_flow/"}
+                          />
                           {/* <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
@@ -683,7 +698,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => handleDownload("api/download_insights/")}
+                                onClick={() =>
+                                  handleDownload("api/download_insights/")
+                                }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Word
@@ -704,12 +721,11 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       </CardDescription>
                     </CardHeader>
                     <CardContent className=" h-full overflow-hidden justify-center text-center">
-
                       {isSubmitting ? (
                         <Loader />
                       ) : (
                         <>
-                          <div className="w-full flex flex-col gap-3">
+                          {/* <div className="w-full flex flex-col gap-3">
                             <GraphComponent
                               data={data}
                               type={type}
@@ -731,6 +747,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             <Link href={`${source}`}>
                               <h3 className="mb-20 hover:text-blue-500">Source</h3>
                             </Link>
+                          </div> */}
+                          <div className="w-full h-full">
+                            <Component />
                           </div>
                           {/* <TestGraphs/> */}
 

@@ -14,6 +14,9 @@ import React from 'react'
 import Layout from '@/components/Layout'
 import { SignOutButton, SignedIn, UserButton } from '@clerk/nextjs';
 import { useUser } from '@clerk/clerk-react';
+import CardComponent from '@/components/CardComponent'
+import TabsDemo from '@/components/helper'
+import { Input } from '@/components/ui/input'
 // import { NavbarDemo } from '@/components/Navbar'
 
 
@@ -24,65 +27,34 @@ function page() {
 
       <div className=' w-full h-full'>
 
-        <div className='w-full h-full px-5 bg--300 '>
-          <div className=' w-full flex justify-between items-center p-4 mt-10 '>
-            <h1 className='  font-bold text-3xl font-sans  '><span className='text-[#A785B2]'>Hello,</span> <span className='text-[#540F66]'>{user?.firstName}</span>  </h1>
+          <div className=' w-full flex justify-between items-center px-6 py-4 mt-10 '>
+            <h1 className='  font-bold text-3xl font-sans  '><span className='text-black'>Hello,</span> <span className='text-black'>Ayan</span>  </h1>
+            <div className='flex gap-2'>
+            <Input placeholder='Search Workflows' className='w-[600px] '/>
+            <Button className='w-[4.5rem] h-10 bg-gradient-to-r from-purple-700 to-[#540F66]'>Search</Button>
+
+            </div>
             <SignedIn>
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
           </div>
-          <div className='w-full mt-5 pl-4 py-7'>
-            <Button className='  w-20 hover:drop-shadow-lg transition-all h-7 text-black bg-white border-2 rounded-2xl' >All
-              <span className='bg-zinc-100 border rounded-full w-5 h-5 text-[10px] ml-2 flex justify-center items-center'>4</span>
-            </Button>
-            <Button className=' m-3 w-auto hover:drop-shadow-lg transition-all h-7 text-black bg-white border-2 rounded-2xl' >Research Agents         <span className='bg-zinc-100 border rounded-full w-5 h-5 text-[10px] ml-2 flex justify-center items-center'>2</span>
-            </Button>
-            <Button className=' w-auto hover:drop-shadow-lg transition-all h-7 text-black bg-white border-2 rounded-2xl' >Analytics Agents<span className='bg-zinc-100 border rounded-full w-5 h-5 text-[10px] ml-2 flex justify-center items-center'>2</span>
-            </Button>
-          </div>
-          <div className='w-full py-5 flex gap-5 '>
-
-            <Link href={"/market_research_agent"}>
-              <Card className='border-2 text-[#540F66]'>
-                <CardHeader>
-                  <CardTitle>Market Research agent</CardTitle>
-                  <CardDescription>Generates an Industry Landscape Report</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Based on the selected industry this</p>
-                  <p>agent will give you insights about market.</p>
-                </CardContent>
-              </Card>
-            </Link>
-              <Card className='border-2 text-[#540F66] cursor-not-allowed'>
-                <CardHeader>
-                  <CardTitle>Medical Research Agent</CardTitle>
-                  <CardDescription>Coming Soon...</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Based on the query given it searches</p>
-                  <p>for related medical research papers.</p>
-                </CardContent>
-              </Card>
-            <Link href={"/financial_analytics_agent"}>
-
-              <Card className='border-2 text-[#540F66]'>
-                <CardHeader>
-                  <CardTitle>Financial Analytics Agent</CardTitle>
-                  <CardDescription>Generates Financial Insights</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Based on company it analyses the earnings</p>
-                  <p>of the company and generates insights.</p>
-                </CardContent>
-              </Card>
-            </Link>
-
+          <div className='mt-3 p-5 ml-24 bg--50 flex justify-center items-center'>
+            <div className='tracking-tight w-[50%] text-center justify-items-start whitespace-normal '>Lorem ipsmet consectetur  elit. Magni ipsa inventore beatae similique rem. Accusamus sit recusandae optio earum aperiam deleniti dolor beatae, commodi maiores nisi quae atque vero maxime.cusantium alias at doloribus quibusdam sit ea ex delectus  </div>
           </div>
 
+          {/* <div className='w-[85%] mt-20 flex justify-evenly items-center m-auto bg-'  >
+            <CardComponent/>
+            <CardComponent/>
+            <CardComponent/>
+
+          </div> */}
+          <div className='flex items-center justify-center'>
+          <TabsDemo/>
+
+          </div>
+         
 
         </div>
-      </div>
 
     </Layout>
   )
