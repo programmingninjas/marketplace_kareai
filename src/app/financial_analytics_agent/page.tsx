@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 import useDownload from '@/hooks/useDownload';
 
 import Loader from "@/components/Loader";
-import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelLeft, PanelLeftClose, PanelRightClose, Save, Triangle, WandIcon } from "lucide-react";
+import { BarChart, BarChart2Icon, BarChart3, Copy, File, FileText, GitGraph, GitGraphIcon, PanelLeft, PanelLeftClose, PanelRightClose, RefreshCwIcon, Save, Triangle, WandIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -151,6 +151,25 @@ function Page() {
   useEffect(() => {
     loadDataFromLocalStorage();
   }, []);
+
+  const [refreshTriggered, setRefreshTriggered] = useState(false);
+
+  const refresh = () => {
+    console.log('refreshed');
+    setRefreshTriggered(true); // Set state to trigger useEffect
+    toast({
+      title: 'Chat refreshed',
+      description: 'Your chat is now refreshed and local storage is cleared',
+    });
+  };
+
+  useEffect(() => {
+    if (refreshTriggered) {
+      localStorage.clear(); // Clears the local storage
+      setRefreshTriggered(false); // Reset state after clearing local storage
+    }
+  }, [refreshTriggered]);
+
   
 
   const loadingMessages = [
@@ -572,6 +591,28 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               url={"api/download_balance_sheet/"}
                             />
                           </div>
+                          <div className=" py-2 mb-7  flex  gap-2">
+                            <div className="relative group">
+                              <FileText
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() =>
+                                  handleDownload("api/download_insights/")
+                                }
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Word
+                              </div>
+                            </div>
+                            <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                          </div>
                           {/* <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
@@ -623,6 +664,28 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             balance_sheet={content2}
                             url={"api/download_income_statement/"}
                           />
+                           <div className=" py-2 mb-7  flex  gap-2">
+                            <div className="relative group">
+                              <FileText
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() =>
+                                  handleDownload("api/download_insights/")
+                                }
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Word
+                              </div>
+                            </div>
+                            <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                          </div>
                         </>
                       )}
                     </CardContent>
@@ -686,7 +749,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                       ) : (
                         <>
                          <MarkdownRenderer tt={content4}/>
-                          <div className=" py-2   flex  gap-2">
+                          <div className=" py-2 mb-7  flex  gap-2">
                             <div className="relative group">
                               <FileText
                                 className="w-5 cursor-pointer hover:text-blue-500"
@@ -698,6 +761,15 @@ const [isopen, setIsopen] = useState<boolean>(false);
                                 Word
                               </div>
                             </div>
+                            <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
                           </div>
                         </>
                       )}
@@ -742,6 +814,28 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           </div> */}
                           <div className="w-full h-full">
                             <Component financialData={graph} />
+                          </div>
+                          <div className=" py-2 mb-7  flex  gap-2">
+                            <div className="relative group">
+                              <FileText
+                                className="w-5 cursor-pointer hover:text-blue-500"
+                                onClick={() =>
+                                  handleDownload("api/download_insights/")
+                                }
+                              />
+                              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Word
+                              </div>
+                            </div>
+                            <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
                           </div>
                           {/* <TestGraphs/> */}
 

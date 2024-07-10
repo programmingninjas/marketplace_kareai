@@ -6,15 +6,25 @@ import { Tabs } from "@/components/ui/tabs2";
 import CardComponent from "@/components/CardComponent";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import Link from "next/link";
 export default function TabsDemo() {
   const tabs = [
     {
       title: "Product",
       value: "product",
       content: (<div className="flex gap-4">
-        <CardComponent name= {"Market Research Agent"}/>
-        <CardComponent name= {"Medical Research Agent"}/>
-        <CardComponent name= {"Financial Analytics Agent"}/>
+<Link href={"/market_research_agent"}>
+          <CardComponent name= {"Category Playbook"} />
+
+          </Link>
+          <Link href={"/medical_research_agent"}>
+          <CardComponent name= {"Medical Research Agent"} />
+
+          </Link>
+          <Link href={"/financial_analytics_agent"}>
+          <CardComponent name= {"Ai Analyst OS"} />
+
+          </Link>
 
         </div>
 
@@ -26,7 +36,10 @@ export default function TabsDemo() {
       value: "services",
       content: (
         <div className="flex gap-5">
-          <CardComponent name= {"Market Research Agent"}/>
+          <Link href={"/market_research_agent"}>
+          <CardComponent name= {"Category Playbook"} />
+
+          </Link>
         <CardComponent name= {"Medical Research Agent"}/>
         <CardComponent name= {"Financial Analytics Agent"}/>
 
@@ -41,7 +54,7 @@ export default function TabsDemo() {
       content: (
         <div className="flex gap-5">
           
-          <CardComponent name= {"Market Research Agent"}/>
+          <CardComponent name= {"Category Playbook"}/>
         <CardComponent name= {"Medical Research Agent"}/>
         <CardComponent name= {"Financial Analytics Agent"}/>
         </div>

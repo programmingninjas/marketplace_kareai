@@ -198,14 +198,23 @@ function Page() {
     }
   };
 
+  const [refreshTriggered, setRefreshTriggered] = useState(false);
+
   const refresh = () => {
     console.log('refreshed');
-    localStorage.clear(); // Clears the local storage
+    setRefreshTriggered(true); // Set state to trigger useEffect
     toast({
       title: 'Chat refreshed',
       description: 'Your chat is now refreshed and local storage is cleared',
     });
   };
+
+  useEffect(() => {
+    if (refreshTriggered) {
+      localStorage.clear(); // Clears the local storage
+      setRefreshTriggered(false); // Reset state after clearing local storage
+    }
+  }, [refreshTriggered]);
 
   const handlePopupClick = () => {
     setIsPopupOpen(false);

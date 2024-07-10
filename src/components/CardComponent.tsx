@@ -26,8 +26,8 @@ const CardComponent: React.FC<Props> = ({ name }) => {
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Based on company it analyses the earnings</p>
-        <p>of the company and generates insights.</p>
+        <p>Based on company it analyses the earnings of the company and generates insights.</p>
+        <p></p>
         <div className='flex gap-2 mt-5'>
           <div className="rounded-full bg-gradient-to-r from-purple-700 to-[#540F66] px-3 py-1 w-[6rem] text-xs font-medium text-primary-foreground flex items-center justify-center">
             <span>framework</span>

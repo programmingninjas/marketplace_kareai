@@ -205,7 +205,7 @@ const Excel: React.FC<ExcelProps> = ({ balance_sheet, url }) => {
           columnLabels={columnLabels}
         />
       </div>
-      <div className="bg--900 mb-10 flex gap-2 py-2">
+      {/* <div className="bg--900 mb-10 flex gap-2 py-2">
         <div className="relative group">
           <FileText
             className="w-5 cursor-pointer hover:text-blue-500"
@@ -215,7 +215,7 @@ const Excel: React.FC<ExcelProps> = ({ balance_sheet, url }) => {
             Excel
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

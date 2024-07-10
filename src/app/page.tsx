@@ -27,21 +27,20 @@ function page() {
 
       <div className=' w-full h-full'>
 
-          <div className=' w-full flex justify-center items-center px-6 py-4 mt-10 '>
-            {/* <h1 className='  font-bold text-3xl font-sans  '><span className='text-black'>Hello,</span> <span className='text-black'>Ayan</span>  </h1> */}
-            <div className='flex gap-1 '>
+          <div className=' w-full flex justify-between items-center px-6 py-4 mt-10 '>
+            <h1 className='  font-bold text-3xl font-sans  '><span className='text-black'>Hello,</span> <span className='text-black'>Ayan</span>  </h1>
+            <div className='flex gap-3 mr-14 '>
             <Input placeholder='Search Workflows' className='w-[500px] '/>
             <Button className='w-[4.5rem] h-10 bg-gradient-to-r from-purple-700 to-[#540F66]'>Search</Button>
 
             </div>
-           
-          </div>
-          <div className='flex justify-end mb-20  bg--200'>
-          <SignedIn>
+            <div className='bg h-full flex justify-end'>
+            <SignedIn>
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
+            </div>
+            
           </div>
-
           
 
           {/* <div className='w-[85%] mt-20 flex justify-evenly items-center m-auto bg-'  >

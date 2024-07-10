@@ -68,7 +68,7 @@ const GraphComponent: React.FC<Props> = ({ data, type, source, title }) => {
             }}
           />
         )}
-        <a href={`${source}`} target="_blank" rel="noopener noreferrer">
+    <a href={`${source}`} target="_blank" rel="noopener noreferrer">
           <h3 className="text-xl">source</h3>
         </a>
       </div>
