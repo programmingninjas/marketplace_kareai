@@ -258,7 +258,7 @@ function Page() {
                     </div>
                   </div>
                 </div>
-                <div className="px-6 py-2 mt- overflow-y-auto flex-1">
+                <div className="px-6 py-2 mt-1 overflow-y-auto flex-1">
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                       <FormField
@@ -266,7 +266,7 @@ function Page() {
                         control={form.control}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="mb-2 text-2xl font-bold text-zinc-800">Category Name</FormLabel>
+                            <FormLabel className="mb-2 text-lg font-bold text-zinc-800">Category Name</FormLabel>
                             <Input placeholder="Enter your category" className="overflow-y-auto mt-2 border border-zinc-400" {...field} />
                             <FormMessage />
                           </FormItem>
@@ -277,6 +277,7 @@ function Page() {
                         control={form.control}
                         render={({ field }) => (
                           <FormItem>
+                            
                             <FormLabel className="text-lg font-semibold">Product/Service</FormLabel>
                             <Textarea
                               placeholder="Enter the Product/Service description name"
@@ -292,10 +293,11 @@ function Page() {
                         control={form.control}
                         render={({ field }) => (
                           <FormItem>
-                            <div className="flex items-center gap-2">
-                            <FormLabel className="text-lg font-semibold">Company Name </FormLabel>
+                                                        <FormLabel className="text-lg font-semibold">Company Name </FormLabel>
 
-                            <div className="relative group">
+                            {/* <div className="flex items-center gap-2">
+
+                            <div className="ibutton relative group">
                               <InfoIcon
                                 className="w-4 cursor-pointer hover:text-blue-500"
                                 
@@ -304,7 +306,7 @@ function Page() {
                                 Enter the name of the company
                               </div>
                             </div>
-                            </div>
+                            </div> */}
                             
                             <Textarea
                               placeholder="Enter the company name"
@@ -420,7 +422,7 @@ function Page() {
             <div className="w-full   h-full border-l-2  border-zinc-100 flex justify-center text-zinc-900 overflow-x-hidden   py-2 overflow-y-auto "  onMouseUp={handleTextSelection}>
               <Tabs className="w-full bg--200 " defaultValue="account">
                 <TabsList
-                  className={`flex w-full ${
+                  className={`flex w-full px-6 ${
                     left ? "justify-evenly" : "justify-around gap-12"
                   } text-zinc-900`}
                 >
@@ -431,7 +433,7 @@ function Page() {
                   <TabsTrigger value="account">Industry Landscape</TabsTrigger>
                   <TabsTrigger value="password">Market Size</TabsTrigger>
                   <TabsTrigger value="Graphs">Visualisation</TabsTrigger>
-                  <TabsTrigger value="profile">Comparitive analysis</TabsTrigger>
+                  <TabsTrigger value="profile">Competitive analysis</TabsTrigger>
                   <TabsTrigger value="settings">Category Alert</TabsTrigger>
                   <TabsTrigger value="billing">Predictions</TabsTrigger>
                   <TabsTrigger value="support">Recommendations</TabsTrigger>

@@ -72,10 +72,9 @@ function Page() {
   const [tittle, setTittle] = useState("title");
   const [source, setSource] = useState("");
 
-  const [data, setData] = useState();
   const [type, setType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [graph, setGraph] = useState(false);
+  const [graph, setGraph] = useState("");
   const [left, setLeft] = useState(true);
   const {toast} = useToast();
   const [sector, setSector] = useState("")
@@ -92,7 +91,7 @@ function Page() {
     console.log(newSource);
   
     try {
-      const response = await axios.post(`http://98.70.9.194:8000/api/financial_analytics`, {
+      const response = await axios.post(`https://8656-2405-201-4041-c8-4024-3761-3abb-befd.ngrok-free.app/api/financial_analytics`, {
         ticker: data.ticker,
         year: data.year,
         model: data.model,
@@ -112,9 +111,8 @@ function Page() {
       setContent3(response.data.financial_data.cash_flow);
       setContent4(response.data.insights);
       
-      setData(response.data.graphs.assets);
-      setContent5(response.data.graphs.liabilities);
-      setContent6(response.data.graphs.balance_sheet);
+      setGraph(response.data.graphs);
+      
       setType("Pie Chart");
       
       console.log(response);
@@ -141,10 +139,10 @@ function Page() {
       setContent2(parsedData.financial_data.income_statement);
       setContent3(parsedData.financial_data.cash_flow);
       setContent4(parsedData.insights);
+      setGraph(parsedData.graphs);
+
       
-      setData(parsedData.graphs.assets);
-      setContent5(parsedData.graphs.liabilities);
-      setContent6(parsedData.graphs.balance_sheet);
+      
       setType("Pie Chart");
     }
   };
@@ -184,7 +182,6 @@ function Page() {
       year:'2020',
       model: 'llama3-70b-8192',
       ticker:"",
-      value_proposition:"",
       
 
     },
@@ -688,12 +685,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <Loader />
                       ) : (
                         <>
-                          <ReactQuill
-                            className="h-[400px] py-2 mb-10"
-                            modules={{ toolbar: customToolbarOptions }}
-                            value={content4}
-                            onChange={setContent4}
-                          />
+                         <MarkdownRenderer tt={content4}/>
                           <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
@@ -715,7 +707,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                 <TabsContent className="flex-1 overflow-hidden" value="Graphs">
                   <Card className="h-full ">
                     <CardHeader>
-                      <CardTitle className="text-zinc-900">Graph</CardTitle>
+                      <CardTitle className="text-zinc-900">Dashboard</CardTitle>
                       <CardDescription>
                         Visualization of financial data.
                       </CardDescription>
@@ -749,7 +741,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             </Link>
                           </div> */}
                           <div className="w-full h-full">
-                            <Component />
+                            <Component financialData={graph} />
                           </div>
                           {/* <TestGraphs/> */}
 

@@ -27,20 +27,22 @@ function page() {
 
       <div className=' w-full h-full'>
 
-          <div className=' w-full flex justify-between items-center px-6 py-4 mt-10 '>
-            <h1 className='  font-bold text-3xl font-sans  '><span className='text-black'>Hello,</span> <span className='text-black'>Ayan</span>  </h1>
-            <div className='flex gap-2'>
-            <Input placeholder='Search Workflows' className='w-[600px] '/>
+          <div className=' w-full flex justify-center items-center px-6 py-4 mt-10 '>
+            {/* <h1 className='  font-bold text-3xl font-sans  '><span className='text-black'>Hello,</span> <span className='text-black'>Ayan</span>  </h1> */}
+            <div className='flex gap-1 '>
+            <Input placeholder='Search Workflows' className='w-[500px] '/>
             <Button className='w-[4.5rem] h-10 bg-gradient-to-r from-purple-700 to-[#540F66]'>Search</Button>
 
             </div>
-            <SignedIn>
+           
+          </div>
+          <div className='flex justify-end mb-20  bg--200'>
+          <SignedIn>
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
           </div>
-          <div className='mt-3 p-5 ml-24 bg--50 flex justify-center items-center'>
-            <div className='tracking-tight w-[50%] text-center justify-items-start whitespace-normal '>Lorem ipsmet consectetur  elit. Magni ipsa inventore beatae similique rem. Accusamus sit recusandae optio earum aperiam deleniti dolor beatae, commodi maiores nisi quae atque vero maxime.cusantium alias at doloribus quibusdam sit ea ex delectus  </div>
-          </div>
+
+          
 
           {/* <div className='w-[85%] mt-20 flex justify-evenly items-center m-auto bg-'  >
             <CardComponent/>

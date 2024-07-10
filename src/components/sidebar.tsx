@@ -27,7 +27,7 @@ const Sidebar: React.FC = () => {
               height={100}
               alt='no'
               src="/logo2.jpg"/>
-              <Menu className="w-6 h-6 mt text-zinc-900" /></div>}
+              </div>}
           </button>
         </div>
       </div>

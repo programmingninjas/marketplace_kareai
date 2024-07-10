@@ -1,11 +1,11 @@
 import React from 'react';
 
 interface FinancialSummaryProps {
-  currentRatio: string;
-  DebtTEq: string;
-  QuickR: string;
-  Roe: string;
-  AssetT: string;
+  currentRatio: number;
+  DebtTEq: number;
+  QuickR: number;
+  Roe: number;
+  AssetT: number;
 }
 
 export const FinancialSummary: React.FC<FinancialSummaryProps> = ({
