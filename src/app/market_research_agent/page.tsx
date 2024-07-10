@@ -112,7 +112,7 @@ function Page() {
     }
 
     try {
-      const response = await axios.post('https://8f48-49-36-144-200.ngrok-free.app/api/market_research', formData, {
+      const response = await axios.post('http://98.70.9.194:8000/api/market_research', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

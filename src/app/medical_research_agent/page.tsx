@@ -49,7 +49,7 @@ function Page() {
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);
     try {
-      const response = await axios.post(`https://b96b-2405-201-4041-c8-4d6b-a4f1-5a92-e190.ngrok-free.app/api/medical_research`, {
+      const response = await axios.post(`http://98.70.9.194:8000/api/medical_research`, {
         query: data.query,
       }, {
         headers: {

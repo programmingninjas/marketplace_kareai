@@ -1,18 +1,3 @@
-// import { SignUp } from '@clerk/nextjs';
-
-// export default function SignUpPage() {
-//   return (
-//     <main className="flex h-screen w-full items-center justify-center">
-//       <SignUp />
-//     </main>
-//   );
-// }
-
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/exGTRchGLmf
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
@@ -28,11 +13,10 @@ export default function Component() {
           <div className="container grid max-w-5xl items-center gap-10 px-4 md:px-6 lg:grid-cols-2 lg:gap-20">
             <div className="space-y-4">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-                Welcome back 
-
+                Welcome back
               </h1>
               <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                Sign in to continue your journey of exploring our powerful tools and resources. Together, we'll build something
+                Sign in to continue your journey of exploring our powerful tools and resources. Together, we&apos;ll build something
                 amazing.
               </p>
               <div className="flex items-center gap-4">
@@ -46,7 +30,7 @@ export default function Component() {
                 </Link>
               </div>
             </div>
-           <SignIn />
+            <SignIn />
           </div>
         </section>
       </main>
@@ -130,7 +114,7 @@ export default function Component() {
   )
 }
 
-function ArrowRightIcon(props:any) {
+function ArrowRightIcon(props: any) {
   return (
     <svg
       {...props}

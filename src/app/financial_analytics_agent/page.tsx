@@ -91,7 +91,7 @@ function Page() {
     console.log(newSource);
   
     try {
-      const response = await axios.post(`https://8656-2405-201-4041-c8-4024-3761-3abb-befd.ngrok-free.app/api/financial_analytics`, {
+      const response = await axios.post(`http://98.70.9.194:8000/api/financial_analytics`, {
         ticker: data.ticker,
         year: data.year,
         model: data.model,

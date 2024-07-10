@@ -20,7 +20,7 @@ import { Input } from '@/components/ui/input'
 // import { NavbarDemo } from '@/components/Navbar'
 
 
-function page() {
+function Page() {
   const { user } = useUser();
   return (
     <Layout>
@@ -62,4 +62,4 @@ function page() {
   )
 }
 
-export default page
+export default  Page
