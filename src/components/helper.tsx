@@ -13,18 +13,9 @@ export default function TabsDemo() {
       title: "Product",
       value: "product",
       content: (<div className="flex gap-4">
-<Link href={"/market_research_agent"}>
-          <CardComponent name= {"Category Playbook"} />
-
-          </Link>
-          <Link href={"/medical_research_agent"}>
-          <CardComponent name= {"Medical Research Agent"} />
-
-          </Link>
-          <Link href={"/financial_analytics_agent"}>
-          <CardComponent name= {"Ai Analyst OS"} />
-
-          </Link>
+        <CardComponent name= {"Market Research Agent"}/>
+        <CardComponent name= {"Medical Research Agent"}/>
+        <CardComponent name= {"Financial Analytics Agent"}/>
 
         </div>
 
@@ -36,13 +27,11 @@ export default function TabsDemo() {
       value: "services",
       content: (
         <div className="flex gap-5">
-          <Link href={"/market_research_agent"}>
-          <CardComponent name= {"Category Playbook"} />
-
-          </Link>
+          <CardComponent name= {"Market Research Agent"}/>
         <CardComponent name= {"Medical Research Agent"}/>
+        <Link href={"/financial_analytics_agent"}>
         <CardComponent name= {"Financial Analytics Agent"}/>
-
+        </Link>
         </div>
 
 
@@ -54,9 +43,11 @@ export default function TabsDemo() {
       content: (
         <div className="flex gap-5">
           
-          <CardComponent name= {"Category Playbook"}/>
+          <CardComponent name= {"Market Research Agent"}/>
         <CardComponent name= {"Medical Research Agent"}/>
+        <Link href={"/financial_analytics_agent"}>
         <CardComponent name= {"Financial Analytics Agent"}/>
+        </Link>
         </div>
 
 
