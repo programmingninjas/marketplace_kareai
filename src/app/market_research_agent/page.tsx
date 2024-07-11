@@ -257,6 +257,7 @@ function Page() {
               <div className="leftDiv w-1/2 h-full flex overflow-x-hidden flex-col">
                 <div className="py-4 flex items-center justify-between pr-6 overflow-x-hidden text-zinc-900 font-bold text-3xl ml-6 mb- bg-white">
                   Category Playbook
+                  <div className="flex gap-3">
                   <div className="relative group">
                     <PanelLeftClose
                       onClick={toggleInput}
@@ -266,6 +267,17 @@ function Page() {
                       Tap to hide
                     </div>
                   </div>
+                  <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-white text-zinc-900 text-xs rounded opacity-0  font-[200] shadow-md group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                  </div>
+                  
                 </div>
                 <div className="px-6 py-2 mt-1 overflow-y-auto flex-1">
                   <Form {...form}>
@@ -287,9 +299,9 @@ function Page() {
                         render={({ field }) => (
                           <FormItem>
                             
-                            <FormLabel className="text-lg font-semibold">Product/Service</FormLabel>
+                            <FormLabel className="text-lg font-semibold">Description</FormLabel>
                             <Textarea
-                              placeholder="Enter the Product/Service description name"
+                              placeholder="Describe your product or service here "
                               className="h-24 overflow-y-auto border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                               {...field}
                             />
@@ -318,7 +330,7 @@ function Page() {
                             </div> */}
                             
                             <Textarea
-                              placeholder="Enter the company name"
+                              placeholder="Enter your company details"
                               className="h-24 overflow-y-auto border border-zinc-400 rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                               {...field}
                             />

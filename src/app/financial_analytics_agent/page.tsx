@@ -325,17 +325,28 @@ const [isopen, setIsopen] = useState<boolean>(false);
                     left ? "inline" : "block"
                   }`}
                 >
-                  <div className="py-4 flex items-center  justify-between pr-6  text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
+                  <div className="py-4 flex items-center  justify-between pr-3  text-zinc-900 font-bold text-3xl ml-6 mb-6 bg-white">
                     Financial Analytics Agent
-                    <div className="relative group">
-                      <PanelLeftClose
-                        onClick={toggleInput}
-                        className="cursor-pointer  hover:text-blue-600 "
-                      />
-                      <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 mb-4 bg-white shadow-md text-zinc-900 text-xs rounded opacity-0 group-hover:opacity-100 font-[200] transition-opacity duration-300">
-                        Tap to hide
-                      </div>
+                    <div className=" ml-2 flex bg--50 gap-2">
+                  <div className="relative group">
+                    <PanelLeftClose
+                      onClick={toggleInput}
+                      className="cursor-pointer hover:text-blue-600"
+                    />
+                    <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 mb-4 bg-white shadow-md text-zinc-900 text-xs rounded opacity-0 group-hover:opacity-100 font-[200] transition-opacity duration-300">
+                      Tap to hide
                     </div>
+                  </div>
+                  <div className="relative group">
+                              <RefreshCwIcon
+                                  className="w-5 cursor-pointer hover:text-blue-500"
+                                  onClick={() => refresh()}
+                                />
+                                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-white text-zinc-900 text-xs rounded opacity-0  font-[200] shadow-md group-hover:opacity-100 transition-opacity duration-300">
+                                  Refresh
+                                </div>
+                              </div>
+                  </div>
                   </div>
                   <div className="p-6 mt-2 flex-1 overflow-hidden">
                     <Form {...form}>
