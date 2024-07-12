@@ -89,7 +89,7 @@ The top biotech and pharmaceutical companies are characterized by high revenue, 
 
 const MarkdownRenderer: React.FC<Props> = ({ tt }) => {
   return (
-    <div className="w-full prose-lg text-sm  h-full mx-auto overflow-hidden p-4">
+    <div className="w-full text-lg  h-full mx-auto overflow-hidden p-4">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}

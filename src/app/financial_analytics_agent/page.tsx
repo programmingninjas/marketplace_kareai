@@ -311,8 +311,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
     <Layout>
       <div className="w-full h-screen flex overflow-hidden ">
         <div className="w-full">
-          <div className="py-3 w-full border-b-2 flex justify-between px-3  border-zinc-100">
-            <Image src={"/logo.jpg"} alt="no" width={90} height={100} />
+          <div className="py-3 w-full border-b-2 flex justify-end px-3 border-zinc-100">
             <SignedIn>
               <UserButton afterSignOutUrl="/sign-in" />
             </SignedIn>
