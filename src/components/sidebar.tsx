@@ -33,11 +33,11 @@ const Sidebar: React.FC = () => {
         </div>
       </div>
       <nav className={`flex-1 px-4 py-8 space-y-4 ${isOpen ? 'block' : 'hidden'}`}>
-        <div className='bg-gradient-to-r from-purple-600 to-[#c54ee3e7] p-2 rounded-xl text-white flex gap-2'> <MessageCircle/> Chats</div>
+        <div className='bg-gradient-to-r from-purple-700 to-[#540F66] p-2 rounded-xl text-white flex gap-2'> <MessageCircle/> Chats</div>
           
-        <div className='bg-gradient-to-r from-purple-600 to-[#c54ee3e7] p-2 rounded-xl text-white flex gap-2'> <IconReport/> Reports</div>
+        <div className='bg-gradient-to-r from-purple-700 to-[#540F66] p-2 rounded-xl text-white flex gap-2'> <IconReport/> Reports</div>
 
-        <div className='bg-gradient-to-r from-purple-600 to-[#c54ee3e7] p-2 rounded-xl text-white flex gap-2'> <List/> Agents</div>
+        <div className='bg-gradient-to-r from-purple-700 to-[#540F66] p-2 rounded-xl text-white flex gap-2'> <List/> Agents</div>
 
       </nav>
     </div>
