@@ -77,7 +77,7 @@ function Page() {
   const [tittle, setTittle] = useState("title");
   const [source, setSource] = useState("source");
 
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [type, setType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [graph, setGraph] = useState(false);
@@ -199,21 +199,34 @@ function Page() {
   };
 
   const [refreshTriggered, setRefreshTriggered] = useState(false);
-
+const router = useRouter();
   const refresh = () => {
     console.log('refreshed');
     setRefreshTriggered(true); // Set state to trigger useEffect
-    toast({
-      title: 'Chat refreshed',
-      description: 'Your chat is now refreshed and local storage is cleared',
-    });
+    // toast({
+    //   title: 'Chat refreshed',
+    //   description: 'Your chat is now refreshed and local storage is cleared',
+    // });
   };
 
+
   useEffect(() => {
-    if (refreshTriggered) {
-      localStorage.clear(); // Clears the local storage
-      setRefreshTriggered(false); // Reset state after clearing local storage
-    }
+      if (refreshTriggered) {
+        localStorage.clear();
+        setContent("");
+      setContent2("");
+      setContent3("");
+      setContent4("");
+      setContent5("");
+      setContent6("");
+      setWordFile("");
+      setData([]);
+      setType("");
+      setTittle("");
+      setSource("");
+        
+    };
+    setRefreshTriggered(false)
   }, [refreshTriggered]);
 
   const handlePopupClick = () => {
@@ -238,7 +251,7 @@ function Page() {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      alert("Content copied to clipboard");
+      // alert("Content copied to clipboard");
     }).catch((err) => {
       console.error('Could not copy text: ', err);
     });

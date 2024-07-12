@@ -14,13 +14,20 @@ export default function Component() {
               <div className="space-y-4 bg-">
                 <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
                   Introducing AI Analyst
-                  <span style={{ color: 'hsl(265, 80%, 50%)' }}>OS</span>
+                  <span className="bg-gradient-to-r from-purple-700 to-[#540F66] bg-clip-text text-transparent">OS</span>
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
                   AI Analyst OS streamlines your entire data analysis workflow. From data collection and preprocessing, to insightful analytics and reporting, and beyond. Get started with pre-built AI models.
                 </p>
                 <div className="flex items-center gap-4">
-                  <Button>Get Started</Button>
+                <Link
+                    href="/sign-up"
+                    className="inline-flex items-center justify-center text-sm font-medium text-muted-foreground hover:underline"
+                    prefetch={false}
+                  >
+                  <Button className="bg-gradient-to-r from-purple-700 to-[#540F66]" >Get Started</Button>
+                  </Link>
+
                   <Link
                     href="/sign-up"
                     className="inline-flex items-center justify-center text-sm font-medium text-muted-foreground hover:underline"
@@ -45,7 +52,7 @@ export default function Component() {
               </CardContent>
               <CardFooter className="flex justify-between">
                 <Link href="/market_research_agent">
-                  <Button>Try Now</Button>
+                  <Button className="bg-gradient-to-r from-purple-700 to-[#540F66]">Try Now</Button>
                 </Link>
               </CardFooter>
             </Card>
@@ -61,7 +68,7 @@ export default function Component() {
               </CardContent>
               <CardFooter className="flex justify-between">
                 <Link href="/medical_research_agent">
-                  <Button>Try Now</Button>
+                <Button className="bg-gradient-to-r from-purple-700 to-[#540F66]">Try Now</Button>
                 </Link>
               </CardFooter>
             </Card>
@@ -77,7 +84,7 @@ export default function Component() {
               </CardContent>
               <CardFooter className="flex justify-between">
                 <Link href="/financial_analytics_agent">
-                  <Button>Try Now</Button>
+                <Button className="bg-gradient-to-r from-purple-700 to-[#540F66] mt-[10px]">Try Now</Button>
                 </Link>
               </CardFooter>
             </Card>
