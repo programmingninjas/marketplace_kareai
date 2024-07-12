@@ -9,6 +9,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import { User } from '@clerk/nextjs/server';
 import { toast } from './ui/use-toast';
+import SkeletonDemo from './skeleton';
 
 interface NewComponentProps {
   isOpen: boolean;
@@ -25,6 +26,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   const [messageText, setMessageText] = useState(selectedText);
   const [messages, setMessages] = useState([
     { sender: "Cosmo", text: "Hello! How can I assist you today?" },
+
   ]);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -140,7 +142,9 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                 )}
               </div>
             ))}
-            {isLoading && <Loader2 messages={["Thinking.", "Thinking..", "Thinking..."]} />}
+            {/* {isLoading && <Loader2 messages={["Thinking.", "Thinking..", "Thinking..."]} />} */}
+            {isLoading && <SkeletonDemo/>}
+
           </div>
           <div className="bg-gray-100 dark:bg-gray-800 px-4 py-3 border-t">
             <div className="relative">

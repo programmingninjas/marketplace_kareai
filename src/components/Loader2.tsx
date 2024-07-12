@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LoaderPinwheel } from 'lucide-react';
+import { EllipsisIcon, LoaderPinwheel } from 'lucide-react';
 
 interface LoaderProps {
   messages: string[];
@@ -26,7 +26,7 @@ const Loader: React.FC<LoaderProps> = ({ messages }) => {
 
   return (
     <div className="flex flex-col items-center mt-52 justify-center space-x-2">
-      <LoaderPinwheel className="h-8 w-8 animate-spin text-[#540F66]" />
+      <EllipsisIcon className="h-8 w-8 animate-pulse text-[#540F66]" />
       {messages && messages.length > 0 ? messages[currentMessageIndex] : 'Loading...'}
     </div>
   );
