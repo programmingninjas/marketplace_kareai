@@ -142,23 +142,21 @@ import { FinancialSummary } from "./VerticalBox";
 import MarkdownRenderer from './Markdown';
 
 type FinancialData = {
-  graphs: {
-    assets: {
-      data: { label: string; value: number }[];
-      insights: string;
-    };
-    liabilities: {
-      data: { label: string; value: number }[];
-      insights: string;
-    };
-    equity: {
-      data: { label: string; value: number }[];
-      insights: string;
-    };
-    ratios: {
-      data: number[];
-      insights: string;
-    };
+  assets: {
+    data: { label: string; value: number }[];
+    insights: string;
+  };
+  liabilities: {
+    data: { label: string; value: number }[];
+    insights: string;
+  };
+  equity: {
+    data: { label: string; value: number }[];
+    insights: string;
+  };
+  ratios: {
+    data: number[];
+    insights: string;
   };
 };
 
@@ -167,50 +165,59 @@ type FinancialSummaryComponentProps = {
 };
 
 const FinancialSummaryComponent: React.FC<FinancialSummaryComponentProps> = ({ financialData }) => {
-  if (!financialData) {
-    return <div className="p-10"></div>;
+  if (!financialData || financialData.length === 0) {
+    return <div className="p-10">No data available</div>;
   }
 
-  const [assetsData, setAssetsData] = useState(financialData.graphs.assets.data);
-  const [liabilitiesData, setLiabilitiesData] = useState(financialData.graphs.liabilities.data);
-  const [equityData, setEquityData] = useState(financialData.graphs.equity.data);
+  const [assetsData, setAssetsData] = useState(financialData.assets.data || []);
+  const [liabilitiesData, setLiabilitiesData] = useState(financialData.liabilities.data || []);
+  const [equityData, setEquityData] = useState(financialData.equity.data || []);
   const [financialRatios, setFinancialRatios] = useState({
-    currentRatio: financialData.graphs.ratios.data[0],
-    DebtTEq: financialData.graphs.ratios.data[1],
-    QuickR: financialData.graphs.ratios.data[2],
-    Roe: financialData.graphs.ratios.data[3],
-    AssetT: financialData.graphs.ratios.data[4],
+    currentRatio: financialData.ratios.data[0] || 0,
+    DebtTEq: financialData.ratios.data[1] || 0,
+    QuickR: financialData.ratios.data[2] || 0,
+    Roe: financialData.ratios.data[3] || 0,
+    AssetT: financialData.ratios.data[4] || 0,
   });
   const [insights, setInsights] = useState({
-    assets: financialData.graphs.assets.insights,
-    liabilities: financialData.graphs.liabilities.insights,
-    equity: financialData.graphs.equity.insights,
-    ratios: financialData.graphs.ratios.insights,
+    assets: financialData.assets.insights || '',
+    liabilities: financialData.liabilities.insights || '',
+    equity: financialData.equity.insights || '',
+    ratios: financialData.ratios.insights || '',
   });
 
   return (
     <div className="p-10 space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div>
-        <h3 className="text-center text-lg font-semibold mt-4">Assets</h3>
-
-          <BarChart className="w-full aspect-[5/3]" color="#007BFF" data={assetsData} />
-          <MarkdownRenderer tt={insights.assets}/>
+          <h3 className="text-center text-lg font-semibold mt-4">Assets</h3>
+          {assetsData.length > 0 ? (
+            <BarChart className="w-full aspect-[5/3]" color="#007BFF" data={assetsData} />
+          ) : (
+            <p>No data available</p>
+          )}
+          <MarkdownRenderer tt={insights.assets} />
         </div>
         <div>
-        <h3 className="text-center text-lg font-semibold mt-4">Liabilities</h3>
-
-          <BarChart className="w-full aspect-[5/3]" color="#540F66" data={liabilitiesData} />
-          <MarkdownRenderer tt={insights.liabilities}/>
+          <h3 className="text-center text-lg font-semibold mt-4">Liabilities</h3>
+          {liabilitiesData.length > 0 ? (
+            <BarChart className="w-full aspect-[5/3]" color="#540F66" data={liabilitiesData} />
+          ) : (
+            <p>No data available</p>
+          )}
+          <MarkdownRenderer tt={insights.liabilities} />
         </div>
       </div>
       <div className="">
         <div className="grid grid-cols-2 gap-4">
-          <div className="mt-14 ">
-          <h3 className="text-center text-lg font-semibold">Equity</h3>
-
-            <BarChart className="w-full aspect-[3/3]" color="#D1B892" data={equityData} />
-            <MarkdownRenderer tt={insights.equity}/>
+          <div className="mt-14">
+            <h3 className="text-center text-lg font-semibold">Equity</h3>
+            {equityData.length > 0 ? (
+              <BarChart className="w-full aspect-[3/3]" color="#D1B892" data={equityData} />
+            ) : (
+              <p>No data available</p>
+            )}
+            <MarkdownRenderer tt={insights.equity} />
           </div>
           <div className="mt-10">
             <FinancialSummary
@@ -221,7 +228,7 @@ const FinancialSummaryComponent: React.FC<FinancialSummaryComponentProps> = ({ f
               AssetT={financialRatios.AssetT}
             />
             <h2 className="text-lg text-center mt-9 font-semibold">Ratio Analysis</h2>
-            <MarkdownRenderer tt={insights.ratios}/>
+            <MarkdownRenderer tt={insights.ratios} />
           </div>
         </div>
       </div>
