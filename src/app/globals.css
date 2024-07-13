@@ -17,41 +17,41 @@
     width: 10px;
   }
   
-  *::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background: var(--scrollbar-track);
     border-radius: 5px;
   }
   
-  *::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 14px;
     border: 3px solid var(--scrollbar-track);
   }
   
-  *::-webkit-scrollbar-thumb:hover {
+  ::-webkit-scrollbar-thumb:hover {
     background-color: var(--scrollbar-thumb-hover);
   }
 
-.prose table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.prose a {
-  color: #3b82f6; /* Tailwind's blue-500 */
-  text-decoration: underline;
-}
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .prose a {
+    color: #3b82f6; /* Tailwind's blue-500 */
+    text-decoration: underline;
+  }
 
-.prose th,
-.prose td {
-  border: 1px solid #d1d5db; /* Use Tailwind's gray-300 color */
-  padding: 0.5rem;
-}
+  .prose th,
+  .prose td {
+    border: 1px solid #d1d5db; /* Use Tailwind's gray-300 color */
+    padding: 0.5rem;
+  }
 
-.prose th {
-  background-color: #f9fafb; /* Use Tailwind's gray-50 color */
-  text-align: left;
-  font-weight: bold;
-}
+  .prose th {
+    background-color: #f9fafb; /* Use Tailwind's gray-50 color */
+    text-align: left;
+    font-weight: bold;
+  }
 
   :root {
     --background: 0 0% 100%;
@@ -91,15 +91,11 @@
     --scrollbar-thumb: var(--secondary);
     --scrollbar-thumb-hover: var(--primary);
   }
+  
   .custom-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: #9d4edd #f3e8ff; /* Thumb color, Track color */
   }
-  .custom-spreadsheet .Spreadsheet__cell {
-    min-width: 200px;  /* Adjust the width */
-    height: 50px;      /* Adjust the height */
-  }
-  
 
   .custom-scrollbar::-webkit-scrollbar {
     width: 10px;
@@ -118,6 +114,11 @@
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: #6b21a8;
+  }
+
+  .custom-spreadsheet .Spreadsheet__cell {
+    min-width: 200px;  /* Adjust the width */
+    height: 50px;      /* Adjust the height */
   }
 
   .dark {
@@ -152,6 +153,22 @@
     --scrollbar-track: var(--secondary);
     --scrollbar-thumb: var(--primary);
     --scrollbar-thumb-hover: var(--secondary);
+  }
+}
+
+@layer utilities {
+  .animate-bounce {
+    @apply inline-block;
+    animation: bounce 1.4s infinite both;
+  }
+
+  @keyframes bounce {
+    0%, 80%, 100% {
+      transform: scale(0);
+    }
+    40% {
+      transform: scale(1);
+    }
   }
 }
 
