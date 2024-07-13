@@ -350,7 +350,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                     </AvatarFallback>
                   </Avatar>
                 )}
-                <div className="bg--600 max-w-[85%] flex">
+                <div className={`bg--600  ${isExtended ? "max-w-[95%]" : "max-w-[85%]"} flex`}>
                   <div
                     className={`max-w-full rounded-xl text-sm ${message.sender === "You" ? "bg-purple-600 text-justify text-white px-5 py-4" : "bg-slate-100 text-justify px-7 py-5 "} break-words`}
                     dangerouslySetInnerHTML={{ __html: linkify(message.text) }}
