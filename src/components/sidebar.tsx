@@ -64,7 +64,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className={`h-screen shadow-md flex flex-col font-sans text-base transition-all duration-300 ${isOpen ? 'w-64' : ''}`}>
+    <div className={`h-screen shadow-md flex flex-col font-sans text-base transition-all duration-300 ${isOpen ? 'min-w-64' : ''}`}>
       <div className="flex items-center justify-between p-4 mt-10">
         <div className='flex justify-between items-center w-full'>
           <Link href="/"><Image width={100} height={50} src="/logo.jpg" alt="Logo" className={`h-8 mr-2 ${isOpen ? 'block' : 'hidden'}`} /></Link>
@@ -88,7 +88,7 @@ const Sidebar: React.FC = () => {
             {isAgentsOpen ? <ChevronUp className="ml-auto" /> : <ChevronDown className="ml-auto" />}
           </div>
           {isAgentsOpen && (
-            <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+            <div className={`absolute right-0 mt-2 min-w-[14rem] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10`}>
               <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 <Link href="/market_research_agent" >
                   <h3 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
