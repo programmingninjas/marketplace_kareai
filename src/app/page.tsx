@@ -9,7 +9,7 @@ export default function Component() {
     <Layout>
       <div className="flex min-h-dvh flex-col">
         <main className="">
-          <section className="w-full py-12 md:py-14 bg- lg:py-[48px]">
+          <section className="w-full py-12 md:py-14 bg- lg:py-[54px]">
             <div className="container bg- grid max-w-3xl items-center gap- px-4 md:px-6 lg:grid-cols-1 lg:gap-10">
               <div className="space-y-4 bg-">
                 <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
@@ -67,8 +67,8 @@ export default function Component() {
                 </div>
               </CardContent>
               <CardFooter className="flex justify-between">
-                <Link href="/medical_research_agent">
-                <Button className="bg-gradient-to-r from-purple-700 to-[#540F66]">Try Now</Button>
+                <Link href="/medical_research_agent" >
+                <Button disabled className="bg-gradient-to-r  from-purple-700 to-[#540F66]">Coming soon...</Button>
                 </Link>
               </CardFooter>
             </Card>

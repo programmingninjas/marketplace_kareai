@@ -18,6 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useUser } from '@clerk/clerk-react';
+
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -76,6 +78,19 @@ function Page() {
   const [wordFile, setWordFile] = useState("");
   const [tittle, setTittle] = useState("title");
   const [source, setSource] = useState("source");
+  const [File, setFile] = useState("");
+  const [cid , setCid] = useState("");
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (!user) return;
+
+    // Getting user id from clerk and setting as the client id 
+    const client_id = user.id;
+    setCid(client_id); // Update state with the client id
+
+  }, [user])
+
 
   const [data, setData] = useState([]);
   const [type, setType] = useState("");
@@ -103,7 +118,9 @@ function Page() {
     formData.append('value_proposition', data.value_proposition);
     formData.append('model', data.model);
     formData.append('language', data.language);
-    // formData.append('Company_name', data.Company_name);
+    formData.append('user_id', cid);
+
+    formData.append('Company_name', data.Company_name);
 
 
     if (data.files && data.files[0]) {
@@ -133,6 +150,7 @@ function Page() {
       setType(response.data.type);
       setTittle(response.data.title);
       setSource(response.data.source);
+      setFile(response.data.file);
 
       console.log(response);
     } catch (error) {
@@ -164,6 +182,8 @@ function Page() {
       setType(parsedData.type);
       setTittle(parsedData.title);
       setSource(parsedData.source);
+      setFile(parsedData.file);
+
     }
   };
 
@@ -173,8 +193,8 @@ function Page() {
 
   const [filename, setFilename] = useState('');
 
-  const handleDownload = (file: string) => {
-    setFilename(file);
+  const handleDownload = () => {
+    window.location.href=File;
   };
 
   const toggleSidebar = () => {
@@ -513,7 +533,7 @@ const router = useRouter();
                               <div className="relative group">
                                 <FileText
                                   className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => handleDownload(wordFile)}
+                                  onClick={() => handleDownload()}
                                 />
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Word
@@ -584,7 +604,7 @@ const router = useRouter();
                             <div className="relative group">
                                 <FileText
                                   className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => handleDownload(wordFile)}
+                                  onClick={() => handleDownload()}
                                 />
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Word
@@ -680,7 +700,7 @@ const router = useRouter();
                             <div className="relative group">
                                 <FileText
                                   className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => handleDownload(wordFile)}
+                                  onClick={() => handleDownload()}
                                 />
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Word
@@ -747,7 +767,7 @@ const router = useRouter();
                             <div className="relative group">
                                 <FileText
                                   className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => handleDownload(wordFile)}
+                                  onClick={() => handleDownload()}
                                 />
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Word
@@ -811,7 +831,7 @@ const router = useRouter();
                             <div className="relative group">
                                 <FileText
                                   className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => handleDownload(wordFile)}
+                                  onClick={() => handleDownload()}
                                 />
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Word
@@ -877,7 +897,7 @@ const router = useRouter();
                             <div className="relative group">
                                 <FileText
                                   className="w-5 cursor-pointer hover:text-blue-500"
-                                  onClick={() => handleDownload(wordFile)}
+                                  onClick={() => handleDownload()}
                                 />
                                 <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                   Word

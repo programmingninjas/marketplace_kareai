@@ -323,7 +323,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
     <div className="relative">
       <div className="p-4 cursor-text"></div>
       <div
-        className={`fixed top-0 right-0 bottom-0 ${isExtended ? "w-[650px]" : "w-[450px]"} bg-white dark:bg-gray-950 border-l shadow-lg z-50 transform transition-transform duration-300 ${
+        className={`fixed top-0 right-0 bottom-0 ${isExtended ? "w-[750px]" : "w-[450px]"} bg-white dark:bg-gray-950 border-l shadow-lg z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -350,7 +350,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                     </AvatarFallback>
                   </Avatar>
                 )}
-                <div className={`bg--600  ${isExtended ? "max-w-[95%]" : "max-w-[85%]"} flex`}>
+                <div className={`bg--600  ${isExtended ? "max-w-[98%]" : "max-w-[85%]"} flex`}>
                   <div
                     className={`max-w-full rounded-xl text-sm ${message.sender === "You" ? "bg-purple-600 text-justify text-white px-5 py-4" : "bg-slate-100 text-justify px-7 py-5 "} break-words`}
                     dangerouslySetInnerHTML={{ __html: linkify(message.text) }}

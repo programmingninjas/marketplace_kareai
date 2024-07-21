@@ -116,7 +116,7 @@ const MarkdownRenderer: React.FC<Props> = ({ tt }) => {
             <li className="mb-2 text-lg" {...props} />
           ),
           p: ({ node, ...props }) => (
-            <p className="mb-2 text-lg" {...props} />
+            <p className="mb-2 text-lg text-justify" {...props} />
           ),
         }}
       >

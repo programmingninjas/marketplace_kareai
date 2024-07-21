@@ -598,15 +598,16 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <div className="w-full bg--100 h-full">
                             <Excel
                               balance_sheet={content}
-                              url={"api/download_balance_sheet/"}
+                              // url={"api/download_balance_sheet/"}
                             />
                           </div>
-                          <div className=" py-2 mb-7  flex  gap-2">
-                            <div className="relative group">
+                          <div className=" py-2 mb-7   flex  gap-2">
+                            <div  className="relative hidden group ">
                               <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
+                              
+                                className="w-5 cursor-pointer disabled hover:text-blue-500"
                                 onClick={() =>
-                                  handleDownload("api/download_insights/")
+                                  handleDownload("api/download_balance_sheet/")
                                 }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -672,14 +673,14 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           </div> */}
                           <Excel
                             balance_sheet={content2}
-                            url={"api/download_income_statement/"}
+                            // url={"api/download_income_statement/"}
                           />
                            <div className=" py-2 mb-7  flex  gap-2">
                             <div className="relative group">
                               <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
+                                className="w-5 cursor-pointer hidden hover:text-blue-500"
                                 onClick={() =>
-                                  handleDownload("api/download_insights/")
+                                  handleDownload("api/download_income_statement/")
                                 }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -720,19 +721,20 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           {/* <MarkdownRenderer tt={content3} /> */}
                           <Excel
                             balance_sheet={content3}
-                            url={"api/download_cash_flow/"}
+                            // url={"api/download_cash_flow/"}
                           />
-                          {/* <div className=" py-2   flex  gap-2">
+                          <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
-                                onClick={() => handleDownload(wordFile)}
+                                className="w-5 cursor-pointer hidden hover:text-blue-500"
+                                onClick={() =>handleDownload("api/download_cash_flow/")
+                                }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 Excel
                               </div>
                             </div>
-                          </div> */}
+                          </div>
                         </>
                       )}
                     </CardContent>
@@ -762,7 +764,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <div className=" py-2 mb-7  flex  gap-2">
                             <div className="relative group">
                               <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
+                                className="w-5 cursor-pointer hidden hover:text-blue-500"
                                 onClick={() =>
                                   handleDownload("api/download_insights/")
                                 }
@@ -823,12 +825,16 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             </Link>
                           </div> */}
                           <div className="w-full h-full">
-                            <Component financialData={graph} />
+                            <Component financialData={graph} left={left}/>
                           </div>
+                          <Link className="" href={`${source}`}>
+                              <h3 className="mb- hover:text-blue-500">Source</h3>
+                            </Link>
+                          
                           <div className=" py-2 mb-7  flex  gap-2">
                             <div className="relative group">
                               <FileText
-                                className="w-5 cursor-pointer hover:text-blue-500"
+                                className="w-5 cursor-pointer hidden hover:text-blue-500"
                                 onClick={() =>
                                   handleDownload("api/download_insights/")
                                 }

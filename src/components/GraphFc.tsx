@@ -310,9 +310,10 @@ type FinancialData = {
 
 type FinancialSummaryComponentProps = {
   financialData: any;
+  left:boolean;
 };
 
-const FinancialSummaryComponent: React.FC<FinancialSummaryComponentProps> = ({ financialData }) => {
+const FinancialSummaryComponent: React.FC<FinancialSummaryComponentProps> = ({ financialData,left }) => {
   const [assetsData, setAssetsData] = useState(financialData?.assets?.data || []);
   const [liabilitiesData, setLiabilitiesData] = useState(financialData?.liabilities?.data || []);
   const [equityData, setEquityData] = useState(financialData?.equity?.data || []);
@@ -335,21 +336,21 @@ const FinancialSummaryComponent: React.FC<FinancialSummaryComponentProps> = ({ f
   }
 
   return (
-    <div className="p-10 space-y-4">
+    <div className="p-1 space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <div>
+        <div className='border shadow-lg shadow-zinc-300'>
           <h3 className="text-center text-lg font-semibold mt-4">Assets</h3>
           {assetsData.length > 0 ? (
-            <BarChart className="w-full aspect-[5/3]" color="#007BFF" data={assetsData} />
+            <BarChart className="w-full  mt-5 aspect-[5/3]" color="#007BFF" data={assetsData} />
           ) : (
             <p>No data available</p>
           )}
           <MarkdownRenderer tt={insights.assets} />
         </div>
-        <div>
+        <div className='border shadow-lg shadow-zinc-300'>
           <h3 className="text-center text-lg font-semibold mt-4">Liabilities</h3>
           {liabilitiesData.length > 0 ? (
-            <BarChart className="w-full aspect-[5/3]" color="#540F66" data={liabilitiesData} />
+            <BarChart className="w-full mt-5 aspect-[5/3]" color="#540F66" data={liabilitiesData} />
           ) : (
             <p>No data available</p>
           )}
@@ -358,25 +359,28 @@ const FinancialSummaryComponent: React.FC<FinancialSummaryComponentProps> = ({ f
       </div>
       <div className="">
         <div className="grid grid-cols-2 gap-4">
-          <div className="mt-14">
-            <h3 className="text-center text-lg font-semibold">Equity</h3>
+          <div className="mt-14 border shadow-zinc-300 shadow-lg">
+            <h3 className="text-center text-lg font-semibold mt-4">Equity</h3>
             {equityData.length > 0 ? (
-              <BarChart className="w-full aspect-[3/3]" color="#D1B892" data={equityData} />
+              <BarChart className={`${left ? "aspect-[3/3]" : "aspect-[5/3]"} w-full mt-5 `} color="#D1B892" data={equityData} />
             ) : (
               <p>No data available</p>
             )}
             <MarkdownRenderer tt={insights.equity} />
           </div>
-          <div className="mt-10">
-            <FinancialSummary
+          <div className="mt-14 border shadow-lg  py-5 shadow-zinc-300 flex flex-col bg--300">
+          <h2 className="text-lg text-center mb-5  font-semibold">Ratio Analysis</h2>
+            <div className='mb-6'>
+            <FinancialSummary 
               currentRatio={financialRatios.currentRatio}
               DebtTEq={financialRatios.DebtTEq}
               QuickR={financialRatios.QuickR}
               Roe={financialRatios.Roe}
               AssetT={financialRatios.AssetT}
             />
-            <h2 className="text-lg text-center mt-9 font-semibold">Ratio Analysis</h2>
-            <MarkdownRenderer tt={insights.ratios} />
+            </div>
+            
+            <MarkdownRenderer  tt={insights.ratios} />
           </div>
         </div>
       </div>
@@ -391,7 +395,7 @@ function BarChart({ className, color, data }: { className: string; color: string
         data={data.map(item => ({ name: item.label, value: item.value }))}
         keys={["value"]}
         indexBy="name"
-        margin={{ top: 0, right: 0, bottom: 40, left: 40 }}
+        margin={{ top: 0, right: 14, bottom: 40, left: 40 }}
         padding={0.3}
         colors={[color]}
         axisBottom={{
