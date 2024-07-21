@@ -127,14 +127,14 @@ const Sidebar: React.FC = () => {
                     Category Playbook
                   </h3>
                 </Link>
-                <Link href="/medical_research_agent">
-                  <h3
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                {/* <Link href="/medical_research_agent" > */}
+                  <h3 
+                    className="block px-4 cursor-not-allowed py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
                   >
                     Medical Research Agent
                   </h3>
-                </Link>
+                {/* </Link> */}
                 <Link href="/financial_analytics_agent">
                   <h3
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"

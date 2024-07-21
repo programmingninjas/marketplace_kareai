@@ -104,7 +104,7 @@ function Page() {
       value_proposition: '',
       language: 'english',
       model: 'llama3-70b-8192',
-      Company_name:'',
+      company_name:'',
       files: null as FileList | null,
     },
   });
@@ -120,7 +120,7 @@ function Page() {
     formData.append('language', data.language);
     formData.append('user_id', cid);
 
-    formData.append('Company_name', data.Company_name);
+    formData.append('Company_name', data.company_name);
 
 
     if (data.files && data.files[0]) {
@@ -142,7 +142,7 @@ function Page() {
       setContent(response.data.industry_landscape);
       setContent2(response.data.msgp);
       setContent3(response.data.tt);
-      setContent4(response.data.in);
+      setContent4(response.data.industry_news );
       setContent5(response.data.top_5);
       setContent6(response.data.insights);
       setWordFile(response.data.file);
@@ -174,7 +174,7 @@ function Page() {
       setContent(parsedData.industry_landscape);
       setContent2(parsedData.msgp);
       setContent3(parsedData.tt);
-      setContent4(parsedData.in);
+      setContent4(parsedData.industry_news);
       setContent5(parsedData.top_5);
       setContent6(parsedData.insights);
       setWordFile(parsedData.file);
@@ -343,7 +343,7 @@ const router = useRouter();
                         )}
                       />
                          <FormField
-                        name="Company_name"
+                        name="company_name"
                         control={form.control}
                         render={({ field }) => (
                           <FormItem>
@@ -752,9 +752,9 @@ const router = useRouter();
                           <Loader  />
                       ) : (
                         <>
-                                                    <MarkdownRenderer tt={content4} />
+                           <MarkdownRenderer tt={content4} />
 
-                          <div className=" py-2   flex  gap-2">
+                           <div className=" py-2 mb-10  flex  gap-2">
                             <div className="relative group">
                               <Copy
                                 className="w-5 cursor-pointer hover:text-blue-500"
@@ -785,7 +785,9 @@ const router = useRouter();
                             <div className="relative group">
                               {/* <Save
                                 className="w-5 cursor-pointer hover:text-blue-500"
-                                // onClick={() => downloadPDF(content4, "News")}
+                                // onClick={() =>
+                                //   downloadPDF(content3, "tech_trends")
+                                // }
                               /> */}
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 PDF

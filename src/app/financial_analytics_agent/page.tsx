@@ -827,9 +827,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <div className="w-full h-full">
                             <Component financialData={graph} left={left}/>
                           </div>
-                          <Link className="" href={`${source}`}>
-                              <h3 className="mb- hover:text-blue-500">Source</h3>
-                            </Link>
+                          <a href={`${source}`} target="_blank" rel="noopener noreferrer">                          
+                                <h3 className="mb- hover:text-blue-500">Source</h3>
+                            </a>
                           
                           <div className=" py-2 mb-7  flex  gap-2">
                             <div className="relative group">
