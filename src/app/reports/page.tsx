@@ -114,6 +114,7 @@ interface Report {
     title: string;
     timestamp: string;
     file:string;
+    key:string;
     description: string; // Add other fields as necessary
 }
 
@@ -162,12 +163,12 @@ export default function TableDemo() {
         return `${day}.${month}.${year}`;
     };
 
-    const handleDelete = (id: string) => {
+    const handleDelete = (id: string,file:string) => {
         // Remove the report from the state
         setReportHistory(prevReports => prevReports.filter(report => report.id !== id));
-
+        // const url = `https://kareai-reports.s3.ap-south-1.amazonaws.com/${file}`
         // Optionally, send a request to delete the report from the server
-        axios.delete(`http://98.70.9.194:8000/api/delete_report/${id}`)
+        axios.delete(`http://98.70.9.194:8000/api/delete_report/${file}`)
             .then(response => {
                 console.log('Report deleted:', response.data);
             })
@@ -207,7 +208,7 @@ export default function TableDemo() {
                                         </a>
                                     </TableCell>
                                 <TableCell className="text-right">
-                                    <Trash2 className="text-red-600 cursor-pointer" onClick={() => handleDelete(report.id)} />
+                                    <Trash2 className="text-red-600 cursor-pointer" onClick={() => handleDelete(report.id,report.file)} />
                                 </TableCell>
                             </TableRow>
                         ))}

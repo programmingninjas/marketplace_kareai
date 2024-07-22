@@ -146,12 +146,12 @@ const Sidebar: React.FC = () => {
               </div>
             </div>
           )}
-          <a href={"/reports"} target="_blank" rel="noopener noreferrer">
+          <Link href={"/reports"}  >
           <div  className="bg-gradient-to-r items-center mt-2 leading-none tracking-normal  from-purple-700 to-[#540F66] p-2 rounded-xl text-white flex gap-2 cursor-pointer">
               <IconReport />
               <span className="text-xl">My Reports</span>
             </div>       
-             </a>
+             </Link>
             
         </div>
       </nav>

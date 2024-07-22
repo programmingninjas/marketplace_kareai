@@ -120,7 +120,7 @@ function Page() {
     formData.append('language', data.language);
     formData.append('user_id', cid);
 
-    formData.append('Company_name', data.company_name);
+    formData.append('company_name', data.company_name);
 
 
     if (data.files && data.files[0]) {
@@ -194,7 +194,7 @@ function Page() {
   const [filename, setFilename] = useState('');
 
   const handleDownload = () => {
-    window.location.href=File;
+    window.location.href=`https://kareai-reports.s3.ap-south-1.amazonaws.com/${File}`;
   };
 
   const toggleSidebar = () => {
