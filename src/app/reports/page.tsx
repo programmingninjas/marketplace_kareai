@@ -139,7 +139,7 @@ export default function TableDemo() {
                 const response = await axios.get(`http://98.70.9.194:8000/api/get_reports/${cid}`);
                 const reports = response.data.map((report: any) => ({
                     id: report._id,
-                    title: report.title.replace(/\b(\d{4}|market|revenue|forecast|-)\b/gi, '').trim(),
+                    title: report.sector,
                     timestamp: report.timestamp,
                     file:report.file,
                 }));

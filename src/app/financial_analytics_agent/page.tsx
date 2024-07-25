@@ -56,21 +56,23 @@ import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import MarkdownRenderer from "@/components/Markdown";
-import { SignedIn, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import Excel from "@/components/Excel";
 import TestGraphs from "@/components/GraphC";
 import Component from "@/components/GraphFc";
 function Page() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [content, setContent] = useState("");
-  const [content2, setContent2] = useState("");
-  const [content3, setContent3] = useState("");
+  const [content, setContent] = useState([]);
+  const [content2, setContent2] = useState([]);
+  const [content3, setContent3] = useState([]);
   const [content4, setContent4] = useState("");
   const [content5, setContent5] = useState("");
   const [content6, setContent6] = useState("");
   const [wordFile, setWordFile] = useState("");
   const [tittle, setTittle] = useState("title");
   const [source, setSource] = useState("");
+  const [File, setFile] = useState("");
+
 
   const [type, setType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -78,6 +80,20 @@ function Page() {
   const [left, setLeft] = useState(true);
   const {toast} = useToast();
   const [sector, setSector] = useState("")
+  const [cid , setCid] = useState("");
+
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (!user) return;
+
+    // Getting user id from clerk and setting as the client id 
+    const client_id = user.id;
+    setCid(client_id); // Update state with the client id
+
+  }, [user])
+
+
 
   const onSubmit = async (data: any) => {
     console.log(data);
@@ -96,6 +112,7 @@ function Page() {
         year: data.year,
         model: data.model,
         language: data.language,
+        user_id : cid,
       }, {
         headers: {
           "Content-Type": "application/json"
@@ -108,8 +125,10 @@ function Page() {
       // Set the state with the response data
       setContent(response.data.financial_data.balance_sheet);
       setContent2(response.data.financial_data.income_statement);
-      setContent3(response.data.financial_data.cash_flow);
+      setContent3(response.data.financial_data.cash_flow); // Cash flow data
       setContent4(response.data.insights);
+      setFile(response.data.file);
+
       
       setGraph(response.data.graphs);
       
@@ -137,7 +156,7 @@ function Page() {
   
       setContent(parsedData.financial_data.balance_sheet);
       setContent2(parsedData.financial_data.income_statement);
-      setContent3(parsedData.financial_data.cash_flow);
+     
       setContent4(parsedData.insights);
       setGraph(parsedData.graphs);
 
@@ -153,22 +172,30 @@ function Page() {
   }, []);
 
   const [refreshTriggered, setRefreshTriggered] = useState(false);
-
   const refresh = () => {
     console.log('refreshed');
     setRefreshTriggered(true); // Set state to trigger useEffect
-    toast({
-      title: 'Chat refreshed',
-      description: 'Your chat is now refreshed and local storage is cleared',
-    });
+    // toast({
+    //   title: 'Chat refreshed',
+    //   description: 'Your chat is now refreshed and local storage is cleared',
+    // });
   };
 
+
   useEffect(() => {
-    if (refreshTriggered) {
-      localStorage.clear(); // Clears the local storage
-      setRefreshTriggered(false); // Reset state after clearing local storage
-    }
+      if (refreshTriggered) {
+        localStorage.clear();
+        setContent([]);
+        setContent2([]);
+        setContent3([]);
+        setContent4("");
+        
+        setGraph("");
+        
+    };
+    setRefreshTriggered(false)
   }, [refreshTriggered]);
+
 
   
 
@@ -244,10 +271,9 @@ function Page() {
   
   const [filename, setFilename] = useState('');
 
-  const handleDownload = (file: React.SetStateAction<string>) => {
-    setFilename(file);
+  const handleDownload = () => {
+    window.location.href=`https://kareai-reports.s3.ap-south-1.amazonaws.com/${File}`;
   };
-  useDownload(filename);
 
 
   const toggleSidebar = () => {
@@ -602,12 +628,12 @@ const [isopen, setIsopen] = useState<boolean>(false);
                             />
                           </div>
                           <div className=" py-2 mb-7   flex  gap-2">
-                            <div  className="relative hidden group ">
+                            <div  className="relative  group ">
                               <FileText
                               
                                 className="w-5 cursor-pointer disabled hover:text-blue-500"
                                 onClick={() =>
-                                  handleDownload("api/download_balance_sheet/")
+                                  handleDownload()
                                 }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -678,9 +704,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
                            <div className=" py-2 mb-7  flex  gap-2">
                             <div className="relative group">
                               <FileText
-                                className="w-5 cursor-pointer hidden hover:text-blue-500"
+                                className="w-5 cursor-pointer  hover:text-blue-500"
                                 onClick={() =>
-                                  handleDownload("api/download_income_statement/")
+                                  handleDownload()
                                 }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -726,8 +752,8 @@ const [isopen, setIsopen] = useState<boolean>(false);
                           <div className=" py-2   flex  gap-2">
                             <div className="relative group">
                               <FileText
-                                className="w-5 cursor-pointer hidden hover:text-blue-500"
-                                onClick={() =>handleDownload("api/download_cash_flow/")
+                                className="w-5 cursor-pointer  hover:text-blue-500"
+                                onClick={() =>handleDownload()
                                 }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -762,11 +788,12 @@ const [isopen, setIsopen] = useState<boolean>(false);
                         <>
                          <MarkdownRenderer tt={content4}/>
                           <div className=" py-2 mb-7  flex  gap-2">
-                            <div className="relative group">
+                            <div  className="relative group">
                               <FileText
+                              
                                 className="w-5 cursor-pointer hidden hover:text-blue-500"
                                 onClick={() =>
-                                  handleDownload("api/download_insights/")
+                                  handleDownload()
                                 }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -836,7 +863,7 @@ const [isopen, setIsopen] = useState<boolean>(false);
                               <FileText
                                 className="w-5 cursor-pointer hidden hover:text-blue-500"
                                 onClick={() =>
-                                  handleDownload("api/download_insights/")
+                                  handleDownload()
                                 }
                               />
                               <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-12 w-max p-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
