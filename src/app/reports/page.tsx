@@ -178,6 +178,7 @@ export default function TableDemo() {
     };
 
     function handleDownload(file: string) {
+        window.location.href = `https://kareai-reports.s3.ap-south-1.amazonaws.com/${file}`
     }
 
     return (
