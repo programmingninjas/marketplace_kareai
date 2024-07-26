@@ -226,6 +226,10 @@ import { User } from '@clerk/nextjs/server';
 import { toast } from './ui/use-toast';
 import SkeletonDemo from './skeleton';
 import Loader from './Loader2';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import MarkdownRenderer from './Markdown2';
 
 interface NewComponentProps {
   isOpen: boolean;
@@ -262,11 +266,8 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
       setIsLoading(false);
     };
 
-    // Getting user id from clerk and setting as the client id 
     const client_id = user.id;
     const image = user.imageUrl;
-    console.log(image);
-    console.log(client_id);
     const wsInstance = new WebSocket(`ws://98.70.9.194:8000/ws/${client_id}`);
     setWs(wsInstance);
     setClientid(client_id);
@@ -285,7 +286,6 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
   }, [messages]);
 
   const refresh = async () => {
-    console.log("refreshed");
     const response = await axios.post(`http://98.70.9.194:8000/api/refresh_session?client_id=${clientid}`);
     toast({
       title: "Chat refreshed",
@@ -310,7 +310,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
 
   const handleKeyPress = (event: any) => {
     if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault(); // Prevents adding a new line
+      event.preventDefault();
       sendMessage();
     }
   };
@@ -341,7 +341,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex  items-center gap-2 mb-4 ${message.sender === "You" ? "justify-end" : "justify-start"}`}
+                className={`flex items-center gap-2 mb-4 ${message.sender === "You" ? "justify-end" : "justify-start"}`}
               >
                 {message.sender !== "You" && (
                   <Avatar className="w-8 h-8 bg-white">
@@ -350,11 +350,16 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
                     </AvatarFallback>
                   </Avatar>
                 )}
-                <div className={`bg--600  ${isExtended ? "max-w-[98%]" : "max-w-[85%]"} flex`}>
+                <div className={`bg--600 ${isExtended ? "max-w-[98%]" : "max-w-[85%]"} flex`}>
                   <div
                     className={`max-w-full rounded-xl text-sm ${message.sender === "You" ? "bg-purple-600 text-justify text-white px-5 py-4" : "bg-slate-100 text-justify px-7 py-5 "} break-words`}
-                    dangerouslySetInnerHTML={{ __html: linkify(message.text) }}
-                  />
+                  >
+                    {message.sender === "Cosmo" ? (
+                      <MarkdownRenderer tt={message.text} />
+                    ) : (
+                      <div dangerouslySetInnerHTML={{ __html: linkify(message.text) }} />
+                    )}
+                  </div>
                 </div>
                 {message.sender === "You" && (
                   <Avatar className="w-8 h-8 border">
@@ -365,7 +370,7 @@ const NewComponent: React.FC<NewComponentProps> = ({ isOpen, selectedText, handl
               </div>
             ))}
             {isLoading && (
-              <div className="flex items-start mb-4 w-full  justify-start">
+              <div className="flex items-start mb-4 w-full justify-start">
                 <Avatar className="w-8 h-8 bg-white">
                   <AvatarFallback className="bg-white">
                     <Wand className="text-purple-700" />
