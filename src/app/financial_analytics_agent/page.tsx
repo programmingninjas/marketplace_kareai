@@ -37,7 +37,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import Sidebar from "@/components/sidebar"
+// import Sidebar from "@/components/sidebar"
 import axios from "axios";
 // import ReactQuill from 'react-quill';
 const ReactQuill = dynamic(() => import('react-quill'), {
@@ -135,12 +135,17 @@ function Page() {
       setType("Pie Chart");
       
       console.log(response);
-    } catch (error) {
+    } catch (error:any) {
+      const errorMessage = error.response && error.response.data && error.response.data.message
+        ? error.response.data.message
+        : "An unexpected error occurred";
+    
       toast({
         title: "ERROR API CALL",
-        description: "There is an error in making the call",
+        description: errorMessage,
         variant: "destructive"
       });
+    
       console.error("Error fetching data:", error);
     }
     setIsSubmitting(false);
@@ -156,6 +161,8 @@ function Page() {
   
       setContent(parsedData.financial_data.balance_sheet);
       setContent2(parsedData.financial_data.income_statement);
+      setContent2([]);
+
      
       setContent4(parsedData.insights);
       setGraph(parsedData.graphs);
