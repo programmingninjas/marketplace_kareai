@@ -492,51 +492,51 @@ const FinancialSummaryComponent: React.FC<FinancialSummaryComponentProps> = ({ f
     ratios: financialData?.ratios?.insights || '',
   });
 
-  useEffect(() => {
-    const loadDataFromLocalStorage = () => {
-      const storedData = localStorage.getItem('financialData');
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
+  // useEffect(() => {
+  //   const loadDataFromLocalStorage = () => {
+  //     const storedData = localStorage.getItem('financialData');
+  //     if (storedData) {
+  //       const parsedData = JSON.parse(storedData);
 
-        setAssetsData(parsedData?.assets?.data || []);
-        setLiabilitiesData(parsedData?.liabilities?.data || []);
-        setEquityData(parsedData?.equity?.data || []);
-        setFinancialRatios({
-          currentRatio: getNumber(parsedData?.ratios?.data[0]),
-          DebtTEq: getNumber(parsedData?.ratios?.data[1]),
-          QuickR: getNumber(parsedData?.ratios?.data[2]),
-          Roe: getNumber(parsedData?.ratios?.data[3]),
-          AssetT: getNumber(parsedData?.ratios?.data[4]),
-        });
-        setInsights({
-          assets: parsedData?.assets?.insights || '',
-          liabilities: parsedData?.liabilities?.insights || '',
-          equity: parsedData?.equity?.insights || '',
-          ratios: parsedData?.ratios?.insights || '',
-        });
-      } else {
-        // Reset the states if no data is available in local storage
-        setAssetsData([]);
-        setLiabilitiesData([]);
-        setEquityData([]);
-        setFinancialRatios({
-          currentRatio: 0,
-          DebtTEq: 0,
-          QuickR: 0,
-          Roe: 0,
-          AssetT: 0,
-        });
-        setInsights({
-          assets: '',
-          liabilities: '',
-          equity: '',
-          ratios: '',
-        });
-      }
-    };
+  //       setAssetsData(parsedData?.assets?.data || []);
+  //       setLiabilitiesData(parsedData?.liabilities?.data || []);
+  //       setEquityData(parsedData?.equity?.data || []);
+  //       setFinancialRatios({
+  //         currentRatio: getNumber(parsedData?.ratios?.data[0]),
+  //         DebtTEq: getNumber(parsedData?.ratios?.data[1]),
+  //         QuickR: getNumber(parsedData?.ratios?.data[2]),
+  //         Roe: getNumber(parsedData?.ratios?.data[3]),
+  //         AssetT: getNumber(parsedData?.ratios?.data[4]),
+  //       });
+  //       setInsights({
+  //         assets: parsedData?.assets?.insights || '',
+  //         liabilities: parsedData?.liabilities?.insights || '',
+  //         equity: parsedData?.equity?.insights || '',
+  //         ratios: parsedData?.ratios?.insights || '',
+  //       });
+  //     } else {
+  //       // Reset the states if no data is available in local storage
+  //       setAssetsData([]);
+  //       setLiabilitiesData([]);
+  //       setEquityData([]);
+  //       setFinancialRatios({
+  //         currentRatio: 0,
+  //         DebtTEq: 0,
+  //         QuickR: 0,
+  //         Roe: 0,
+  //         AssetT: 0,
+  //       });
+  //       setInsights({
+  //         assets: '',
+  //         liabilities: '',
+  //         equity: '',
+  //         ratios: '',
+  //       });
+  //     }
+  //   };
 
-    loadDataFromLocalStorage();
-  }, []);
+  //   loadDataFromLocalStorage();
+  // }, []);
 
   if (!financialData) {
     return <div className="p-10">No data available</div>;
