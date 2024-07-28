@@ -87,7 +87,7 @@ The top biotech and pharmaceutical companies are characterized by high revenue, 
 
 
 
-const MarkdownRenderer: React.FC<Props> = ({ tt }) => {
+const MarkdownRenderer2: React.FC<Props> = ({ tt }) => {
   return (
     <div className="w-full   h-full  overflow-hidden ">
       <ReactMarkdown
@@ -104,7 +104,7 @@ const MarkdownRenderer: React.FC<Props> = ({ tt }) => {
   );
 };
 
-export default MarkdownRenderer;
+export default MarkdownRenderer2;
 
 // const MarkdownRenderer: React.FC<Props> = ({ tt }) => {
 //   return (
