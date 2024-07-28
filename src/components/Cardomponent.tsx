@@ -11,7 +11,7 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { BarChart3Icon } from "lucide-react";
-import Sidebar from "./Sidebar2";
+import Sidebar from "./SearchBar";
 
 
 

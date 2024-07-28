@@ -277,14 +277,13 @@ const router = useRouter();
     });
   };
   return (
-    <Layout>
       <div className="w-full h-screen flex overflow-x-hidden ">
         <div className="w-full">
-          <div className="py-3 w-full border-b-2 flex justify-end px-3 border-zinc-100">
+          {/* <div className="py-3 w-full border-b-2 flex justify-end px-3 border-zinc-100">
             <SignedIn>
               <UserButton afterSignOutUrl="/sign-in" />
             </SignedIn>
-          </div>
+          </div> */}
           <div className="w-full h-full flex text-base overflow-hidden text-zinc-800">
             {left ? (
               <div className="leftDiv w-1/2 h-full flex overflow-x-hidden flex-col">
@@ -971,7 +970,6 @@ const router = useRouter();
           </div>
         </div>
       </div>
-    </Layout>
   );
 }
 

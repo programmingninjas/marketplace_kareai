@@ -136,10 +136,9 @@ function Page() {
       
       console.log(response);
     } catch (error:any) {
-      const errorMessage = error.response && error.response.data && error.response.data.message
-        ? error.response.data.message
-        : "An unexpected error occurred";
-    
+      const errorMessage = "Recheck year and ticker symbol"
+       
+    // console.log(errorMessage);
       toast({
         title: "ERROR API CALL",
         description: errorMessage,
@@ -341,14 +340,9 @@ const [isopen, setIsopen] = useState<boolean>(false);
 
   
   return (
-    <Layout>
       <div className="w-full h-screen flex overflow-hidden ">
         <div className="w-full">
-          <div className="py-3 w-full border-b-2 flex justify-end px-3 border-zinc-100">
-            <SignedIn>
-              <UserButton afterSignOutUrl="/sign-in" />
-            </SignedIn>
-          </div>
+         
           <div className="w-full  h-full flex  text-base text-zinc-800 overflow-hidden">
             {left ? (
               <>
@@ -940,7 +934,6 @@ const [isopen, setIsopen] = useState<boolean>(false);
           </div>
         </div>
       </div>
-    </Layout>
   );
 }
 

@@ -30,7 +30,7 @@ export default function Component() {
                 </Link>
               </div>
             </div>
-            <SignIn />
+            <SignIn forceRedirectUrl={"/"} />
           </div>
         </section>
       </main>

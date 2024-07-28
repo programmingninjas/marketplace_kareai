@@ -9,6 +9,7 @@ import { Poppins } from 'next/font/google'
 import { SidebarProvider } from "@/context/SidebarContext";
 import { Toaster } from "@/components/ui/toaster";
 import { ClerkProvider } from "@clerk/nextjs";
+import Layout from "@/components/Layout";
  
 const roboto = Poppins({
   weight: '500',
@@ -52,11 +53,10 @@ export default function RootLayout({
       <body className={roboto.className} >
 
       <Toaster/>
-      <SidebarProvider>
+      <Layout>{children}</Layout>
 
-        {children}
         
-        </SidebarProvider>
+        
 
         </body>
         </ClerkProvider>

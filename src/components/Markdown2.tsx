@@ -93,6 +93,9 @@ const MarkdownRenderer: React.FC<Props> = ({ tt }) => {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
+        components={{ a: ({ node, ...props }) => (
+          <a className="text-blue-500 underline" {...props} />
+        ),}}
        
       >
         {tt}
