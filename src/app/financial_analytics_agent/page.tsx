@@ -66,9 +66,9 @@ function Page() {
   const [content2, setContent2] = useState([]);
   const [content3, setContent3] = useState([]);
   const [content4, setContent4] = useState("");
-  const [content5, setContent5] = useState("");
-  const [content6, setContent6] = useState("");
-  const [wordFile, setWordFile] = useState("");
+  // const [content5, setContent5] = useState("");
+  // const [content6, setContent6] = useState("");
+  // const [wordFile, setWordFile] = useState("");
   const [tittle, setTittle] = useState("title");
   const [source, setSource] = useState("");
   const [File, setFile] = useState("");
@@ -100,7 +100,8 @@ function Page() {
     setIsSubmitting(true);
   
     // source setting
-    setSector(data.ticker);
+    const src = data.ticker;
+    setSector(src);
     console.log(sector);
     const newSource = `https://finance.yahoo.com/quote/${data.ticker}`;
     setSource(newSource);
@@ -153,25 +154,42 @@ function Page() {
   };
   
   // Function to load data from local storage
+  // const loadDataFromLocalStorage = () => {
+  //   const storedData = localStorage.getItem('financialData');
+  //   if (storedData) {
+  //     const parsedData = JSON.parse(storedData);
+  
+  //     setContent(parsedData.financial_data.balance_sheet);
+  //     setContent2(parsedData.financial_data.income_statement);
+  //     setContent2([]);
+
+     
+  //     setContent4(parsedData.insights);
+  //     setGraph(parsedData.graphs);
+
+      
+      
+  //     setType("Pie Chart");
+  //   }
+  // };
   const loadDataFromLocalStorage = () => {
     const storedData = localStorage.getItem('financialData');
     if (storedData) {
       const parsedData = JSON.parse(storedData);
   
-      setContent(parsedData.financial_data.balance_sheet);
-      setContent2(parsedData.financial_data.income_statement);
+      setContent([]);
+      setContent2([]);
       setContent2([]);
 
      
-      setContent4(parsedData.insights);
-      setGraph(parsedData.graphs);
+      setContent4("");
+      setGraph("");
 
       
       
       setType("Pie Chart");
     }
   };
-  
   // Call this function on component mount or wherever appropriate
   useEffect(() => {
     loadDataFromLocalStorage();
