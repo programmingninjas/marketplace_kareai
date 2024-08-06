@@ -21,11 +21,8 @@ export default function BentoGridThirdDemo() {
 
   const categories = [
     "All",
-    "Category Playbook",
-    "Data Science",
-    "AI Content Generation",
-    "Financial Analytics",
-    "Text Summarization",
+    "Text Agent",
+    "Action Agents",
   ];
 
   const filteredItems = items.filter(
@@ -286,30 +283,30 @@ const SkeletonFive = () => {
 
 const items = [
   {
-    title: "Category Playbook",
-    description: <span className="text-sm">Aids businesses in understanding market trends, customer behavior, and competitive landscape</span>,
+    title: "Market Intelligence",
+    description: <span className="text-sm">   Generate the most comprehensive market intelligence reports on any category, sector, or commodity in minutes.</span>,
     header: <SkeletonOne />,
     className: "md:col-span-1",
     icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
-    category: "Category Playbook",
+    category: "Text Agent",
     Link:"/market_research_agent"
   },
   {
-    title: "Data Science Agent",
-    description: <span className="text-sm">Let AI handle the proofreading of your documents.</span>,
+    title: "Supplier Information",
+    description: <span className="text-sm">Perform supplier risk assessments on incumbent and potential partners in minutes.</span>,
     header: <SkeletonTwo />,
     className: "md:col-span-1",
     icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
-    category: "Data Science",
+    category: "Text Agent",
   },
   {
-    title: "Financial Analytics Agent",
-    description: <span className="text-sm">Analyzes financial data, market conditions, and economic trends for informed investment decisions
-</span>,
+    title: "Financial Intelligence",
+    description: <span className="text-sm">
+     Access and monitor public market information like never before.</span>,
     header: <SkeletonOne />,
     className: "md:col-span-1",
     icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
-    category: "Financial Analytics",
+    category: "Text Agent",
     Link:"/financial_analytics_agent"
 
   },

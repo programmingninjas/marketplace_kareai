@@ -140,6 +140,7 @@ import { Sidebar, SidebarBody, SidebarLink } from "./ui/sidebar";
 import {
   IconArrowLeft,
   IconBrandTabler,
+  IconReport,
   IconSettings,
   IconUserBolt,
 } from "@tabler/icons-react";
@@ -147,7 +148,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Brain, FileCheckIcon, PanelRightCloseIcon, Triangle } from "lucide-react";
+import { Brain, FileCheckIcon, ListPlusIcon, Mail, MailsIcon, PanelRightCloseIcon, Triangle } from "lucide-react";
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { Avatar } from "@radix-ui/react-avatar";
@@ -157,15 +158,15 @@ type AgentNames = {
 
 const links = [
   {
-    label: "Dashboard",
+    label: "AI Agents",
     href: "/",
     icon: (
       <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
   {
-    label: "Profile",
-    href: "#",
+    label: "AI Copilot",
+    href: "/copilot",
     icon: (
       <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
@@ -177,12 +178,36 @@ const links = [
       <FileCheckIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
+  {
+    label: "News and Alerts",
+    href: "/news",
+    icon: (
+      <IconReport className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Watchlist",
+    href: "/watchlist",
+    icon: (
+      <ListPlusIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
+  {
+    label: "Email Updates",
+    href: "/updates",
+    icon: (
+      <MailsIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    ),
+  },
 ];
 
 const agentNames:AgentNames = {
   "/": "Home ",
   "/market_research_agent": "Category Playbook",
-  "/financial_analytics_agent": "Financial Analytics Agent"
+  "/financial_analytics_agent": "Financial Analytics Agent",
+  "/copilot": "AI copilot ",
+
+
  
   // Add other paths and corresponding agent names here
 };

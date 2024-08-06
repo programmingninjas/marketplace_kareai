@@ -122,10 +122,13 @@ const config: Config = {
       },
     },
     extend: {
+    
+       
       animation: {
         bounce: 'bounce 1.4s infinite both',
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        scroll: 'scroll 30s linear infinite',
       },
       keyframes: {
         bounce: {
@@ -139,6 +142,10 @@ const config: Config = {
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
+        },
+        scroll: {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(-50%)' }, // Adjust based on the number of rows and their height
         },
       },
       height: {
